@@ -1,0 +1,15 @@
+__pycache__/
+Randomizer/*/randomize.bat
+*.bin
+*.zip
+Redirection_Patch/
+MovesInGame/
+*_array.json
+*_table.json
+*_0.trsog
+*_1.trsog
+flatc/*.bat
+json_output
+*.trpfd
+output/
+data.json
