@@ -1,0 +1,45 @@
+{
+    "wild_randomizer": {
+        "_comment": "Fully updated to 3.0",
+        "is_enabled": "yes",
+        "exclude_legendaries": "no"
+    },
+    "trainer_randomizer": {
+        "_comment": "Still need updating to 3.0 ---- Keep as no",
+        "is_enabled": "no",
+        "force_6_pokemons_on_important_trainers": "no",
+        "force_6_pokemons_on_all_trainers": "no",
+        "force_perfect_ivs": "no",
+        "make_ai_smart_for_all_trainers": "yes",
+        "allow_all_trainers_to_terastalize": "yes",
+        "randomize_fixed_tera_type": "yes",
+        "randomize_all_tera_type": "yes"
+    },
+    "personal_data_randomizer": {
+        "_comment": "Fully Updated to 3.0.0",
+        "is_enabled": "yes",
+        "randomize_abilities": "yes",
+        "ban_wonder_guard": "yes",
+        "randomize_movesets": "yes",
+        "randomize_evolutions": "no"
+    },
+    "starter_randomizer": {
+        "_comment": "Fully updated for 3.0",
+        "is_enabled": "yes",
+        "all_shiny": "no",
+        "higher_shiny_chance": "yes",
+        "randomize_all_gifts": "no",
+        "randomize_tera_type": "no",
+        "show_starters_in_overworld": "yes"
+    },
+    "static_randomizer": {
+		"_comment": "Fully Updated to 3.0.0",
+        "is_enabled": "yes",
+        "randomize_tera_type_for_static_tera": "no"
+    },
+    "tm_randomizer": {
+        "_comment": "Work in progress - Don't turn on",
+        "is_enabled": "no"
+    },
+    "patch_trpfd": "no"
+}
