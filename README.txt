@@ -1,4 +1,5 @@
 --- Pokemon Scarlet and Violet Randomizer by XLuma updated by Gonzalo----
+Go to: https://github.com/Gonzalooo/Scarlet-and-Violet-Randomizer for latest Version.
 
 *** THIS RANDOMIZER WORKS ONLY WITH VERSION 3.0.1/3.0.0***
 PREFACE: Make sure you have at least Python 3.10 installed on your computer, anything lower will not work!
