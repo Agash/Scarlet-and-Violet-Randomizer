@@ -1,5 +1,5 @@
 __pycache__/
-Randomizer/*/randomize.bat
+*.bat
 *.bin
 *.zip
 Redirection_Patch/
@@ -13,3 +13,4 @@ json_output
 *.trpfd
 output/
 data.json
+Randomizer/Starters/pokemon_clean
