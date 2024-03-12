@@ -372,10 +372,13 @@ def randomize(config):
             battleformat = random.randint(1, 2)
             if battleformat == 2 and pokemon_to_randomize < 2:
                 make_poke(entry, str(2), csvdata, config, beginner)
+            if battleformat == 2:
+                entry['aiDouble'] = True
             type_of_battle = f"_{battleformat}vs{battleformat}"
             entry['battleType'] = type_of_battle
         if config['only_double'] == "yes" and beginner is False:
             entry['battleType'] = "_2vs2"
+            entry['aiDouble'] = True
             if pokemon_to_randomize < 2:
                 make_poke(entry, str(2), csvdata, config, beginner)
 
