@@ -357,25 +357,28 @@ def randomize(config):
                     entry['pokeData']['formId'] = alt_form_choosen
 
                     # Hard code tera types for ogerpon and terapagos so that they don't break.
-                    match choice:
-                        case 1011:
-                            match alt_form_choosen:
-                                case 0:
-                                    entry['pokeData']['gemType'] = "KUSA"
-                                    pass
-                                case 1:
-                                    entry['pokeData']['gemType'] = "MIZU"
-                                    pass
-                                case 2:
-                                    entry['pokeData']['gemType'] = "HONOO"
-                                    pass
-                                case 3:
-                                    entry['pokeData']['gemType'] = "IWA"
-                                    pass
-                        case 1021:
-                            entry['pokeData']['gemType'] = "NIJI"
-                        case _:
-                            pass
+                    if config['randomize_tera_type'] == "yes":
+                        entry['pokeData']['gemType'] = tera_types[random.randint(0, len(tera_types) - 1)].upper()
+
+                        match choice:
+                            case 1011:
+                                match alt_form_choosen:
+                                    case 0:
+                                        entry['pokeData']['gemType'] = "KUSA"
+                                        pass
+                                    case 1:
+                                        entry['pokeData']['gemType'] = "MIZU"
+                                        pass
+                                    case 2:
+                                        entry['pokeData']['gemType'] = "HONOO"
+                                        pass
+                                    case 3:
+                                        entry['pokeData']['gemType'] = "IWA"
+                                        pass
+                            case 1021:
+                                entry['pokeData']['gemType'] = "NIJI"
+                            case _:
+                                pass
 
                     if config['all_shiny'] == "yes":
                         entry['pokeData']['rareType'] = "RARE"
@@ -414,6 +417,9 @@ def randomize(config):
                     val = random.randint(0, len(legends_and_paradox)-1)
                     choice = legends_and_paradox[val]
 
+            entry['pokeData']['devId'] = fetch_devname(choice, names)
+            entry['pokeData']['formId'] = get_alt_form(choice)
+
             if config['all_shiny'] == "yes":
                 entry['pokeData']['rareType'] = "RARE"
             elif config['higher_shiny_chance'] == "yes":
@@ -422,30 +428,29 @@ def randomize(config):
                     entry['pokeData']['rareType'] = "RARE"
                 else:
                     entry['pokeData']['rareType'] = "NO_RARE"
-            entry['pokeData']['devId'] = fetch_devname(choice, names)
-            entry['pokeData']['formId'] = get_alt_form(choice)
-        if config['randomize_tera_type'] == "yes":
-            entry['pokeData']['gemType'] = tera_types[random.randint(0, len(tera_types) - 1)].upper()
 
-            match choice:
-                case 1011:
-                    match alt_form_choosen:
-                        case 0:
-                            entry['pokeData']['gemType'] = "KUSA"
-                            pass
-                        case 1:
-                            entry['pokeData']['gemType'] = "MIZU"
-                            pass
-                        case 2:
-                            entry['pokeData']['gemType'] = "HONOO"
-                            pass
-                        case 3:
-                            entry['pokeData']['gemType'] = "IWA"
-                            pass
-                case 1021:
-                    entry['pokeData']['gemType'] = "NIJI"
-                case _:
-                    pass
+            if config['randomize_tera_type'] == "yes":
+                entry['pokeData']['gemType'] = tera_types[random.randint(0, len(tera_types) - 1)].upper()
+
+                match choice:
+                    case 1011:
+                        match alt_form_choosen:
+                            case 0:
+                                entry['pokeData']['gemType'] = "KUSA"
+                                pass
+                            case 1:
+                                entry['pokeData']['gemType'] = "MIZU"
+                                pass
+                            case 2:
+                                entry['pokeData']['gemType'] = "HONOO"
+                                pass
+                            case 3:
+                                entry['pokeData']['gemType'] = "IWA"
+                                pass
+                    case 1021:
+                        entry['pokeData']['gemType'] = "NIJI"
+                    case _:
+                        pass
 
         entry['pokeData']['wazaType'] = "DEFAULT"
         entry['pokeData']['waza1']['wazaId'] = "WAZA_NULL"

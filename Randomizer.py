@@ -88,20 +88,36 @@ def randomize():
         os.makedirs("output/romfs/" + paths['scenes'], mode=777, exist_ok=True)
         shutil.copyfile("Randomizer/Scenes/common_0070_always_0.trsog", "output/romfs/" + paths['scenes'] + '/common_0070_always_0.trsog')
         shutil.copyfile("Randomizer/Scenes/common_0070_always_1.trsog", "output/romfs/" + paths['scenes'] + '/common_0070_always_1.trsog')
-    # -------------removed until I learn more about how this work and how to update it for 3.0.1 -----------------------
-    # if config['patch_trpfd'] == "yes":
-    #     FileDescriptor.patchFileDescriptor()
-    #     generateBinary("Randomizer/FileDescriptor/data.fbs", "Randomizer/FileDescriptor/data.json", paths['trpfd'])
-    #     shutil.make_archive("output/randomizer", "zip", "output/")
-    shutil.make_archive("output/randomizer", "zip", "output/romfs/")
+    if config['patch_trpfd'] == "yes":
+        FileDescriptor.patchFileDescriptor()
+        generateBinary("Randomizer/FileDescriptor/data.fbs", "Randomizer/FileDescriptor/data.json", paths['trpfd'])
+        shutil.make_archive("output/randomizer", "zip", "output/")
+        if os.path.exists(os.getcwd() + "\\randomizer-patched"):
+            shutil.rmtree(os.getcwd() + "\\randomizer-patched")
+        shutil.copytree('output/', 'randomizer-patched/')
+        shutil.move('output/randomizer.zip', 'randomizer-patched/randomizer.zip')
+        if config['starter_randomizer']['shiny_overworld'] == "yes":
+            if os.path.exists(os.getcwd() + "\\Randomizer\\Starters\\" + f'output'):
+                shutil.copytree(os.getcwd() + "\\Randomizer\\Starters\\output\\romfs\\pokemon\\data",
+                                "output/romfs/" + paths['shiny_scenes'])
+                FileDescriptor.patchFileDescriptor()
+                generateBinary("Randomizer/FileDescriptor/data.fbs", "Randomizer/FileDescriptor/data.json",
+                               paths['trpfd'])
+                shutil.make_archive("output/randomizer-shiny-overworld", "zip", "output/")
+                if os.path.exists(os.getcwd() + "\\randomizer-shiny"):
+                    shutil.rmtree(os.getcwd() + "\\randomizer-shiny")
+                shutil.copytree('output/', 'randomizer-shiny/')
+                shutil.move('output/randomizer-shiny-overworld.zip', 'randomizer-shiny/randomizer-shiny-overworld.zip')
+    else:
+        shutil.make_archive("output/randomizer", "zip", "output/romfs/")
 
-    if config['starter_randomizer']['shiny_overworld'] == "yes":
-        if os.path.exists(os.getcwd() + "\\Randomizer\\Starters\\" + f'output'):
-            shutil.copytree(os.getcwd() + "\\Randomizer\\Starters\\output\\romfs\\pokemon\\data",
-                            "output/romfs/" + paths['shiny_scenes'])
-            shutil.make_archive("output/randomizer-shiny-overworld", "zip", "output/romfs/")
-        else:
-            print('No Shiny starter')
+        if config['starter_randomizer']['shiny_overworld'] == "yes":
+            if os.path.exists(os.getcwd() + "\\Randomizer\\Starters\\" + f'output'):
+                shutil.copytree(os.getcwd() + "\\Randomizer\\Starters\\output\\romfs\\pokemon\\data",
+                                "output/romfs/" + paths['shiny_scenes'])
+                shutil.make_archive("output/randomizer-shiny-overworld", "zip", "output/romfs/")
+            else:
+                print('No Shiny starter')
 
 
 def test():
