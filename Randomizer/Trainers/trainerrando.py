@@ -324,15 +324,15 @@ def randomize(config):
         counter = 1
         for j in range(0, 6):
             t = j+1
-            if entry['poke' + str(t)] != "DEV_NULL":
+            if entry['poke' + str(t)]['devId'] != "DEV_NULL":
                 counter = counter + 1
         pokemon_to_randomize = counter
 
-        if config['force_6_pokemons_on_trainers'] == 'no' and config['give_trainers_extra_mons'] == "yes":
+        if config['give_trainers_extra_mons'] == "yes":
             new_counter = 1
             # Counter to see how many free slots there are
             for j in range(2, 6):
-                if entry['poke' + str(j)] == "DEV_NULL":
+                if entry['poke' + str(j)]['devId'] == "DEV_NULL":
                     new_counter = new_counter + 1
             # If none then just randomize all 6
             if new_counter == 0:
@@ -343,14 +343,22 @@ def randomize(config):
                 pokemon_to_randomize = pokemon_to_randomize + counter
                 if pokemon_to_randomize > 6:
                     pokemon_to_randomize = 6
-        elif config['force_6_pokemons_on_trainers'] == "yes":
+        if config['force_6_pokemons_on_trainers'] == "yes":
             # If user wants all 6 then set to all 6
             pokemon_to_randomize = 6
 
         # a way to prevent any errors
         beginner = False
-        if pokemon_to_randomize > 6 or pokemon_to_randomize < 1:
+        if pokemon_to_randomize > 6:
             pokemon_to_randomize = 6
+        elif pokemon_to_randomize < 1:
+            # get exact number if its less than 1 (should never happen)
+            counter = 1
+            for j in range(0, 6):
+                t = j + 1
+                if entry['poke' + str(t)]['devId'] != "DEV_NULL":
+                    counter = counter + 1
+            pokemon_to_randomize = counter
 
         if entry['trid'] == "rival_01_hono" or entry['trid'] == "rival_01_kusa" or entry['trid'] == "rival_01_mizu":
             pokemon_to_randomize = 1

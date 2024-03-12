@@ -11,17 +11,17 @@
         "give_trainers_extra_mons": "no",
         "force_perfect_ivs": "no",
         "make_ai_smart_for_all_trainers": "yes",
-        "allow_all_trainers_to_terastalize": "yes",
+        "allow_all_trainers_to_terastalize": "no",
         "randomize_fixed_tera_type": "yes",
         "randomize_all_tera_type": "yes",
         "randomnly_choose_single_or_double": "no",
-        "only_double": "yes"
+        "only_double": "no"
     },
     "personal_data_randomizer": {
         "_comment": "Fully Updated to 3.0.0",
         "is_enabled": "yes",
         "randomize_abilities": "yes",
-        "randomize_types": "yes",
+        "randomize_types": "no",
         "ban_wonder_guard": "yes",
         "randomize_movesets": "yes",
         "randomize_evolutions": "no"
@@ -32,7 +32,7 @@
         "all_shiny": "yes",
         "higher_shiny_chance": "no",
         "randomize_all_gifts": "no",
-        "randomize_tera_type": "no",
+        "randomize_tera_type": "yes",
         "show_starters_in_overworld": "yes",
         "only_legends": "no",
         "only_paradox": "no",
