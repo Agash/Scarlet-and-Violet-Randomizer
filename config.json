@@ -14,8 +14,8 @@
         "allow_all_trainers_to_terastalize": "yes",
         "randomize_fixed_tera_type": "yes",
         "randomize_all_tera_type": "yes",
-        "randomnly_choose_single_or_double": "yes",
-        "only_double": "no"
+        "randomnly_choose_single_or_double": "no",
+        "only_double": "yes"
     },
     "personal_data_randomizer": {
         "_comment": "Fully Updated to 3.0.0",
@@ -34,13 +34,16 @@
         "randomize_all_gifts": "no",
         "randomize_tera_type": "no",
         "show_starters_in_overworld": "yes",
+        "only_legends": "no",
+        "only_paradox": "no",
+        "only_legends_and_paradox": "yes",
         "_comment": "Only current way of having shiny starters is by inverting the textures",
         "_comment2": "Therefore - only have this active if you wish to have inverted textures",
         "_comment3": "Only recommended if you want to do things like 'Choosing Starter' type of things",
         "_comment4": "If you wish to play the game with a shiny starter without carrying about its overworld",
         "_comment5": "texture when picking it - then please have it as no. Else have it as yes.",
         "_comment6": "Does not work with randomize_all_gifts as it assumes you'll be playing the whole game.",
-        "shiny_overworld": "no"
+        "shiny_overworld": "yes"
     },
     "static_randomizer": {
 		"_comment": "Fully Updated to 3.0.0",
