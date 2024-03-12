@@ -208,6 +208,14 @@ def randomizeMoveset(pokemon):
     return pokemon
 
 
+def randomizeTypes(pokemon):
+    if pokemon['is_present'] is True:
+        pokemon['type_1'] = random.randint(0, 17)
+        pokemon['type_2'] = random.randint(0, 17)
+
+    return pokemon
+
+
 def randomizeEvolutions(pokemon):
     for evo in pokemon['evo_data']:
         choice = random.randint(1, 1025)
@@ -216,6 +224,7 @@ def randomizeEvolutions(pokemon):
         evo['species'] = choice
         evo['form'] = get_alt_form(choice)
     return pokemon
+
 
 # To be completed - Trying to figure out how to keep
 # same total.
@@ -244,6 +253,8 @@ def randomize(config):
             pokemon = randomizeMoveset(pokemon)
         if config['randomize_evolutions'] == "yes":
             pokemon = randomizeEvolutions(pokemon)
+        if config['randomize_types'] == "yes":
+            pokemon = randomizeTypes(pokemon)
     
     outdata = json.dumps(data, indent=4)
     with open(os.getcwd() + "/Randomizer/PersonalData/" +"personal_array.json", 'w') as outfile:

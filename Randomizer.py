@@ -15,7 +15,7 @@ import subprocess
 def generateBinary(schema: str, json: str, path: str):
     flatc = "flatc/flatc.exe"
     outpath = os.path.abspath("output/romfs/" + path)
-    print(outpath)
+    # print(outpath)
     proc = subprocess.run(
         [os.path.abspath(flatc),
         "-b",
@@ -52,6 +52,7 @@ paths = {
     "tms": "world/data/item/itemdata",
     "catalog": "pokemon/catalog/catalog",
     "scenes": "world/scene/parts/event/event_scenario/main_scenario/common_0070_",
+    "shiny_scenes": "pokemon/data/",
     "trpfd": "arc"
 }
 
@@ -69,9 +70,9 @@ def randomize():
         generateBinary("Randomizer/WildEncounters/pokedata_su2_array.bfbs",
                        "Randomizer/WildEncounters/pokedata_su2_array.json",
                        paths["wilds_su2"])
-    # if config['trainer_randomizer']['is_enabled'] == "yes":
-    #     TrainerRandomizer.randomize(config['trainer_randomizer'])
-    #     generateBinary("Randomizer/Trainers/trdata_array.bfbs", "Randomizer/Trainers/trdata_array.json", paths["trainers"])
+    if config['trainer_randomizer']['is_enabled'] == "yes":  # Updated for 3.0.1
+        TrainerRandomizer.randomize(config['trainer_randomizer'])
+        generateBinary("Randomizer/Trainers/trdata_array.bfbs", "Randomizer/Trainers/trdata_array.json", paths["trainers"])
     if config['personal_data_randomizer']['is_enabled'] == "yes":  # Updated to 3.0.1
         PersonalRandomizer.randomize(config['personal_data_randomizer'])
         generateBinary("Randomizer/PersonalData/personal_array.fbs", "Randomizer/PersonalData/personal_array.json", paths["personal"])
@@ -81,18 +82,26 @@ def randomize():
     if config['static_randomizer']['is_enabled'] == "yes":  # Updated to 3.0.1
         StaticRandomizer.randomize(config['static_randomizer'])
         generateBinary("Randomizer/StaticSpawns/fixed_symbol_table_array.bfbs", "Randomizer/StaticSpawns/fixed_symbol_table_array.json", paths["statics"])
-    # -------------removed until I learn more about how this work and how to update it for 3.0.1 -----------------------
-    if config['starter_randomizer']['is_enabled'] == "yes" and config['starter_randomizer']['show_starters_in_overworld'] == "yes":
+    if config['starter_randomizer']['is_enabled'] == "yes" and config['starter_randomizer']['show_starters_in_overworld'] == "yes": # Updated for 3.0.1
         PatchScene.patchScenes()
         generateBinary("Randomizer/Scenes/poke_resource_table.fbs", "Randomizer/Scenes/poke_resource_table.json", paths['catalog'])
         os.makedirs("output/romfs/" + paths['scenes'], mode=777, exist_ok=True)
         shutil.copyfile("Randomizer/Scenes/common_0070_always_0.trsog", "output/romfs/" + paths['scenes'] + '/common_0070_always_0.trsog')
         shutil.copyfile("Randomizer/Scenes/common_0070_always_1.trsog", "output/romfs/" + paths['scenes'] + '/common_0070_always_1.trsog')
+    # -------------removed until I learn more about how this work and how to update it for 3.0.1 -----------------------
     # if config['patch_trpfd'] == "yes":
     #     FileDescriptor.patchFileDescriptor()
     #     generateBinary("Randomizer/FileDescriptor/data.fbs", "Randomizer/FileDescriptor/data.json", paths['trpfd'])
     #     shutil.make_archive("output/randomizer", "zip", "output/")
     shutil.make_archive("output/randomizer", "zip", "output/romfs/")
+
+    if config['starter_randomizer']['shiny_overworld'] == "yes":
+        if os.path.exists(os.getcwd() + "\\Randomizer\\Starters\\" + f'output'):
+            shutil.copytree(os.getcwd() + "\\Randomizer\\Starters\\output\\romfs\\pokemon\\data",
+                            "output/romfs/" + paths['shiny_scenes'])
+            shutil.make_archive("output/randomizer-shiny-overworld", "zip", "output/romfs/")
+        else:
+            print('No Shiny starter')
 
 
 def test():

@@ -36,7 +36,6 @@ KNOWM BUGS/ISSUES
 - Terapagos will not have its ability randomized either and Tera-Shift has been banned as well to prevent others from using it
     - Will add option to randomize Terapagos forms abilities later on (Same with Ogerpon).
 - Base Stat Randomizer not completed but it has been started.
-- Shiny starters do not show up as shiny in selection screen (they are still shiny - trying to figure out how to fix this)
 - Boss Pokemon Battles and Initial Lechonk battle are not yet randomized (Will be added later)
 - Snackworth's legendaries are not yet randomized - I know how but I haven't implemented it
 
@@ -44,8 +43,6 @@ FUTURE FEATURES
 - Working on way to give more freedom on randomizer selection
     - ie: having more options for starters, wild settings, etc...
 - Adding option to have item only forms to show up on overworld too
-- Adding support for trainer battle randomization in 3.0.0
-	- Will include feature to change to all 2v2s too
 - Randomize Tera Raid Battles
 
 

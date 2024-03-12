@@ -208,7 +208,7 @@ chosen_biomes = []
 
 ### Actual shit going on here ###
 def randomize(config):
-    print(os.getcwd())
+    # print(os.getcwd())
     # load information
     file = open(os.getcwd() + "/Randomizer/WildEncounters/" + "pokedata_array_clean.json", "r")
     data = json.load(file)
@@ -322,7 +322,7 @@ def randomize(config):
 
 
 def randomize_teal(config):
-    print(os.getcwd())
+    # print(os.getcwd())
     # load information
     file = open(os.getcwd() + "/Randomizer/WildEncounters/" + "pokedata_su1_array_clean.json", "r")
     data = json.load(file)
@@ -436,7 +436,7 @@ def randomize_teal(config):
 
 
 def randomize_indigo(config):
-    print(os.getcwd())
+    # print(os.getcwd())
     # load information
     file = open(os.getcwd() + "/Randomizer/WildEncounters/" + "pokedata_su2_array_clean.json", "r")
     data = json.load(file)
@@ -547,7 +547,6 @@ def randomize_indigo(config):
     with open(os.getcwd() + "/Randomizer/WildEncounters/" + "pokedata_su2_array.json", 'w') as outfile:
         outfile.write(outdata)
     print("Randomisation - Indigo done !")
-
 
 
 def main():

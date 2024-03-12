@@ -5,32 +5,42 @@
         "exclude_legendaries": "no"
     },
     "trainer_randomizer": {
-        "_comment": "Still need updating to 3.0 ---- Keep as no",
-        "is_enabled": "no",
-        "force_6_pokemons_on_important_trainers": "no",
-        "force_6_pokemons_on_all_trainers": "no",
+        "_comment": "Updated for 3.0.0",
+        "is_enabled": "yes",
+        "force_6_pokemons_on_trainers": "no",
+        "give_trainers_extra_mons": "no",
         "force_perfect_ivs": "no",
         "make_ai_smart_for_all_trainers": "yes",
         "allow_all_trainers_to_terastalize": "yes",
         "randomize_fixed_tera_type": "yes",
-        "randomize_all_tera_type": "yes"
+        "randomize_all_tera_type": "yes",
+        "randomnly_choose_single_or_double": "yes",
+        "only_double": "no"
     },
     "personal_data_randomizer": {
         "_comment": "Fully Updated to 3.0.0",
         "is_enabled": "yes",
         "randomize_abilities": "yes",
+        "randomize_types": "yes",
         "ban_wonder_guard": "yes",
         "randomize_movesets": "yes",
         "randomize_evolutions": "no"
     },
     "starter_randomizer": {
-        "_comment": "Fully updated for 3.0",
+        "_comment0": "Fully updated for 3.0",
         "is_enabled": "yes",
-        "all_shiny": "no",
-        "higher_shiny_chance": "yes",
+        "all_shiny": "yes",
+        "higher_shiny_chance": "no",
         "randomize_all_gifts": "no",
         "randomize_tera_type": "no",
-        "show_starters_in_overworld": "yes"
+        "show_starters_in_overworld": "yes",
+        "_comment": "Only current way of having shiny starters is by inverting the textures",
+        "_comment2": "Therefore - only have this active if you wish to have inverted textures",
+        "_comment3": "Only recommended if you want to do things like 'Choosing Starter' type of things",
+        "_comment4": "If you wish to play the game with a shiny starter without carrying about its overworld",
+        "_comment5": "texture when picking it - then please have it as no. Else have it as yes.",
+        "_comment6": "Does not work with randomize_all_gifts as it assumes you'll be playing the whole game.",
+        "shiny_overworld": "yes"
     },
     "static_randomizer": {
 		"_comment": "Fully Updated to 3.0.0",

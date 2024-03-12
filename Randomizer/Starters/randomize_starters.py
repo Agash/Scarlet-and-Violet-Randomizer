@@ -1,6 +1,7 @@
 import json
 import random
 import os
+import shutil
 
 picked_starters = []
 tera_types = ['normal','kakutou', 'hikou', 'doku', 'jimen', 'iwa', 'mushi', 'ghost', 'hagane', 'honoo', 'mizu', 'kusa',
@@ -136,7 +137,54 @@ def get_alt_form(index: int):
         return 0
 
 
+def flip_starter_texture(starter_num: int):
+    file = open(os.getcwd() + "/Randomizer/Starters/" +"pokemon_to_file.txt", "r")
+    names = []
+    for name in file:
+        names.append(name)
+    pokemon_file = fetch_devname(starter_num, names)
+    print(starter_num)
+    print(pokemon_file)
+    # _00 - male
+    # _01 - female
+    # _51 and _52 - mega/primal forms
+    # _61 - Alolan Form
+    # _81 - GMAX form
+    # _XX_31 - Galarian form
+    # _XX_41 - Hisuian
+    # _XX_51 - Paldean
+    # _71_XX - Noble
+    # --------------- 1X is only for non-regional forms
+    # _11 - form0
+    # _12 - form1
+    # _13 - form2
+    # _14 - form3
+    # _XY - formZ./pokemon_clean/{pokemon_file}
+    # Copies files of pokemon needed. Right now gets all - later only form specific
+    shutil.copytree(os.getcwd() + "\\Randomizer\\Starters\\" +f'pokemon_clean\\{pokemon_file}',
+                 os.getcwd() + "\\Randomizer\\Starters\\" +f'output\\romfs\\pokemon\\data\\{pokemon_file}')
+    current_check = os.getcwd() + "\\Randomizer\\Starters\\" +f'output\\romfs\\pokemon\\data\\{pokemon_file}'
+    i = 0
+    for pokemonfolder in os.listdir(current_check):
+        # print(pokemonfolder)
+        pokemontextures_animations = current_check + "\\" + pokemonfolder
+
+        for files in os.listdir(pokemontextures_animations):
+            if "rare" in files:
+                # print(files)
+                # print(files.replace("_rare", ''))
+                replacedfile = files.replace("_rare", '')
+                ogfiledir = pokemontextures_animations + "\\" + f'{files}'
+                newfiledir =pokemontextures_animations + "\\" + f'{replacedfile}'
+                #print(f'OG File Dir: {ogfiledir}')
+                #print(f'New File Dir: {newfiledir}')
+                shutil.copy2(ogfiledir, newfiledir)
+
+
 def randomize(config):
+    if os.path.exists(os.getcwd() + "\\Randomizer\\Starters\\" +f'output'):
+        shutil.rmtree(os.getcwd() + "\\Randomizer\\Starters\\" +f'output')
+
     file = open(os.getcwd() + "/Randomizer/Starters/" +"eventAddPokemon_array_clean.json", "r")
     data = json.load(file)
     file.close()
@@ -150,19 +198,24 @@ def randomize(config):
         if config['randomize_all_gifts'] == "no":  # only starters
             if "common_0065_" in entry['label']:
                 choice = random.randint(1, 1025)
-                while choice in banned_pokemon:
+                while choice in banned_pokemon or choice in picked_starters:
                     choice = random.randint(1, 1025)
                 if choice not in picked_starters:
                     entry['pokeData']['devId'] = fetch_devname(choice, names)
                     entry['pokeData']['formId'] = get_alt_form(choice)
                     if choice == 1021:
                         entry['pokeData']['gemType'] = "NIJI"
+
                     if config['all_shiny'] == "yes":
                         entry['pokeData']['rareType'] = "RARE"
+                        if config['shiny_overworld'] == "yes":
+                            flip_starter_texture(choice)
                     elif config['higher_shiny_chance'] == "yes":
-                        chance = random.randint(0, 10)
+                        chance = random.randint(1, 10)
                         if chance == 10:
                             entry['pokeData']['rareType'] = "RARE"
+                            if config['shiny_overworld'] == "yes":
+                                flip_starter_texture(choice)
                         else:
                             entry['pokeData']['rareType'] = "NO_RARE"
                     picked_starters.append(choice) 
@@ -187,6 +240,7 @@ def randomize(config):
         entry['pokeData']['waza2']['wazaId'] = "WAZA_NULL"
         entry['pokeData']['waza3']['wazaId'] = "WAZA_NULL"
         entry['pokeData']['waza4']['wazaId'] = "WAZA_NULL"
+
 
     outdata = json.dumps(data, indent=4)
     with open(os.getcwd() + "/Randomizer/Starters/" +"eventAddPokemon_array.json", 'w') as outfile:

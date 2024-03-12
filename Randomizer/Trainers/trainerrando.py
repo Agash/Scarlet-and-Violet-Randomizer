@@ -117,68 +117,63 @@ def get_alt_form(index: int):
         return  0
 
 
-allowed_species = [ 4, 5, 6, 25, 26, 39, 40, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 79, 80, 81, 82, 88, 89, 90, 91, 92, 93, 94, 96, 97, 100, 101, 113, 123, 128, 129, 130, 132, 133, 134, 135, 136, 144, 145, 146, 147, 148, 149, 150, 151, 155, 156, 157, 172, 174, 179, 180, 181, 183, 184, 185, 187, 188, 189, 191, 192, 194, 195, 196, 197, 198, 199, 200, 203, 204, 205, 206, 211, 212, 214, 215, 216, 217, 225, 228, 229, 231, 232, 234, 242, 246, 247, 248, 278, 279, 280, 281, 282, 283, 284, 285, 286, 287, 288, 289, 296, 297, 298, 302, 307, 308, 316, 317, 322, 323, 324, 325, 326, 331, 332, 333, 334, 335, 336, 339, 340, 353, 354, 357, 361, 362, 370, 371, 372, 373, 382, 383, 384, 396, 397, 398, 401, 402, 403, 404, 405, 415, 416, 417, 418, 419, 422, 423, 425, 426, 429, 430, 434, 435, 436, 437, 438, 440, 442, 443, 444, 445, 447, 448, 449, 450, 453, 454, 456, 457, 459, 460, 461, 462, 470, 471, 475, 478, 479, 480, 481, 482, 483, 484, 485, 487, 488, 493, 501, 502, 503, 548, 549, 550, 551, 552, 553, 570, 571, 574, 575, 576, 585, 586, 590, 591, 594, 602, 603, 604, 610, 611, 612, 613, 614, 615, 624, 625, 627, 628, 633, 634, 635, 636, 637, 641, 642, 645, 648, 650, 651, 652, 653, 654, 655, 656, 657, 658, 661, 662, 663, 664, 665, 666, 667, 668, 669, 670, 671, 672, 673, 690, 691, 692, 693, 700, 701, 702, 703, 704, 705, 706, 707, 712, 713, 714, 715, 719, 720, 721, 722, 723, 724, 734, 735, 739, 740, 741, 744, 745, 747, 748, 749, 750, 753, 754, 757, 758, 761, 762, 763, 765, 766, 769, 770, 775, 778, 779, 801, 810, 811, 812, 813, 814, 815, 816, 817, 818, 819, 820, 821, 822, 823, 833, 834, 837, 838, 839, 840, 841, 842, 843, 844, 846, 847, 848, 849, 854, 855, 856, 857, 858, 859, 860, 861, 863, 870, 871, 872, 873, 874, 875, 876, 878, 879, 885, 886, 887, 888, 889, 890, 891, 892, 893, 894, 895, 896, 897, 898, 899, 900, 901, 902, 903, 904, 905, 906, 907, 908, 909, 910, 911, 912, 913, 914, 915, 916, 917, 918, 919, 920, 921, 922, 923, 924, 925, 926, 927, 928, 929, 930, 931, 932, 933, 934, 935, 936, 937, 938, 939, 940, 941, 942, 943, 944, 945, 946, 947, 948, 949, 950, 951, 952, 953, 954, 955, 956, 957, 958, 959, 960, 961, 962, 963, 964, 965, 966, 967, 968, 969, 970, 971, 972, 973, 974, 975, 976, 977, 978, 979, 980, 981, 982, 983, 984, 985, 986, 987, 988, 989, 990, 991, 992, 993, 994, 995, 996, 997, 998, 999, 1000, 1001, 1002, 1003, 1004, 1005, 1006, 1007, 1008, 1009, 1010]
-tera_types = ['normal','kakutou', 'hikou', 'doku', 'jimen', 'iwa', 'mushi', 'ghost', 'hagane', 'honoo', 'mizu', 'kusa', 'denki', 'esper', 'koori', 'dragon', 'aku', 'fairy']
-def check_important_trainer(id: str):
-    prefixes = ['leader', 'chair', "e4"]
-    for prefix in prefixes:
-        if prefix in id:
-            return True
-    return False
-
+banned_pokemon = [10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 29, 30, 31, 32, 33, 34, 35, 41, 42, 46, 47, 63,
+                  64, 65, 66, 67, 77, 78, 83, 95, 98, 99, 104, 105, 108, 114, 115, 118, 119, 120, 121, 122, 124, 127,
+                  138, 139, 140, 141, 142, 165, 166, 169, 175, 176, 177, 178, 201, 202, 208, 213, 222, 223, 224, 226,
+                  238, 241, 251, 263, 264, 265, 266, 267, 268, 269, 276, 277, 290, 291, 292, 293, 294, 295, 300, 301,
+                  303, 304, 305, 306, 309, 310, 315, 318, 319, 320, 321, 327, 337, 338, 343, 344, 345, 346, 347, 348,
+                  351, 352, 359, 360, 363, 364, 365, 366, 367, 368, 369, 399, 400, 406, 407, 412, 413, 414, 420, 421,
+                  427, 428, 431, 432, 439, 441, 451, 452, 455, 458, 463, 465, 468, 494, 504, 505, 506, 507, 508, 509,
+                  510, 511, 512, 513, 514, 515, 516, 517, 518, 519, 520, 521, 524, 525, 526, 527, 528, 531, 526, 537,
+                  538, 539, 543, 544, 545, 554, 555, 556, 557, 558, 561, 562, 563, 564, 565, 566, 567, 568, 569, 582,
+                  583, 584, 587, 588, 589, 592, 593, 597, 598, 599, 600, 601, 605, 606, 616, 617, 618, 621, 626, 631,
+                  632, 649, 659, 660, 674, 675, 676, 679, 680, 681, 682, 683, 684, 685, 688, 689, 694, 695, 696, 697,
+                  698, 699, 710, 711, 716, 717, 718, 746, 755, 756, 759, 760, 767, 768, 771, 772, 773, 776, 777, 780,
+                  781, 785, 786, 787, 788, 793, 794, 795, 796, 797, 798, 799, 802, 803, 804, 805, 806, 807, 808, 809,
+                  824, 825, 826, 827, 828, 829, 830, 831, 832, 835, 836, 850, 851, 852, 853, 864, 865, 866, 867, 880,
+                  881, 882, 883]
+tera_types = ['normal', 'kakutou', 'hikou', 'doku', 'jimen', 'iwa', 'mushi', 'ghost', 'hagane', 'honoo', 'mizu', 'kusa',
+              'denki', 'esper', 'koori', 'dragon', 'aku', 'fairy', 'niji']
 average_level = 0
-def make_poke(pokeEntry, index: str, csvdata, config):
-    if config['force_6_pokemons_on_important_trainers'] == 'yes' and check_important_trainer(pokeEntry['trid']) == True:
-        chosenmon = allowed_species[random.randint(0, 475)]
-        pokeEntry['poke' + index]['devId'] = fetch_devname(chosenmon, csvdata)
-        pokeEntry['poke' + index]['formId'] = get_alt_form(chosenmon)
-        pokeEntry['poke' + index]['sex'] = "DEFAULT"
-        pokeEntry['poke' + index]['level'] = pokeEntry['poke1']['level']
-        if (random.randint(0, 100) < 50):
-            pokeEntry['poke' + index]['level'] = pokeEntry['poke' + index]['level'] + 1
-        pokeEntry['poke' + index]['wazaType'] = "DEFAULT"
-        pokeEntry['poke' + index]['waza1']['wazaId'] = "WAZA_NULL"
-        pokeEntry['poke' + index]['waza2']['wazaId'] = "WAZA_NULL"
-        pokeEntry['poke' + index]['waza3']['wazaId'] = "WAZA_NULL"
-        pokeEntry['poke' + index]['waza4']['wazaId'] = "WAZA_NULL" #6 mons on gyms, elite 4 champ
-        if config['force_perfect_ivs'] == "yes":
-            talentvalue = {
-                "hp": 31,
-                "atk": 31,
-                "def": 31,
-                "spAtk": 31,
-                "spDef": 31,
-                "agi": 31
-            }
-            pokeEntry['poke' + index]['talentValue'] = talentvalue
-        if config['randomize_fixed_tera_type'] == "yes" and pokeEntry['poke' + index]['gemType'] != "DEFAULT":
-            pokeEntry['poke' + index]['gemType'] = tera_types[random.randint(0, len(tera_types) - 1)].upper()
-        if config['randomize_all_tera_type'] == "yes":
-            pokeEntry['poke' + index]['gemType'] = tera_types[random.randint(0, len(tera_types) - 1)].upper()
-    else:  
-        if pokeEntry['poke' + index]['devId'] != "DEV_NULL":   
-            chosenmon = allowed_species[random.randint(0, 475)]
-            pokeEntry['poke' + index]['devId'] = fetch_devname(chosenmon, csvdata)
-            pokeEntry['poke' + index]['formId'] = get_alt_form(chosenmon)
-            pokeEntry['poke' + index]['wazaType'] = "DEFAULT"
-            pokeEntry['poke' + index]['waza1']['wazaId'] = "WAZA_NULL"
-            pokeEntry['poke' + index]['waza2']['wazaId'] = "WAZA_NULL"
-            pokeEntry['poke' + index]['waza3']['wazaId'] = "WAZA_NULL"
-            pokeEntry['poke' + index]['waza4']['wazaId'] = "WAZA_NULL"
-            if config['force_perfect_ivs'] == "yes":
-                talentValue = {
-                    "hp": 31,
-                    "atk": 31,
-                    "def": 31,
-                    "spAtk": 31,
-                    "spDef": 31,
-                    "agi": 31
-                }
-                pokeEntry['poke' + index]['talentValue'] = talentValue
-            if config['randomize_fixed_tera_type'] == "yes" and pokeEntry['poke' + index]['gemType'] != "DEFAULT":
-                pokeEntry['poke' + index]['gemType'] = tera_types[random.randint(0, len(tera_types) - 1)].upper()
-            if config['randomize_all_tera_type'] == "yes":
-                pokeEntry['poke' + index]['gemType'] = tera_types[random.randint(0, len(tera_types) - 1)].upper()
+
+# trid == rival_01_hono
+# ...._kusa
+# ...._mizu
+
+
+def make_poke(pokeEntry, index: str, csvdata, config, beginner: bool):
+    chosenmon = random.randint(1, 1025)
+    while chosenmon in banned_pokemon:
+        chosenmon = random.randint(1, 1025)
+    pokeEntry['poke' + index]['devId'] = fetch_devname(chosenmon, csvdata)
+    pokeEntry['poke' + index]['formId'] = get_alt_form(chosenmon)
+    pokeEntry['poke' + index]['sex'] = "DEFAULT"
+    if beginner is False:
+        pokeEntry['poke' + index]['level'] = pokeEntry['poke'+ index]['level'] + 3
+    pokeEntry['poke' + index]['wazaType'] = "DEFAULT"
+    pokeEntry['poke' + index]['waza1']['wazaId'] = "WAZA_TERABAASUTO"
+    pokeEntry['poke' + index]['waza2']['wazaId'] = "WAZA_NULL"
+    pokeEntry['poke' + index]['waza3']['wazaId'] = "WAZA_NULL"
+    pokeEntry['poke' + index]['waza4']['wazaId'] = "WAZA_NULL" #6 mons on gyms, elite 4 champ
+    if config['force_perfect_ivs'] == "yes":
+        talentvalue = {
+            "hp": 31,
+            "atk": 31,
+            "def": 31,
+            "spAtk": 31,
+            "spDef": 31,
+            "agi": 31
+        }
+        pokeEntry['poke' + index]['talentValue'] = talentvalue
+    if config['randomize_fixed_tera_type'] == "yes" and pokeEntry['poke' + index]['gemType'] != "DEFAULT":
+        pokeEntry['poke' + index]['gemType'] = tera_types[random.randint(0, len(tera_types) - 1)].upper()
+    if config['randomize_all_tera_type'] == "yes":
+        pokeEntry['poke' + index]['gemType'] = tera_types[random.randint(0, len(tera_types) - 1)].upper()
+
+    # Add check for ogerpon later
+    if chosenmon == 1021:
+        pokeEntry['poke' + index]['gemType'] = 'NIJI'
+
 
 def randomize(config):
     #load information
@@ -192,26 +187,74 @@ def randomize(config):
     csvfile.close()
 
     for entry in data['values']:
-        i = 1
+        # Counter to see how many pokemon there are to randomize originally
+        counter = 1
+        for j in range(0, 6):
+            t = j+1
+            if entry['poke' + str(t)] != "DEV_NULL":
+                counter = counter + 1
+        pokemon_to_randomize = counter
 
-        while i < 7:
-            make_poke(entry, str(i), csvdata, config)
+        if config['force_6_pokemons_on_trainers'] == 'no' and config['give_trainers_extra_mons'] == "yes":
+            new_counter = 1
+            # Counter to see how many free slots there are
+            for j in range(2, 6):
+                if entry['poke' + str(j)] == "DEV_NULL":
+                    new_counter = new_counter + 1
+            # If none then just randomize all 6
+            if new_counter == 0:
+                pokemon_to_randomize = 6
+            else:
+                # if some then choose a random number between 1 and itself
+                pokemon_to_randomize = random.randint(1, new_counter)
+                pokemon_to_randomize = pokemon_to_randomize + counter
+                if pokemon_to_randomize > 6:
+                    pokemon_to_randomize = 6
+        elif config['force_6_pokemons_on_trainers'] == "yes":
+            # If user wants all 6 then set to all 6
+            pokemon_to_randomize = 6
+
+        # a way to prevent any errors
+        beginner = False
+        if pokemon_to_randomize > 6 or pokemon_to_randomize < 1:
+            pokemon_to_randomize = 6
+
+        if entry['trid'] == "rival_01_hono" or entry['trid'] == "rival_01_kusa" or entry['trid'] == "rival_01_mizu":
+            pokemon_to_randomize = 1
+            beginner = True
+
+        i = 1
+        while i <= pokemon_to_randomize:
+            make_poke(entry, str(i), csvdata, config, beginner)
             i = i + 1
-        if config['make_ai_smart_for_all_trainers'] == "yes":
+
+        if config['make_ai_smart_for_all_trainers'] == "yes" and beginner is False:
             entry['aiBasic'] = True
             entry['aiHigh'] = True
             entry['aiExpert'] = True
             entry['aiChange'] = True
-        if config['allow_all_trainers_to_terastalize'] == "yes":
+        if config['allow_all_trainers_to_terastalize'] == "yes" and beginner is False:
             entry['changeGem'] = True
+        if config['randomnly_choose_single_or_double'] == "yes" and beginner is False:
+            battleformat = random.randint(1, 2)
+            if battleformat == 2 and pokemon_to_randomize < 2:
+                make_poke(entry, str(2), csvdata, config, beginner)
+            type_of_battle = f"_{battleformat}vs{battleformat}"
+            entry['battleType'] = type_of_battle
+        if config['only_double'] == "yes" and beginner is False:
+            entry['battleType'] = "_2vs2"
+            if pokemon_to_randomize < 2:
+                make_poke(entry, str(2), csvdata, config, beginner)
 
     outdata = json.dumps(data, indent=4)
     with open(os.getcwd() + "/Randomizer/Trainers/" +"trdata_array.json", 'w') as outfile:
         outfile.write(outdata)
-    print("Randomisation done !")
+    print("Randomisation of Trainers done !")
+
 
 def main():
    randomize()
+
 
 if __name__ == "__main__":
     main()
