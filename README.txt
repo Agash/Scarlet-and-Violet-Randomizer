@@ -1,6 +1,10 @@
 --- Pokemon Scarlet and Violet Randomizer by XLuma updated by Gonzalo----
 Go to: https://github.com/Gonzalooo/Scarlet-and-Violet-Randomizer for latest Version.
 ***IMPORTANT: GO TO Randomizer/Starters/pokemon_clean before running the randomizer***
+VIDEO TUTORIAL: https://www.youtube.com/watch?v=YZJTcSzswuY
+NOTE: VIDEO CUT OUT BUT TO GO TO THE SHINY INGAME ONLY AND NOT OVERWORLD YOU NEED TO REMOVE THE ZIP FILE FROM TRINITY.
+RESTART TRINITY AND THEN IT'LL WORK - OTHERWISE YOU WILL INFINTELY BLACK SCREEN
+
 
 *** THIS RANDOMIZER WORKS ONLY WITH VERSION 3.0.1/3.0.0***
 PREFACE: Make sure you have at least Python 3.10 installed on your computer, anything lower will not work!

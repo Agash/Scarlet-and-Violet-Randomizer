@@ -63,113 +63,206 @@ def check_banned_ability(index):
 
 # Double check this function to ensure other forms are added later on
 def get_alt_form(index: int):
-    has_alt = [26, # raichu
-    50, # diglett
-    51, #dugtrio
-    52, #meowth, has two
-    53, #persian
-    58, #growlithe
-    59, #arcanine
-    79, #slowpoke
-    80, #slowbro, seems to be form id 2
-    88, #grimer
-    89, #muk
-    100, #voltorb
-    101, #electrode
-    128, #tauros, 3 form possible 1 2 3
-    144, #articuno
-    145, #zapdos
-    146, #moltres
-    157, #typhlosion
-    194, #wooper
-    199, #slowking
-    211, #qwilfish
-    215, #sneasel
-    422, #shellos
-    423, #gastrodon
-    479, #rotom: 5 forms 0 1 2 3 4 5
-    483, #dialga: force it to be origin
-    484, #palkia: force it to be origin
-    487, #giratina
-    #fuck arceus
-    503, #samurott
-    549, #lilligant
-    550, #basculin, form 2
-    570, #zorua
-    571, #zoroark
-    #fuck deerling
-    628, #braviary
-    641, #tornadus
-    642, #thundurus
-    645, #landorus
-    648, #meloetta
-    705, #sligoo
-    706, #goodra
-    713, #avalugg
-    720, #hoopa
-    724, #decidueye
-    741, #oricorio, 3 forms 0 1 2 3
-    744, #rockruff
-    745, #lycanroc: 2 forms 0 1 2
-    849, #toctricity
-    892, #urshifu
-    893, #zarude
-    898, #calyrex, 2 forms 0 1 2 
+    has_alt = [25,  # pikachu
+                26, #raichu
+                27, #sandshrew
+                28, #sandslash
+               29, #vulpix
+               30, #ninetails
+                50, #diglett
+                51, #dugtrio
+                52, #meowth, has two
+                53, #persian
+                58, #growlithe
+                59, #arcanine
+               74,  #geodude
+               75,  #graveler
+               76,  #golem
+                79, #slowpoke
+                80, #slowbro, seems to be form id 2
+                88, #grimer
+                89, #muk
+                100, #voltorb
+                101, #electrode
+               103,  #exeggutor
+               110,  # weezing
+                128, #tauros, 3 form possible 1 2 3
+                144, #articuno
+                145, #zapdos
+                146, #moltres
+                157, #typhlosion
+                194, #wooper
+                199, #slowking
+                211, #qwilfish
+                215, #sneasel
+               386,  #Deoxys
+                422, #shellos
+                423, #gastrodon
+                479, #rotom: 5 forms 0 1 2 3 4 5
+                483, #dialga
+                484, #palkia
+                487, #giratina
+               492,  #shaymin
+               493,  #arceus
+                503, #samurott
+                549, #lilligant
+                550, #basculin
+                570, #zorua
+                571, #zoroark
+               585,  #deerling
+               586,  #sawsbuck
+                628, #braviary
+                641, #tornadus
+                642, #thundurus
+                645, #landorus
+               646,  #Kyurem
+                648, #meloetta
+               658,  # greninja - added for future proofing and not forget it
+               664,  #scatterbug
+               665,  #sweppa
+               666,  #vivillon - flabebe/floette/florges 0-4 (floette 5 but ot present)
+               669,  #flabebe
+               670,  #floette - 5 is eternal flower not in game
+               671,  #florges
+               678,  # meowstic
+                705, #sligoo
+                706, #goodra
+                713, #avalugg
+                720, #hoopa
+                724, #decidueye
+                741, #oricorio, 3 forms 0 1 2 3
+                744, #rockruff
+                745, #lycanroc: 2 forms 0 1 2
+               774,  #minior
+               778,  #mimikyu
+               800,  #necrozma: 2 - 3 not in game
+               801,  #magearna
+               845,  #cramorant
+                849, #toxtricity
+               854,  #sineastea
+               855,  # plteageist
+               869,  #alcremie 8 forms
+               875,  #Eiscue
+               876,  #indeedee
+               877,  #morpeko
+               888,  #Zacian
+               889,  #Zamazenta
+                892, #urshifu
+                893, #zarude
+                898, #calyrex, 2 forms 0 1 2
+               901,  #Ursaluna
+               902,  #basculegion
+               905,  #enamorus
+               916,  #Oinkolonge
+               917,  #Dudunsparce
+               934,  #Palafin
+               946,  #Mausehold
+               952,  #tatsugiri: 2 forms 0 1 2
+               960,  #squakabily: 3 forms 0 1 2 3
+               976,  #gimmighoul - 998 koraidon test, 999 miraidon test [0-4]
+               1011, #ogerpon - 0 [Teal], 1[wellspring], 2[heartflame], 3[rock]; 4-7 is teraform
+               1021, #terapagos
+               1024, #poltchageist
+               1025, #sinistcha
     ]
     if index in has_alt: #previously, we just shuffled around. Now we include all species, so we need more edge cases
         choice = 0
         match index:
+            case 25:
+                choice = random.randint(0, 9)
+                # form 8 not in the game (Partner Let's Go Pikachu)
+                while choice == 8:
+                    choice = random.randint(0, 9)
+                return choice
             case 52:
                 choice = random.randint(0, 2)
-                #forms = [1, 2]
                 return choice
             case 80:
-                choice = random.randint(0, 100)
-                if choice < 49:
-                    return 2
-                else:
-                    return 0
+                choice = random.randint(0, 2)
+                # form 1 not in the game (Mega Slowbro)
+                while choice == 1:
+                    choice = random.randint(0, 2)
             case 128:
                 choice = random.randint(0, 3)
-                #forms = [0,1,2,3]
-                #choice = [0] #only base tauros is not present
-                #form_index = form_index + 1
                 return choice
-            case 194:
-                choice = random.randint(0, 100)
-                if choice < 49:
-                    return 1
-                else:
-                    return 0
-                #return [0] #base wooper is not in the encounter table
+            case 386:
+                choice = random.randint(0, 3)
+                return choice
             case 479:
-                choice = random.randint(0,5)
-                forms = [1,2,3,4,5]
+                choice = random.randint(0, 5)
+                return choice
+            case 493:
+                choice = random.randint(0, 17)
                 return choice
             case 550:
-                choice = random.randint(0, 100)
-                if choice < 49:
-                    return 2
-                else:
-                    return 0
-            case 745: #all forms already in the table
-                 choice = random.randint(0, 2)
-            #    forms = [0,1,2]
-            #    choice = forms[form_index]
-            #    form_index = form_index + 1
-                 return choice
+                choice = random.randint(0, 2)
+                return choice
+            case 585:
+                choice = random.randint(0, 3)
+                return choice
+            case 586:
+                choice = random.randint(0, 3)
+                return choice
+            case 646:
+                choice = random.randint(0, 2)
+                return choice
+            case 664:
+                choice = random.randint(0, 19)
+                return choice
+            case 665:
+                choice = random.randint(0, 19)
+                return choice
+            case 666:
+                choice = random.randint(0, 19)
+                return choice
+            case 669:
+                choice = random.randint(0, 4)
+                return choice
+            case 670:
+                choice = random.randint(0, 5)
+                while choice == 5:
+                    choice = random.randint(0, 5)
+                return choice
+            case 671:
+                choice = random.randint(0, 4)
+                return choice
+            case 741:
+                choice = random.randint(0, 3)
+                return choice
+            case 745:
+                choice = random.randint(0, 2)
+                return choice
+            case 774: # includes shield downs form
+                choice = random.randint(0, 13)
+                return choice
+            case 800:
+                choice = random.randint(0, 3)
+                while choice == 3:
+                    choice = random.randint(0, 3)
+                return choice
+            case 845:
+                choice = random.randint(0, 2)
+                return choice
+            case 869:
+                choice = random.randint(0, 8)
+                return choice
             case 898:
                 choice = random.randint(0, 2)
-                #forms = [1,2]
+                return choice
+            case 952:
+                choice = random.randint(0, 2)
+                return choice
+            case 960:
+                choice = random.randint(0, 3)
+                return choice
+            case 1011:
+                choice = random.randint(0, 3)
                 return choice
             case _:
-                choice = random.randint(0, 100)
-                if choice < 49:
-                    return 0
-                else:
-                    return 1
+                choice = random.randint(0, 1)
+                return choice
     else:
-        return  0
+        return 0
 
 
 def randomizeAbilities(pokemon):
@@ -179,7 +272,19 @@ def randomizeAbilities(pokemon):
             while check_banned_ability(choice) is True:
                 choice = random.randint(1, 298)
             pokemon['ability_hidden'] = choice
-        elif pokemon['species']['species'] == 1021:
+        elif pokemon['species']['species'] == 1021 and pokemon['species']['form'] != 0:
+            i = 1
+            while i < 4:
+                choice = random.randint(1, 310)
+                while check_banned_ability(choice) is True:
+                    choice = random.randint(1, 310)
+                else:
+                    if i != 3:
+                        pokemon["ability_" + str(i)] = choice
+                    else:
+                        pokemon['ability_hidden'] = choice
+                    i = i + 1
+        elif pokemon['species']['species'] == 1021 and pokemon['species']['form'] == 0:
             pass
         else:
             i = 1
