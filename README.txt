@@ -3,6 +3,7 @@ Go to: https://github.com/Gonzalooo/Scarlet-and-Violet-Randomizer for latest Ver
 
 ***IMPORTANT: GO TO Randomizer/Starters/pokemon_clean before running the randomizer***
 VIDEO TUTORIAL on how to use randomizer tool: https://youtu.be/eO10cWC6QT0
+Tutorial on how to use Generation Limiter: https://youtu.be/dCUUXFHNRcA
 
 
 *** THIS RANDOMIZER WORKS ONLY WITH VERSION 3.0.1/3.0.0***
