@@ -124,11 +124,10 @@ def randomize():
     if config['patch_trpfd'] == "yes":
         FileDescriptor.patchFileDescriptor()
         generateBinary("Randomizer/FileDescriptor/data.fbs", "Randomizer/FileDescriptor/data.json", paths['trpfd'])
-        shutil.make_archive("output/randomizer", "zip", "output/")
         if os.path.exists(os.getcwd() + "\\randomizer-patched"):
             shutil.rmtree(os.getcwd() + "\\randomizer-patched")
         shutil.copytree('output/', 'randomizer-patched/')
-        shutil.move('output/randomizer.zip', 'randomizer-patched/randomizer.zip')
+        shutil.make_archive("randomizer-patched/randomizer", "zip", "output/")
         if config['starter_randomizer']['shiny_overworld'] == "yes":
             if os.path.exists(os.getcwd() + "\\Randomizer\\Starters\\" + f'output'):
                 shutil.copytree(os.getcwd() + "\\Randomizer\\Starters\\output\\romfs\\pokemon\\data",
@@ -136,11 +135,11 @@ def randomize():
                 FileDescriptor.patchFileDescriptor()
                 generateBinary("Randomizer/FileDescriptor/data.fbs", "Randomizer/FileDescriptor/data.json",
                                paths['trpfd'])
-                shutil.make_archive("output/randomizer-shiny-overworld", "zip", "output/")
                 if os.path.exists(os.getcwd() + "\\randomizer-shiny"):
                     shutil.rmtree(os.getcwd() + "\\randomizer-shiny")
                 shutil.copytree('output/', 'randomizer-shiny/')
-                shutil.move('output/randomizer-shiny-overworld.zip', 'randomizer-shiny/randomizer-shiny-overworld.zip')
+                shutil.make_archive("randomizer-shiny/randomizer-shiny-overworld", "zip", "output/")
+
     else:
         shutil.make_archive("output/randomizer", "zip", "output/romfs/")
 
