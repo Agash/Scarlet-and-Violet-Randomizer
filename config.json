@@ -1,4 +1,19 @@
 {
+    "limit_generation": {
+        "_comment": "Note: this options are to limit the generation of pokemon that can be used in game",
+        "_comment1": "If you wish to enable this for a specific randomizer only just change the no to yes",
+        "_comment5": "Options are still depedent on the other settings.",
+        "is_enabled": "no",
+        "_comment2": "fill out like this: 'generations_allowed': [1,2,3] - this will only allow gens 1-3 to be used",
+        "_comment3": "as a fail safe if its enabled and empty then all generations will be used.",
+        "generations_allowed": [1,3],
+        "wild_limiter": "yes",
+        "trainer_limiter": "yes",
+        "static_limiter": "yes",
+        "starter_limiter": "yes",
+        "_comment4": "limits for randomized evolutions if they are active.",
+        "evolution_limiter": "yes"
+    },
     "wild_randomizer": {
         "_comment": "Fully updated to 3.0",
         "is_enabled": "yes",
@@ -8,10 +23,10 @@
         "_comment": "Updated for 3.0.0",
         "is_enabled": "yes",
         "force_6_pokemons_on_trainers": "no",
-        "give_trainers_extra_mons": "no",
+        "give_trainers_extra_mons": "yes",
         "force_perfect_ivs": "no",
         "make_ai_smart_for_all_trainers": "yes",
-        "allow_all_trainers_to_terastalize": "no",
+        "allow_all_trainers_to_terastalize": "yes",
         "randomize_fixed_tera_type": "yes",
         "randomize_all_tera_type": "yes",
         "randomnly_choose_single_or_double": "no",
@@ -24,6 +39,8 @@
         "randomize_types": "no",
         "ban_wonder_guard": "yes",
         "randomize_movesets": "yes",
+        "randomize_stats_with_same_total": "no",
+        "randomize_stats_with_different_total": "no",
         "randomize_evolutions": "no"
     },
     "starter_randomizer": {
@@ -36,7 +53,7 @@
         "show_starters_in_overworld": "yes",
         "only_legends": "no",
         "only_paradox": "no",
-        "only_legends_and_paradox": "yes",
+        "only_legends_and_paradox": "no",
         "_comment": "Only current way of having shiny starters is by inverting the textures",
         "_comment2": "Therefore - only have this active if you wish to have inverted textures",
         "_comment3": "Only recommended if you want to do things like 'Choosing Starter' type of things",
@@ -48,11 +65,11 @@
     "static_randomizer": {
 		"_comment": "Fully Updated to 3.0.0",
         "is_enabled": "yes",
-        "randomize_tera_type_for_static_tera": "no"
+        "randomize_tera_type_for_static_tera": "yes"
     },
     "tm_randomizer": {
         "_comment": "Work in progress - Don't turn on",
         "is_enabled": "no"
     },
-    "patch_trpfd": "no"
+    "patch_trpfd": "yes"
 }
