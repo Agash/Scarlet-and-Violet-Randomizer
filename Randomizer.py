@@ -7,6 +7,7 @@ import Randomizer.Starters.randomize_starters as StarterRandomizer
 import Randomizer.StaticSpawns.statics as StaticRandomizer
 import Randomizer.Scenes.patchscene as PatchScene
 import Randomizer.FileDescriptor.fileDescriptor as FileDescriptor
+import Randomizer.generationLimiter.generationrando as GenerationLimiter
 import shutil
 import subprocess
 
@@ -60,28 +61,60 @@ paths = {
 def randomize():
     config = open_config()
     create_modpack()
+    if config['limit_generation']['is_enabled'] == "yes":
+        GenerationLimiter.randomize(config['limit_generation'], config)
+        if config['limit_generation']['evolution_limiter'] == "yes":
+            generateBinary("Randomizer/PersonalData/personal_array.fbs",
+                           "Randomizer/PersonalData/personal_array.json", paths["personal"])
+
+        if config['limit_generation']['starter_limiter'] == "yes":
+            generateBinary("Randomizer/Starters/eventAddPokemon_array.bfbs",
+                           "Randomizer/Starters/eventAddPokemon_array.json", paths["gifts"])
+
+        if config['limit_generation']['static_limiter'] == "yes":
+            generateBinary("Randomizer/StaticSpawns/fixed_symbol_table_array.bfbs",
+                           "Randomizer/StaticSpawns/fixed_symbol_table_array.json", paths["statics"])
+
+        if config['limit_generation']['trainer_limiter'] == "yes":
+            generateBinary("Randomizer/Trainers/trdata_array.bfbs", "Randomizer/Trainers/trdata_array.json",
+                           paths["trainers"])
+
+        if config['limit_generation']['wild_limiter'] == "yes":
+            generateBinary("Randomizer/WildEncounters/pokedata_array.bfbs",
+                           "Randomizer/WildEncounters/pokedata_array.json", paths["wilds"])
+            generateBinary("Randomizer/WildEncounters/pokedata_su1_array.bfbs",
+                           "Randomizer/WildEncounters/pokedata_su1_array.json",
+                           paths["wilds_su1"])
+            generateBinary("Randomizer/WildEncounters/pokedata_su2_array.bfbs",
+                           "Randomizer/WildEncounters/pokedata_su2_array.json",
+                           paths["wilds_su2"])
     if config['wild_randomizer']['is_enabled'] == "yes":  # Updated for 3.0.1
-        WildRandomizer.randomize(config['wild_randomizer'])
-        WildRandomizer.randomize_teal(config['wild_randomizer'])
-        WildRandomizer.randomize_indigo(config['wild_randomizer'])
-        generateBinary("Randomizer/WildEncounters/pokedata_array.bfbs", "Randomizer/WildEncounters/pokedata_array.json", paths["wilds"])
-        generateBinary("Randomizer/WildEncounters/pokedata_su1_array.bfbs", "Randomizer/WildEncounters/pokedata_su1_array.json",
-                       paths["wilds_su1"])
-        generateBinary("Randomizer/WildEncounters/pokedata_su2_array.bfbs",
-                       "Randomizer/WildEncounters/pokedata_su2_array.json",
-                       paths["wilds_su2"])
+        if config['limit_generation']['wild_limiter'] == "no" or config['limit_generation']['is_enabled'] == "no":
+            WildRandomizer.randomize(config['wild_randomizer'])
+            WildRandomizer.randomize_teal(config['wild_randomizer'])
+            WildRandomizer.randomize_indigo(config['wild_randomizer'])
+            generateBinary("Randomizer/WildEncounters/pokedata_array.bfbs", "Randomizer/WildEncounters/pokedata_array.json", paths["wilds"])
+            generateBinary("Randomizer/WildEncounters/pokedata_su1_array.bfbs", "Randomizer/WildEncounters/pokedata_su1_array.json",
+                           paths["wilds_su1"])
+            generateBinary("Randomizer/WildEncounters/pokedata_su2_array.bfbs",
+                           "Randomizer/WildEncounters/pokedata_su2_array.json",
+                           paths["wilds_su2"])
     if config['trainer_randomizer']['is_enabled'] == "yes":  # Updated for 3.0.1
-        TrainerRandomizer.randomize(config['trainer_randomizer'])
-        generateBinary("Randomizer/Trainers/trdata_array.bfbs", "Randomizer/Trainers/trdata_array.json", paths["trainers"])
+        if config['limit_generation']['trainer_limiter'] == "no" or config['limit_generation']['is_enabled'] == "no":
+            TrainerRandomizer.randomize(config['trainer_randomizer'])
+            generateBinary("Randomizer/Trainers/trdata_array.bfbs", "Randomizer/Trainers/trdata_array.json", paths["trainers"])
     if config['personal_data_randomizer']['is_enabled'] == "yes":  # Updated to 3.0.1
-        PersonalRandomizer.randomize(config['personal_data_randomizer'])
-        generateBinary("Randomizer/PersonalData/personal_array.fbs", "Randomizer/PersonalData/personal_array.json", paths["personal"])
+        PersonalRandomizer.randomize(config['personal_data_randomizer'], config)
+        if config['limit_generation']['evolution_limiter'] == "no" or config['limit_generation']['is_enabled'] == "no":
+            generateBinary("Randomizer/PersonalData/personal_array.fbs", "Randomizer/PersonalData/personal_array.json", paths["personal"])
     if config['starter_randomizer']['is_enabled'] == "yes":  # Updated to 3.0.1
-        StarterRandomizer.randomize(config['starter_randomizer'])
-        generateBinary("Randomizer/Starters/eventAddPokemon_array.bfbs", "Randomizer/Starters/eventAddPokemon_array.json", paths["gifts"])
+        if config['limit_generation']['starter_limiter'] == "no" or config['limit_generation']['is_enabled'] == "no":
+            StarterRandomizer.randomize(config['starter_randomizer'])
+            generateBinary("Randomizer/Starters/eventAddPokemon_array.bfbs", "Randomizer/Starters/eventAddPokemon_array.json", paths["gifts"])
     if config['static_randomizer']['is_enabled'] == "yes":  # Updated to 3.0.1
-        StaticRandomizer.randomize(config['static_randomizer'])
-        generateBinary("Randomizer/StaticSpawns/fixed_symbol_table_array.bfbs", "Randomizer/StaticSpawns/fixed_symbol_table_array.json", paths["statics"])
+        if config['limit_generation']['static_limiter'] == "no" or config['limit_generation']['is_enabled'] == "no":
+            StaticRandomizer.randomize(config['static_randomizer'])
+            generateBinary("Randomizer/StaticSpawns/fixed_symbol_table_array.bfbs", "Randomizer/StaticSpawns/fixed_symbol_table_array.json", paths["statics"])
     if config['starter_randomizer']['is_enabled'] == "yes" and config['starter_randomizer']['show_starters_in_overworld'] == "yes": # Updated for 3.0.1
         PatchScene.patchScenes()
         generateBinary("Randomizer/Scenes/poke_resource_table.fbs", "Randomizer/Scenes/poke_resource_table.json", paths['catalog'])

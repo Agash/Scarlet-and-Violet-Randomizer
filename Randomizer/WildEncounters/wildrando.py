@@ -9,7 +9,139 @@ def fetch_devname(index: int, csvdata):
     return str.strip(csvdata[index])
 
 
-def get_alt_form(index: int):
+def get_alt_form_paldea(index: int):
+    has_alt = [25,  # pikachu
+                26, #raichu
+                28, #sandslash
+               30, #ninetails
+                50, #diglett
+                51, #dugtrio
+                52, #meowth, has two
+                53, #persian
+                58, #growlithe
+                59, #arcanine
+               74,  #geodude
+               75,  #graveler
+               76,  #golem
+                79, #slowpoke
+                80, #slowbro, seems to be form id 2
+                88, #grimer
+                89, #muk
+                100, #voltorb
+                101, #electrode
+               103,  #exeggutor
+               110,  # weezing
+                128, #tauros, 3 form possible 1 2 3
+                144, #articuno
+                145, #zapdos
+                146, #moltres
+                157, #typhlosion
+                194, #wooper
+                199, #slowking
+                211, #qwilfish
+                215, #sneasel
+               386,  #Deoxys
+                422, #shellos
+                423, #gastrodon
+                479, #rotom: 5 forms 0 1 2 3 4 5
+                483, #dialga
+                484, #palkia
+                487, #giratina
+               492,  #shaymin
+                503, #samurott
+                549, #lilligant
+                550, #basculin
+                570, #zorua
+                571, #zoroark
+                628, #braviary
+                641, #tornadus
+                642, #thundurus
+                645, #landorus
+               646,  #Kyurem
+                648, #meloetta
+               658,  # greninja - added for future proofing and not forget it
+               678,  # meowstic
+                705, #sligoo
+                706, #goodra
+                713, #avalugg
+                720, #hoopa
+                724, #decidueye
+               774,  #minior
+               800,  #necrozma: 2 - 3 not in game
+               801,  #magearna
+               869,  #alcremie 8 forms
+                892, #urshifu
+                893, #zarude
+                898, #calyrex, 2 forms 0 1 2
+               901,  #Ursaluna
+               902,  #basculegion
+               905,  #enamorus
+               1011, #ogerpon - 0 [Teal], 1[wellspring], 2[heartflame], 3[rock]; 4-7 is teraform
+               1021, #terapagos
+               1024, #poltchageist
+               1025, #sinistcha
+    ]
+    if index in has_alt: #previously, we just shuffled around. Now we include all species, so we need more edge cases
+        choice = 0
+        match index:
+            case 25:
+                choice = [1,2,3,4,5,6,7,9]
+                # form 8 not in the game (Partner Let's Go Pikachu)
+                return choice
+            case 52:
+                choice = [1,2]
+                return choice
+            case 80:
+                choice = [2]
+                # form 1 not in the game (Mega Slowbro)
+                return choice
+            case 128:
+                choice = [0]
+                return choice
+            case 194:
+                choice = [0]
+                return choice
+            case 386:
+                choice = [1,2,3]
+                return choice
+            case 479:
+                choice = [1,2,3,4,5]
+                return choice
+            case 550:
+                choice = [2]
+                return choice
+            case 646:
+                choice = [1,2]
+                return choice
+            case 774:
+                choice = [1,2,3,4,5,6]
+                return choice
+            case 800:
+                choice = [1, 2]
+                return choice
+            case 869:
+                choice = [1,2,3,4,5,6,7,8]
+                return choice
+            case 898:
+                choice = [1,2]
+                return choice
+            case 952:
+                choice = [1,2]
+                return choice
+            case 960:
+                choice = [1,2,3]
+                return choice
+            case 1011:
+                choice = [1,2,3]
+                return choice
+            case _:
+                choice = [1]
+                return choice
+    else:
+        return [0]
+
+
+def get_alt_form_teal(index: int):
     has_alt = [25,  # pikachu
                 26, #raichu
                 27, #sandshrew
@@ -50,7 +182,6 @@ def get_alt_form(index: int):
                 484, #palkia
                 487, #giratina
                492,  #shaymin
-               493,  #arceus
                 503, #samurott
                 549, #lilligant
                 550, #basculin
@@ -65,9 +196,6 @@ def get_alt_form(index: int):
                646,  #Kyurem
                 648, #meloetta
                658,  # greninja - added for future proofing and not forget it
-               664,  #scatterbug
-               665,  #sweppa
-               666,  #vivillon - flabebe/floette/florges 0-4 (floette 5 but ot present)
                669,  #flabebe
                670,  #floette - 5 is eternal flower not in game
                671,  #florges
@@ -77,23 +205,174 @@ def get_alt_form(index: int):
                 713, #avalugg
                 720, #hoopa
                 724, #decidueye
-                741, #oricorio, 3 forms 0 1 2 3
-                744, #rockruff
-                745, #lycanroc: 2 forms 0 1 2
                774,  #minior
                778,  #mimikyu
                800,  #necrozma: 2 - 3 not in game
                801,  #magearna
-               845,  #cramorant
                 849, #toxtricity
                854,  #sineastea
                855,  # plteageist
                869,  #alcremie 8 forms
-               875,  #Eiscue
+                892, #urshifu
+                893, #zarude
+                898, #calyrex, 2 forms 0 1 2
+               901,  #Ursaluna
+               902,  #basculegion
+               905,  #enamorus
+               916,  #Oinkolonge
+               934,  #Palafin
+               952,  #tatsugiri: 2 forms 0 1 2
+               960,  #squakabily: 3 forms 0 1 2 3
+               976,  #gimmighoul - 998 koraidon test, 999 miraidon test [0-4]
+               1011, #ogerpon - 0 [Teal], 1[wellspring], 2[heartflame], 3[rock]; 4-7 is teraform
+               1021, #terapagos
+               1025, #sinistcha
+    ]
+    if index in has_alt: #previously, we just shuffled around. Now we include all species, so we need more edge cases
+        choice = 0
+        match index:
+            case 25:
+                choice = [1,2,3,4,5,6,7,8,9]
+                # form 8 not in the game (Partner Let's Go Pikachu)
+                return choice
+            case 52:
+                choice = [1,2]
+                return choice
+            case 80:
+                choice = [1,2]
+                # form 1 not in the game (Mega Slowbro)
+                return choice
+            case 128:
+                choice = [1,2,3]
+                return choice
+            case 194:
+                choice = [1]
+                return choice
+            case 386:
+                choice = [1,2,3]
+                return choice
+            case 479:
+                choice = [1,2,3,4,5]
+                return choice
+            case 550:
+                choice = [0, 1]
+                return choice
+            case 585:
+                choice = [1,2,3]
+                return choice
+            case 586:
+                choice = [1,2,3]
+                return choice
+            case 646:
+                choice = [1,2]
+                return choice
+            case 669:
+                choice = [1,2,3,4]
+                return choice
+            case 670:
+                choice = [1, 2, 3, 4]
+                return choice
+            case 671:
+                choice = [1, 2, 3, 4]
+                return choice
+            case 774: # includes shield downs form
+                choice = [1,2,3,4,5,6]
+                return choice
+            case 800:
+                choice = [1, 2]
+                return choice
+            case 869:
+                choice = [1,2,3,4,5,6,7,8]
+                return choice
+            case 898:
+                choice = [1,2]
+                return choice
+            case 952:
+                choice = [1,2]
+                return choice
+            case 960:
+                choice = [1,2,3]
+                return choice
+            case 1011:
+                choice = [1,2,3]
+                return choice
+            case _:
+                choice = [1]
+                return choice
+    else:
+        return [0]
+
+
+def get_alt_form_indigo(index: int):
+    has_alt = [25,  # pikachu
+                26, #raichu
+                27, #sandshrew - 0
+                28, #sandslash - 0
+               29, #vulpix - 0
+               30, #ninetails - 0
+                50, #diglett - 0
+                51, #dugtrio - 0
+                52, #meowth, has two
+                53, #persian
+                58, #growlithe
+                59, #arcanine
+               74,  #geodude - 0
+               75,  #graveler - 0
+               76,  #golem - 0
+                79, #slowpoke - 0
+                80, #slowbro, - 0
+                88, #grimer - 0
+                89, #muk - 0
+                100, #voltorb
+                101, #electrode
+               103,  #exeggutor - 0
+               110,  # weezing
+                128, #tauros, 3 form possible 1 2 3
+                144, #articuno
+                145, #zapdos
+                146, #moltres
+                157, #typhlosion
+                194, #wooper - 0, 1
+                199, #slowking
+                211, #qwilfish - 0
+                215, #sneasel
+               386,  #Deoxys
+                422, #shellos
+                423, #gastrodon
+                479, #rotom: 5 forms 0 1 2 3 4 5
+                483, #dialga
+                484, #palkia
+                487, #giratina
+               492,  #shaymin
+                503, #samurott
+                549, #lilligant
+                550, #basculin - 1 2
+                570, #zorua
+                571, #zoroark
+                628, #braviary
+                641, #tornadus
+                642, #thundurus
+                645, #landorus
+               646,  #Kyurem
+                648, #meloetta
+               658,  # greninja - added for future proofing and not forget it
+               669,  #flabebe
+               670,  #floette - 5 is eternal flower not in game
+               671,  #florges
+                705, #sligoo
+                706, #goodra
+                713, #avalugg
+                720, #hoopa
+                724, #decidueye
+                744, #rockruff
+                745, #lycanroc: 2 forms 0 1 2
+               800,  #necrozma: 2 - 3 not in game
+               801,  #magearna
+                849, #toxtricity
+               854,  #sineastea
+               855,  # plteageist
+               869,  #alcremie 8 forms
                876,  #indeedee
-               877,  #morpeko
-               888,  #Zacian
-               889,  #Zamazenta
                 892, #urshifu
                 893, #zarude
                 898, #calyrex, 2 forms 0 1 2
@@ -119,15 +398,51 @@ def get_alt_form(index: int):
                 choice = [1,2,3,4,5,6,7,8,9]
                 # form 8 not in the game (Partner Let's Go Pikachu)
                 return choice
+            case 27:
+                choice = [0]
+                return choice
+            case 28:
+                choice = [0]
+                return choice
+            case 29:
+                choice = [0]
+                return choice
+            case 30:
+                choice = [0]
+                return choice
+            case 50:
+                choice = [0]
+                return choice
+            case 51:
+                choice = [0]
+                return choice
             case 52:
                 choice = [1,2]
                 return choice
+            case 74:
+                choice = [0]
+                return choice
+            case 75:
+                choice = [0]
+                return choice
+            case 76:
+                choice = [0]
+                return choice
+            case 79:
+                choice = [0]
+                return choice
             case 80:
-                choice = [1,2]
+                choice = [0]
                 # form 1 not in the game (Mega Slowbro)
+                return choice
+            case 103:
+                choice = [0]
                 return choice
             case 128:
                 choice = [1,2,3]
+                return choice
+            case 211:
+                choice = [0]
                 return choice
             case 386:
                 choice = [1,2,3]
@@ -135,53 +450,26 @@ def get_alt_form(index: int):
             case 479:
                 choice = [1,2,3,4,5]
                 return choice
-            case 493:
-                choice = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17]
-                return choice
             case 550:
                 choice = [1,2]
                 return choice
-            case 585:
-                choice = [1,2,3]
-                return choice
-            case 586:
-                choice = [1,2,3]
-                return choice
             case 646:
                 choice = [1,2]
-                return choice
-            case 664:
-                choice = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19]
-                return choice
-            case 665:
-                choice = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19]
-                return choice
-            case 666:
-                choice = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19]
                 return choice
             case 669:
                 choice = [1,2,3,4]
                 return choice
             case 670:
-                choice = [1, 2, 3, 4, 5]
+                choice = [1, 2, 3, 4]
                 return choice
             case 671:
                 choice = [1, 2, 3, 4]
                 return choice
-            case 741:
-                choice = [1, 2, 3]
-                return choice
             case 745:
                 choice = [1,2]
                 return choice
-            case 774: # includes shield downs form
-                choice = [1,2,3,4,5,6,7,8,9,10,11,12,13]
-                return choice
             case 800:
-                choice = [1, 2, 3]
-                return choice
-            case 845:
-                choice = [1,2]
+                choice = [1, 2]
                 return choice
             case 869:
                 choice = [1,2,3,4,5,6,7,8]
@@ -315,6 +603,7 @@ chosen_biomes = []
 
 ### Actual shit going on here ###
 def randomize(config):
+    recreated_species = []
     # print(os.getcwd())
     # load information
     file = open(os.getcwd() + "/Randomizer/WildEncounters/" + "pokedata_array_clean.json", "r")
@@ -383,18 +672,17 @@ def randomize(config):
                     data['values'].append(new_template)
                     i = i + 1
                     # check alt forms for this mon
-                forms = get_alt_form(index)
+                forms = get_alt_form_paldea(index)
                 for form in forms:  # previously was too high, now it should also pass on mons that alraedy have entries
                     # so aside from 128 and 194, all 0's should be ignored
                     form_template = template_entry.copy()  # gotta copy again the template from the start
                     form_template = make_template(form_template, index, csvdata,
                                                   form)  # randomize the template before changing the formno
                     if form == 0:
-                        if index != 128 and index != 194:
-                            break  # NOT ALLOWED !!!
-                        else:
-                            # print(form_template)
+                        if index == 194 or index == 128:
                             data['values'].append(form_template)
+                        else:
+                            continue  # NOT ALLOWED !!!
                     else:  # should let pass 0's if correct id's
                         # print(form_template)
                         data['values'].append(form_template)
@@ -406,18 +694,17 @@ def randomize(config):
                 data['values'].append(new_template)
                 i = i + 1
                 # check alt forms for this mon
-            forms = get_alt_form(index)
+            forms = get_alt_form_paldea(index)
             for form in forms:  # previously was too high, now it should also pass on mons that alraedy have entries
                 # so aside from 128 and 194, all 0's should be ignored
                 form_template = template_entry.copy()  # gotta copy again the template from the start
                 form_template = make_template(form_template, index, csvdata,
                                               form)  # randomize the template before changing the formno
                 if form == 0:
-                    if index != 128 and index != 194:
-                        break  # NOT ALLOWED !!!
-                    else:
-                        # print(form_template)
+                    if index == 194 or index == 128:
                         data['values'].append(form_template)
+                    else:
+                        continue  # NOT ALLOWED !!!
                 else:  # should let pass 0's if correct id's
                     # print(form_template)
                     data['values'].append(form_template)
@@ -429,6 +716,7 @@ def randomize(config):
 
 
 def randomize_teal(config):
+    recreated_species = []
     # print(os.getcwd())
     # load information
     file = open(os.getcwd() + "/Randomizer/WildEncounters/" + "pokedata_su1_array_clean.json", "r")
@@ -497,18 +785,17 @@ def randomize_teal(config):
                     data['values'].append(new_template)
                     i = i + 1
                     # check alt forms for this mon
-                forms = get_alt_form(index)
+                forms = get_alt_form_teal(index)
                 for form in forms:  # previously was too high, now it should also pass on mons that alraedy have entries
                     # so aside from 128 and 194, all 0's should be ignored
                     form_template = template_entry.copy()  # gotta copy again the template from the start
                     form_template = make_template(form_template, index, csvdata,
                                                   form)  # randomize the template before changing the formno
                     if form == 0:
-                        if index != 128 and index != 194:
-                            break  # NOT ALLOWED !!!
-                        else:
-                            # print(form_template)
+                        if index == 550:
                             data['values'].append(form_template)
+                        else:
+                            continue  # NOT ALLOWED !!!
                     else:  # should let pass 0's if correct id's
                         # print(form_template)
                         data['values'].append(form_template)
@@ -520,18 +807,17 @@ def randomize_teal(config):
                 data['values'].append(new_template)
                 i = i + 1
                 # check alt forms for this mon
-            forms = get_alt_form(index)
+            forms = get_alt_form_teal(index)
             for form in forms:  # previously was too high, now it should also pass on mons that alraedy have entries
                 # so aside from 128 and 194, all 0's should be ignored
                 form_template = template_entry.copy()  # gotta copy again the template from the start
                 form_template = make_template(form_template, index, csvdata,
                                               form)  # randomize the template before changing the formno
                 if form == 0:
-                    if index != 128 and index != 194:
-                        break  # NOT ALLOWED !!!
-                    else:
-                        # print(form_template)
+                    if index == 550:
                         data['values'].append(form_template)
+                    else:
+                        continue  # NOT ALLOWED !!!
                 else:  # should let pass 0's if correct id's
                     # print(form_template)
                     data['values'].append(form_template)
@@ -543,6 +829,7 @@ def randomize_teal(config):
 
 
 def randomize_indigo(config):
+    recreated_species = []
     # print(os.getcwd())
     # load information
     file = open(os.getcwd() + "/Randomizer/WildEncounters/" + "pokedata_su2_array_clean.json", "r")
@@ -611,18 +898,39 @@ def randomize_indigo(config):
                     data['values'].append(new_template)
                     i = i + 1
                     # check alt forms for this mon
-                forms = get_alt_form(index)
+                forms = get_alt_form_indigo(index)
                 for form in forms:  # previously was too high, now it should also pass on mons that alraedy have entries
                     # so aside from 128 and 194, all 0's should be ignored
                     form_template = template_entry.copy()  # gotta copy again the template from the start
                     form_template = make_template(form_template, index, csvdata,
                                                   form)  # randomize the template before changing the formno
                     if form == 0:
-                        if index != 128 and index != 194:
-                            break  # NOT ALLOWED !!!
-                        else:
-                            # print(form_template)
+                        if index == 27:
                             data['values'].append(form_template)
+                        elif index == 28:
+                            data['values'].append(form_template)
+                        elif index == 29:
+                            data['values'].append(form_template)
+                        elif index == 30:
+                            data['values'].append(form_template)
+                        elif index == 50:
+                            data['values'].append(form_template)
+                        elif index == 51:
+                            data['values'].append(form_template)
+                        elif index == 74:
+                            data['values'].append(form_template)
+                        elif index == 75:
+                            data['values'].append(form_template)
+                        elif index == 76:
+                            data['values'].append(form_template)
+                        elif index == 79:
+                            data['values'].append(form_template)
+                        elif index == 80:
+                            data['values'].append(form_template)
+                        elif index == 211:
+                            data['values'].append(form_template)
+                        else:
+                            continue
                     else:  # should let pass 0's if correct id's
                         # print(form_template)
                         data['values'].append(form_template)
@@ -634,18 +942,39 @@ def randomize_indigo(config):
                 data['values'].append(new_template)
                 i = i + 1
                 # check alt forms for this mon
-            forms = get_alt_form(index)
+            forms = get_alt_form_indigo(index)
             for form in forms:  # previously was too high, now it should also pass on mons that alraedy have entries
                 # so aside from 128 and 194, all 0's should be ignored
                 form_template = template_entry.copy()  # gotta copy again the template from the start
                 form_template = make_template(form_template, index, csvdata,
                                               form)  # randomize the template before changing the formno
                 if form == 0:
-                    if index != 128 and index != 194:
-                        break  # NOT ALLOWED !!!
-                    else:
-                        # print(form_template)
+                    if index == 27:
                         data['values'].append(form_template)
+                    elif index == 28:
+                        data['values'].append(form_template)
+                    elif index == 29:
+                        data['values'].append(form_template)
+                    elif index == 30:
+                        data['values'].append(form_template)
+                    elif index == 50:
+                        data['values'].append(form_template)
+                    elif index == 51:
+                        data['values'].append(form_template)
+                    elif index == 74:
+                        data['values'].append(form_template)
+                    elif index == 75:
+                        data['values'].append(form_template)
+                    elif index == 76:
+                        data['values'].append(form_template)
+                    elif index == 79:
+                        data['values'].append(form_template)
+                    elif index == 80:
+                        data['values'].append(form_template)
+                    elif index == 211:
+                        data['values'].append(form_template)
+                    else:
+                        continue
                 else:  # should let pass 0's if correct id's
                     # print(form_template)
                     data['values'].append(form_template)

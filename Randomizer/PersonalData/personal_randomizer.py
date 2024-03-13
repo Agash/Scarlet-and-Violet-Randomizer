@@ -187,6 +187,7 @@ def get_alt_form(index: int):
                 # form 1 not in the game (Mega Slowbro)
                 while choice == 1:
                     choice = random.randint(0, 2)
+                return choice
             case 128:
                 choice = random.randint(0, 3)
                 return choice
@@ -327,41 +328,103 @@ def randomizeTypes(pokemon):
 
 
 def randomizeEvolutions(pokemon):
-    for evo in pokemon['evo_data']:
+    for evo in pokemon['evolutions']:
         choice = random.randint(1, 1025)
         while choice in banned_pokemon:
             choice = random.randint(1, 1025)
         evo['species'] = choice
         evo['form'] = get_alt_form(choice)
+
     return pokemon
 
 
 # To be completed - Trying to figure out how to keep
 # same total.
-def randomizeBaseStats(pokemon):
-    for stat in pokemon['base_stats']:
-        total = 0
-        total = total + stat['HP']
-        total = total + stat['ATK']
-        total = total + stat['DEF']
-        total = total + stat['SPA']
-        total = total + stat['SPD']
-        total = total + stat['SPE']
+def randomizeBaseStatsWeighted(pokemon):
+    total = 0
+    total = total + pokemon['base_stats']['hp']
+    total = total + pokemon['base_stats']['atk']
+    total = total + pokemon['base_stats']['def']
+    total = total + pokemon['base_stats']['spa']
+    total = total + pokemon['base_stats']['spd']
+    total = total + pokemon['base_stats']['spe']
+
+    if pokemon['species']['species'] == 0:
+        return pokemon
+    # add hard check for shedninja once back in the game
+    # to have it hard coded to 1 for HP
+    newstats = [15]*6
+    total = total - (15*6)
+
+    # Loop to ensure all stats are always correctly randomized
+    randomizeStats = True
+    while randomizeStats:
+        statschecked = []
+        while total != 0:
+            no_infite_loop = 1
+            checktotal = total
+            changinStat = random.randint(0,5)
+
+            while changinStat in statschecked:
+                changinStat = random.randint(0, 5)
+                if no_infite_loop == 6:
+                    break
+                no_infite_loop = no_infite_loop + 1
+            if no_infite_loop == 6:
+                break
+
+            statschecked.append(changinStat)
+
+            new_base_stat = random.randint(0, 240)
+            while checktotal - new_base_stat < 0:
+                new_base_stat = random.randint(0, total)
+            while newstats[changinStat] + new_base_stat > 255:
+                new_base_stat = random.randint(0, 240)
+
+            newstats[changinStat] = newstats[changinStat] + new_base_stat
+            total = total - new_base_stat
+            if total == 0:
+                randomizeStats = False
+
+    pokemon['base_stats']['hp'] = newstats[0]
+    pokemon['base_stats']['atk'] = newstats[1]
+    pokemon['base_stats']['def'] = newstats[2]
+    pokemon['base_stats']['spa'] = newstats[3]
+    pokemon['base_stats']['spd'] = newstats[4]
+    pokemon['base_stats']['spe'] = newstats[5]
+
+    return pokemon
 
 
-def randomize(config):
+def randomizeBaseStatsTotal(pokemon):
+    pokemon['base_stats']['hp'] = random.randint(15, 255)
+    pokemon['base_stats']['atk'] = random.randint(15, 255)
+    pokemon['base_stats']['def'] = random.randint(15, 255)
+    pokemon['base_stats']['spa'] = random.randint(15, 255)
+    pokemon['base_stats']['spd'] = random.randint(15, 255)
+    pokemon['base_stats']['spe'] = random.randint(15, 255)
+
+    return pokemon
+
+
+def randomize(config, configglobal):
     file = open(os.getcwd() + "/Randomizer/PersonalData/" +"personal_array_clean.json", "r")
     data = json.load(file)
     file.close()
 
     if config['ban_wonder_guard'] == "yes":
         banned_abilities.append(25)
+
     for pokemon in data['entry']:
+        if config['randomize_stats_with_same_total'] == "yes":
+            pokemon = randomizeBaseStatsWeighted(pokemon)
+        if config['randomize_stats_with_different_total'] == "yes":
+            pokemon = randomizeBaseStatsTotal(pokemon)
         if config['randomize_abilities'] == "yes":
             pokemon = randomizeAbilities(pokemon)
         if config['randomize_movesets'] == "yes":
             pokemon = randomizeMoveset(pokemon)
-        if config['randomize_evolutions'] == "yes":
+        if config['randomize_evolutions'] == "yes" and configglobal['limit_generation']['evolution_limiter'] == "no":
             pokemon = randomizeEvolutions(pokemon)
         if config['randomize_types'] == "yes":
             pokemon = randomizeTypes(pokemon)
