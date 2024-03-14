@@ -1,4 +1,5 @@
 {
+    "patch_trpfd": "yes",
     "limit_generation": {
         "_comment": "Note: this options are to limit the generation of pokemon that can be used in game",
         "_comment1": "If you wish to enable this for a specific randomizer only just change the no to yes",
@@ -6,18 +7,27 @@
         "is_enabled": "no",
         "_comment2": "fill out like this: 'generations_allowed': [1,2,3] - this will only allow gens 1-3 to be used",
         "_comment3": "as a fail safe if its enabled and empty then all generations will be used.",
-        "generations_allowed": [1,3],
-        "wild_limiter": "yes",
-        "trainer_limiter": "yes",
-        "static_limiter": "yes",
-        "starter_limiter": "yes",
+        "generations_allowed": [],
+        "wild_limiter": "no",
+        "trainer_limiter": "no",
+        "static_limiter": "no",
+        "starter_limiter": "no",
         "_comment4": "limits for randomized evolutions if they are active.",
-        "evolution_limiter": "yes"
+        "evolution_limiter": "no"
     },
     "wild_randomizer": {
         "_comment": "Fully updated to 3.0",
-        "is_enabled": "yes",
-        "exclude_legendaries": "no"
+        "is_enabled": "no",
+        "exclude_legendaries": "no",
+        "_comment1": "The next two options are not available on generation limit.",
+        "only_legends": "no",
+        "only_paradox": "no",
+        "only_legends_and_paradoxes": "no"
+    },
+    "bulk_creation": {
+        "is_enabled": "no",
+        "_comment": "Default is 0 - if enabled and left at 0 then only 1 will be created",
+        "number_of_unique_randomizers_to_create": 2
     },
     "trainer_randomizer": {
         "_comment": "Updated for 3.0.0",
@@ -30,7 +40,11 @@
         "randomize_fixed_tera_type": "yes",
         "randomize_all_tera_type": "yes",
         "randomnly_choose_single_or_double": "no",
-        "only_double": "no"
+        "allow_trainers_shiny_pokemon": "yes",
+        "only_double": "no",
+        "only_legends": "no",
+        "only_paradox": "no",
+        "only_legends_and_paradoxes": "yes"
     },
     "personal_data_randomizer": {
         "_comment": "Fully Updated to 3.0.0",
@@ -41,11 +55,12 @@
         "randomize_movesets": "yes",
         "randomize_stats_with_same_total": "no",
         "randomize_stats_with_different_total": "no",
-        "randomize_evolutions": "no"
+        "randomize_evolutions": "no",
+        "let_pokemon_evolve_every_level": "yes"
     },
     "starter_randomizer": {
         "_comment0": "Fully updated for 3.0",
-        "is_enabled": "yes",
+        "is_enabled": "no",
         "all_shiny": "yes",
         "higher_shiny_chance": "no",
         "randomize_all_gifts": "no",
@@ -54,6 +69,13 @@
         "only_legends": "no",
         "only_paradox": "no",
         "only_legends_and_paradox": "no",
+        "_comment7": "As long as the force_starter is a dex number or a valid english pokemon name",
+        "_comment8": "Ex: 1024, Tera Pagos, teRapagos, t e r a pa gos are all valid for Terapagos",
+        "_comment9": "However 1 0 2 4 is not a valid input for terapagos",
+        "_comment10": "Similarly tera_paGos is not a valid input for terapagos",
+        "force_starter_1": "Oger Pon",
+        "force_starter_2": 1024,
+        "force_starter_3": "Gouging  FirE",
         "_comment": "Only current way of having shiny starters is by inverting the textures",
         "_comment2": "Therefore - only have this active if you wish to have inverted textures",
         "_comment3": "Only recommended if you want to do things like 'Choosing Starter' type of things",
@@ -64,12 +86,14 @@
     },
     "static_randomizer": {
 		"_comment": "Fully Updated to 3.0.0",
-        "is_enabled": "yes",
-        "randomize_tera_type_for_static_tera": "yes"
+        "is_enabled": "no",
+        "randomize_tera_type_for_static_tera": "yes",
+        "only_legends": "no",
+        "only_paradox": "no",
+        "only_legends_and_paradoxes": "no"
     },
     "tm_randomizer": {
         "_comment": "Work in progress - Don't turn on",
         "is_enabled": "no"
-    },
-    "patch_trpfd": "yes"
+    }
 }

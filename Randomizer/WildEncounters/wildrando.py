@@ -3,7 +3,18 @@ import json
 import random
 import os
 
-
+legends = [144, 145, 146, 150, 151, 243, 244, 245, 249, 250, 251, 377, 378, 379, 380, 381, 382, 383, 384, 385, 386, 480,
+           481, 482, 483, 484, 485, 486, 487, 489, 490, 491, 492, 493, 494, 638, 639, 640, 641, 642, 643, 644, 645, 646,
+           647, 648, 649, 716, 717, 718, 719, 720, 721, 785, 786, 787, 788, 789, 790, 791, 792, 800, 801, 802, 807, 808,
+           809, 888, 889, 890, 891, 892, 893, 894, 895, 896, 897, 898, 905, 994, 995, 996, 997, 998, 999, 1011, 1014,
+           1015, 1016, 1021, 1022]
+legends_and_paradox = [
+           144, 145, 146, 150, 151, 243, 244, 245, 249, 250, 251, 377, 378, 379, 380, 381, 382, 383, 384, 385, 386, 480,
+           481, 482, 483, 484, 485, 486, 487, 489, 490, 491, 492, 493, 494, 638, 639, 640, 641, 642, 643, 644, 645, 646,
+           647, 648, 649, 716, 717, 718, 719, 720, 721, 785, 786, 787, 788, 789, 790, 791, 792, 800, 801, 802, 807, 808,
+           809, 888, 889, 890, 891, 892, 893, 894, 895, 896, 897, 898, 905, 978, 979, 980, 981, 982, 983, 984, 985, 986,
+           987, 988, 989, 990, 991, 992, 993, 1017, 1018, 1019, 1020, 994, 995, 996, 997, 998, 999, 1011, 1014, 1015,
+           1016, 1021, 1022]
 def fetch_devname(index: int, csvdata):
     #print(csvdata[index])
     return str.strip(csvdata[index])
@@ -504,7 +515,7 @@ def pick_random_biome1():
 
 def pick_random_biomerest():
     possible_biomes = ["GRASS", "FOREST", "SWAMP", "LAKE", "TOWN", "MOUNTAIN", "BAMBOO", "MINE", "CAVE", "OLIVE",
-                       "UNDERGROUND", "RIVER", "ROCKY", "BEACH", "SNOW", "OSEAN", "RUINS", "FLOWER", "NONE"]
+                       "UNDERGROUND", "RIVER", "ROCKY", "BEACH", "SNOW", "OSEAN", "RUINS", "FLOWER"]
     choice = possible_biomes[random.randint(0, len(possible_biomes) - 1)]
     while choice in chosen_biomes:
         choice = possible_biomes[random.randint(0, len(possible_biomes) - 1)]
@@ -572,14 +583,14 @@ banned_pokemon = [10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 29, 30, 31
                   303, 304, 305, 306, 309, 310, 315, 318, 319, 320, 321, 327, 337, 338, 343, 344, 345, 346, 347, 348,
                   351, 352, 359, 360, 363, 364, 365, 366, 367, 368, 369, 399, 400, 406, 407, 412, 413, 414, 420, 421,
                   427, 428, 431, 432, 439, 441, 451, 452, 455, 458, 463, 465, 468, 494, 504, 505, 506, 507, 508, 509,
-                  510, 511, 512, 513, 514, 515, 516, 517, 518, 519, 520, 521, 524, 525, 526, 527, 528, 531, 526, 537,
-                  538, 539, 543, 544, 545, 554, 555, 556, 557, 558, 561, 562, 563, 564, 565, 566, 567, 568, 569, 582,
-                  583, 584, 587, 588, 589, 592, 593, 597, 598, 599, 600, 601, 605, 606, 616, 617, 618, 621, 626, 631,
-                  632, 649, 659, 660, 674, 675, 676, 679, 680, 681, 682, 683, 684, 685, 688, 689, 694, 695, 696, 697,
-                  698, 699, 710, 711, 716, 717, 718, 746, 755, 756, 759, 760, 767, 768, 771, 772, 773, 776, 777, 780,
-                  781, 785, 786, 787, 788, 793, 794, 795, 796, 797, 798, 799, 802, 803, 804, 805, 806, 807, 808, 809,
-                  824, 825, 826, 827, 828, 829, 830, 831, 832, 835, 836, 850, 851, 852, 853, 864, 865, 866, 867, 880,
-                  881, 882, 883]
+                  510, 511, 512, 513, 514, 515, 516, 517, 518, 519, 520, 521, 524, 525, 526, 527, 528, 531, 535, 536,
+                  537, 538, 539, 543, 544, 545, 554, 555, 556, 557, 558, 561, 562, 563, 564, 565, 566, 567, 568, 569,
+                  582, 583, 584, 587, 588, 589, 592, 593, 597, 598, 599, 600, 601, 605, 606, 616, 617, 618, 621, 626,
+                  631, 632, 649, 659, 660, 674, 675, 676, 679, 680, 681, 682, 683, 684, 685, 688, 689, 694, 695, 696,
+                  697, 698, 699, 710, 711, 716, 717, 718, 746, 755, 756, 759, 760, 767, 768, 771, 772, 773, 776, 777,
+                  780, 781, 785, 786, 787, 788, 793, 794, 795, 796, 797, 798, 799, 802, 803, 804, 805, 806, 807, 808,
+                  809, 824, 825, 826, 827, 828, 829, 830, 831, 832, 835, 836, 850, 851, 852, 853, 864, 865, 866, 867,
+                  880, 881, 882, 883]
 legends = [144, 145, 146, 150, 151, 243, 244, 245, 249, 250, 251, 377, 378, 379, 380, 381, 382, 383, 384, 385, 386, 480,
            481, 482, 483, 484, 485, 486, 487, 489, 490, 491, 492, 493, 494, 638, 639, 640, 641, 642, 643, 644, 645, 646,
            647, 648, 649, 716, 717, 718, 719, 720, 721, 785, 786, 787, 788, 789, 790, 791, 792, 800, 801, 802, 807, 808,
@@ -622,6 +633,9 @@ def randomize(config):
 
     i = len(data) - 1
     # edit existing entries
+    poke_dict = {}
+    poke_dict['values'] = []
+
     for entry in data['values']:
         # entry['devid'] = fetch_devname(allowed_species[i])
         # entry['sex'] = "DEFAULT"
@@ -686,6 +700,84 @@ def randomize(config):
                     else:  # should let pass 0's if correct id's
                         # print(form_template)
                         data['values'].append(form_template)
+        elif config['only_legends'] == "yes":
+            if index not in legends:
+                pass
+            else:
+                new_template = template_entry.copy()
+                recreated_species.append(fetch_devname(index, csvdata))
+                new_template = make_template(new_template, index, csvdata)
+                data['values'].append(new_template)
+                poke_dict['values'].append(new_template)
+                i = i + 1
+                # check alt forms for this mon
+                forms = get_alt_form_paldea(index)
+                for form in forms:  # previously was too high, now it should also pass on mons that alraedy have entries
+                    # so aside from 128 and 194, all 0's should be ignored
+                    form_template = template_entry.copy()  # gotta copy again the template from the start
+                    form_template = make_template(form_template, index, csvdata,
+                                                  form)  # randomize the template before changing the formno
+                    if form == 0:
+                        if index == 194 or index == 128:
+                            data['values'].append(form_template)
+                        else:
+                            continue  # NOT ALLOWED !!!
+                    else:  # should let pass 0's if correct id's
+                        # print(form_template)
+                        data['values'].append(form_template)
+                        poke_dict['values'].append(form_template)
+        elif config['only_paradox'] == "yes":
+            if index not in paradox:
+                pass
+            else:
+                new_template = template_entry.copy()
+                recreated_species.append(fetch_devname(index, csvdata))
+                new_template = make_template(new_template, index, csvdata)
+                data['values'].append(new_template)
+                poke_dict['values'].append(new_template)
+                i = i + 1
+                    # check alt forms for this mon
+                forms = get_alt_form_paldea(index)
+                for form in forms:  # previously was too high, now it should also pass on mons that alraedy have entries
+                    # so aside from 128 and 194, all 0's should be ignored
+                    form_template = template_entry.copy()  # gotta copy again the template from the start
+                    form_template = make_template(form_template, index, csvdata,
+                                                  form)  # randomize the template before changing the formno
+                    if form == 0:
+                        if index == 194 or index == 128:
+                            data['values'].append(form_template)
+                        else:
+                            continue  # NOT ALLOWED !!!
+                    else:  # should let pass 0's if correct id's
+                        # print(form_template)
+                        data['values'].append(form_template)
+                        poke_dict['values'].append(form_template)
+        elif config['only_legends_and_paradoxes'] == "yes":
+            if index not in legends_and_paradox:
+                pass
+            else:
+                new_template = template_entry.copy()
+                recreated_species.append(fetch_devname(index, csvdata))
+                new_template = make_template(new_template, index, csvdata)
+                data['values'].append(new_template)
+                poke_dict['values'].append(new_template)
+                i = i + 1
+                # check alt forms for this mon
+                forms = get_alt_form_paldea(index)
+                for form in forms:  # previously was too high, now it should also pass on mons that alraedy have entries
+                    # so aside from 128 and 194, all 0's should be ignored
+                    form_template = template_entry.copy()  # gotta copy again the template from the start
+                    form_template = make_template(form_template, index, csvdata,
+                                                  form)  # randomize the template before changing the formno
+                    if form == 0:
+                        if index == 194 or index == 128:
+                            data['values'].append(form_template)
+                        else:
+                            continue  # NOT ALLOWED !!!
+                    else:  # should let pass 0's if correct id's
+                        # print(form_template)
+                        data['values'].append(form_template)
+                        poke_dict['values'].append(form_template)
         else:
             if fetch_devname(index, csvdata) not in recreated_species:
                 new_template = template_entry.copy()
@@ -710,6 +802,9 @@ def randomize(config):
                     data['values'].append(form_template)
 
     outdata = json.dumps(data, indent=4)
+    if len(poke_dict['values']) != 0 and (config['only_legends'] == "yes" or config['only_paradox'] == "yes" or
+                                          config['only_legends_and_paradoxes'] == "yes"):
+        outdata = json.dumps(poke_dict, indent=4)
     with open(os.getcwd() + "/Randomizer/WildEncounters/" + "pokedata_array.json", 'w') as outfile:
         outfile.write(outdata)
     print("Randomisation - Paldea done !")
@@ -735,6 +830,9 @@ def randomize_teal(config):
 
     i = len(data) - 1
     # edit existing entries
+    poke_dict = {}
+    poke_dict['values'] = []
+
     for entry in data['values']:
         # entry['devid'] = fetch_devname(allowed_species[i])
         # entry['sex'] = "DEFAULT"
@@ -799,6 +897,84 @@ def randomize_teal(config):
                     else:  # should let pass 0's if correct id's
                         # print(form_template)
                         data['values'].append(form_template)
+        elif config['only_legends'] == "yes":
+            if index not in legends:
+                pass
+            else:
+                new_template = template_entry.copy()
+                recreated_species.append(fetch_devname(index, csvdata))
+                new_template = make_template(new_template, index, csvdata)
+                data['values'].append(new_template)
+                poke_dict['values'].append(new_template)
+                i = i + 1
+                # check alt forms for this mon
+                forms = get_alt_form_teal(index)
+                for form in forms:  # previously was too high, now it should also pass on mons that alraedy have entries
+                    # so aside from 128 and 194, all 0's should be ignored
+                    form_template = template_entry.copy()  # gotta copy again the template from the start
+                    form_template = make_template(form_template, index, csvdata,
+                                                  form)  # randomize the template before changing the formno
+                    if form == 0:
+                        if index == 550:
+                            data['values'].append(form_template)
+                        else:
+                            continue  # NOT ALLOWED !!!
+                    else:  # should let pass 0's if correct id's
+                        # print(form_template)
+                        data['values'].append(form_template)
+                        poke_dict['values'].append(form_template)
+        elif config['only_paradox'] == "yes":
+            if index not in paradox:
+                pass
+            else:
+                new_template = template_entry.copy()
+                recreated_species.append(fetch_devname(index, csvdata))
+                new_template = make_template(new_template, index, csvdata)
+                data['values'].append(new_template)
+                poke_dict['values'].append(new_template)
+                i = i + 1
+                # check alt forms for this mon
+                forms = get_alt_form_teal(index)
+                for form in forms:  # previously was too high, now it should also pass on mons that alraedy have entries
+                    # so aside from 128 and 194, all 0's should be ignored
+                    form_template = template_entry.copy()  # gotta copy again the template from the start
+                    form_template = make_template(form_template, index, csvdata,
+                                                  form)  # randomize the template before changing the formno
+                    if form == 0:
+                        if index == 550:
+                            data['values'].append(form_template)
+                        else:
+                            continue  # NOT ALLOWED !!!
+                    else:  # should let pass 0's if correct id's
+                        # print(form_template)
+                        data['values'].append(form_template)
+                        poke_dict['values'].append(form_template)
+        elif config['only_legends_and_paradoxes'] == "yes":
+            if index not in legends_and_paradox:
+                pass
+            else:
+                new_template = template_entry.copy()
+                recreated_species.append(fetch_devname(index, csvdata))
+                new_template = make_template(new_template, index, csvdata)
+                data['values'].append(new_template)
+                poke_dict['values'].append(new_template)
+                i = i + 1
+                # check alt forms for this mon
+                forms = get_alt_form_teal(index)
+                for form in forms:  # previously was too high, now it should also pass on mons that alraedy have entries
+                    # so aside from 128 and 194, all 0's should be ignored
+                    form_template = template_entry.copy()  # gotta copy again the template from the start
+                    form_template = make_template(form_template, index, csvdata,
+                                                  form)  # randomize the template before changing the formno
+                    if form == 0:
+                        if index == 550:
+                            data['values'].append(form_template)
+                        else:
+                            continue  # NOT ALLOWED !!!
+                    else:  # should let pass 0's if correct id's
+                        # print(form_template)
+                        data['values'].append(form_template)
+                        poke_dict['values'].append(form_template)
         else:
             if fetch_devname(index, csvdata) not in recreated_species:
                 new_template = template_entry.copy()
@@ -823,6 +999,9 @@ def randomize_teal(config):
                     data['values'].append(form_template)
 
     outdata = json.dumps(data, indent=4)
+    if len(poke_dict['values']) != 0 and (config['only_legends'] == "yes" or config['only_paradox'] == "yes" or
+                                          config['only_legends_and_paradoxes'] == "yes"):
+        outdata = json.dumps(poke_dict, indent=4)
     with open(os.getcwd() + "/Randomizer/WildEncounters/" + "pokedata_su1_array.json", 'w') as outfile:
         outfile.write(outdata)
     print("Randomisation - Teal done !")
@@ -847,6 +1026,8 @@ def randomize_indigo(config):
     template_entry = data['values'][0].copy()
 
     i = len(data) - 1
+    poke_dict = {}
+    poke_dict['values'] = []
     # edit existing entries
     for entry in data['values']:
         # entry['devid'] = fetch_devname(allowed_species[i])
@@ -934,6 +1115,150 @@ def randomize_indigo(config):
                     else:  # should let pass 0's if correct id's
                         # print(form_template)
                         data['values'].append(form_template)
+        elif config['only_legends'] == "yes":
+            if index not in legends:
+                pass
+            else:
+                new_template = template_entry.copy()
+                recreated_species.append(fetch_devname(index, csvdata))
+                new_template = make_template(new_template, index, csvdata)
+                data['values'].append(new_template)
+                poke_dict['values'].append(new_template)
+                i = i + 1
+                # check alt forms for this mon
+                forms = get_alt_form_indigo(index)
+                for form in forms:  # previously was too high, now it should also pass on mons that alraedy have entries
+                    # so aside from 128 and 194, all 0's should be ignored
+                    form_template = template_entry.copy()  # gotta copy again the template from the start
+                    form_template = make_template(form_template, index, csvdata,
+                                                  form)  # randomize the template before changing the formno
+                    if form == 0:
+                        if index == 27:
+                            data['values'].append(form_template)
+                        elif index == 28:
+                            data['values'].append(form_template)
+                        elif index == 29:
+                            data['values'].append(form_template)
+                        elif index == 30:
+                            data['values'].append(form_template)
+                        elif index == 50:
+                            data['values'].append(form_template)
+                        elif index == 51:
+                            data['values'].append(form_template)
+                        elif index == 74:
+                            data['values'].append(form_template)
+                        elif index == 75:
+                            data['values'].append(form_template)
+                        elif index == 76:
+                            data['values'].append(form_template)
+                        elif index == 79:
+                            data['values'].append(form_template)
+                        elif index == 80:
+                            data['values'].append(form_template)
+                        elif index == 211:
+                            data['values'].append(form_template)
+                        else:
+                            continue
+                    else:  # should let pass 0's if correct id's
+                        # print(form_template)
+                        data['values'].append(form_template)
+                        poke_dict['values'].append(form_template)
+        elif config['only_paradox'] == "yes":
+            if index not in paradox:
+                pass
+            else:
+                new_template = template_entry.copy()
+                recreated_species.append(fetch_devname(index, csvdata))
+                new_template = make_template(new_template, index, csvdata)
+                data['values'].append(new_template)
+                poke_dict['values'].append(new_template)
+                i = i + 1
+                # check alt forms for this mon
+                forms = get_alt_form_indigo(index)
+                for form in forms:  # previously was too high, now it should also pass on mons that alraedy have entries
+                    # so aside from 128 and 194, all 0's should be ignored
+                    form_template = template_entry.copy()  # gotta copy again the template from the start
+                    form_template = make_template(form_template, index, csvdata,
+                                                  form)  # randomize the template before changing the formno
+                    if form == 0:
+                        if index == 27:
+                            data['values'].append(form_template)
+                        elif index == 28:
+                            data['values'].append(form_template)
+                        elif index == 29:
+                            data['values'].append(form_template)
+                        elif index == 30:
+                            data['values'].append(form_template)
+                        elif index == 50:
+                            data['values'].append(form_template)
+                        elif index == 51:
+                            data['values'].append(form_template)
+                        elif index == 74:
+                            data['values'].append(form_template)
+                        elif index == 75:
+                            data['values'].append(form_template)
+                        elif index == 76:
+                            data['values'].append(form_template)
+                        elif index == 79:
+                            data['values'].append(form_template)
+                        elif index == 80:
+                            data['values'].append(form_template)
+                        elif index == 211:
+                            data['values'].append(form_template)
+                        else:
+                            continue
+                    else:  # should let pass 0's if correct id's
+                        # print(form_template)
+                        data['values'].append(form_template)
+                        poke_dict['values'].append(form_template)
+        elif config['only_legends_and_paradoxes'] == "yes":
+            if index not in legends_and_paradox:
+                pass
+            else:
+                new_template = template_entry.copy()
+                recreated_species.append(fetch_devname(index, csvdata))
+                new_template = make_template(new_template, index, csvdata)
+                data['values'].append(new_template)
+                poke_dict['values'].append(new_template)
+                i = i + 1
+                # check alt forms for this mon
+                forms = get_alt_form_indigo(index)
+                for form in forms:  # previously was too high, now it should also pass on mons that alraedy have entries
+                    # so aside from 128 and 194, all 0's should be ignored
+                    form_template = template_entry.copy()  # gotta copy again the template from the start
+                    form_template = make_template(form_template, index, csvdata,
+                                                  form)  # randomize the template before changing the formno
+                    if form == 0:
+                        if index == 27:
+                            data['values'].append(form_template)
+                        elif index == 28:
+                            data['values'].append(form_template)
+                        elif index == 29:
+                            data['values'].append(form_template)
+                        elif index == 30:
+                            data['values'].append(form_template)
+                        elif index == 50:
+                            data['values'].append(form_template)
+                        elif index == 51:
+                            data['values'].append(form_template)
+                        elif index == 74:
+                            data['values'].append(form_template)
+                        elif index == 75:
+                            data['values'].append(form_template)
+                        elif index == 76:
+                            data['values'].append(form_template)
+                        elif index == 79:
+                            data['values'].append(form_template)
+                        elif index == 80:
+                            data['values'].append(form_template)
+                        elif index == 211:
+                            data['values'].append(form_template)
+                        else:
+                            continue
+                    else:  # should let pass 0's if correct id's
+                        # print(form_template)
+                        data['values'].append(form_template)
+                        poke_dict['values'].append(form_template)
         else:
             if fetch_devname(index, csvdata) not in recreated_species:
                 new_template = template_entry.copy()
@@ -980,6 +1305,9 @@ def randomize_indigo(config):
                     data['values'].append(form_template)
 
     outdata = json.dumps(data, indent=4)
+    if len(poke_dict['values']) != 0 and (config['only_legends'] == "yes" or config['only_paradox'] == "yes" or
+                                          config['only_legends_and_paradoxes'] == "yes"):
+        outdata = json.dumps(poke_dict, indent=4)
     with open(os.getcwd() + "/Randomizer/WildEncounters/" + "pokedata_su2_array.json", 'w') as outfile:
         outfile.write(outdata)
     print("Randomisation - Indigo done !")

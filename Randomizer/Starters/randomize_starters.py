@@ -3,7 +3,6 @@ import random
 import os
 import shutil
 
-picked_starters = []
 tera_types = ['normal', 'kakutou', 'hikou', 'doku', 'jimen', 'iwa', 'mushi', 'ghost', 'hagane', 'honoo', 'mizu', 'kusa',
               'denki', 'esper', 'koori', 'dragon', 'aku', 'fairy', 'niji']
 '''
@@ -34,14 +33,14 @@ banned_pokemon = [10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 29, 30, 31
                   303, 304, 305, 306, 309, 310, 315, 318, 319, 320, 321, 327, 337, 338, 343, 344, 345, 346, 347, 348,
                   351, 352, 359, 360, 363, 364, 365, 366, 367, 368, 369, 399, 400, 406, 407, 412, 413, 414, 420, 421,
                   427, 428, 431, 432, 439, 441, 451, 452, 455, 458, 463, 465, 468, 494, 504, 505, 506, 507, 508, 509,
-                  510, 511, 512, 513, 514, 515, 516, 517, 518, 519, 520, 521, 524, 525, 526, 527, 528, 531, 526, 537,
-                  538, 539, 543, 544, 545, 554, 555, 556, 557, 558, 561, 562, 563, 564, 565, 566, 567, 568, 569, 582,
-                  583, 584, 587, 588, 589, 592, 593, 597, 598, 599, 600, 601, 605, 606, 616, 617, 618, 621, 626, 631,
-                  632, 649, 659, 660, 674, 675, 676, 679, 680, 681, 682, 683, 684, 685, 688, 689, 694, 695, 696, 697,
-                  698, 699, 710, 711, 716, 717, 718, 746, 755, 756, 759, 760, 767, 768, 771, 772, 773, 776, 777, 780,
-                  781, 785, 786, 787, 788, 793, 794, 795, 796, 797, 798, 799, 802, 803, 804, 805, 806, 807, 808, 809,
-                  824, 825, 826, 827, 828, 829, 830, 831, 832, 835, 836, 850, 851, 852, 853, 864, 865, 866, 867, 880,
-                  881, 882, 883]
+                  510, 511, 512, 513, 514, 515, 516, 517, 518, 519, 520, 521, 524, 525, 526, 527, 528, 531, 535, 536,
+                  537, 538, 539, 543, 544, 545, 554, 555, 556, 557, 558, 561, 562, 563, 564, 565, 566, 567, 568, 569,
+                  582, 583, 584, 587, 588, 589, 592, 593, 597, 598, 599, 600, 601, 605, 606, 616, 617, 618, 621, 626,
+                  631, 632, 649, 659, 660, 674, 675, 676, 679, 680, 681, 682, 683, 684, 685, 688, 689, 694, 695, 696,
+                  697, 698, 699, 710, 711, 716, 717, 718, 746, 755, 756, 759, 760, 767, 768, 771, 772, 773, 776, 777,
+                  780, 781, 785, 786, 787, 788, 793, 794, 795, 796, 797, 798, 799, 802, 803, 804, 805, 806, 807, 808,
+                  809, 824, 825, 826, 827, 828, 829, 830, 831, 832, 835, 836, 850, 851, 852, 853, 864, 865, 866, 867,
+                  880, 881, 882, 883]
 
 legends = [144, 145, 146, 150, 151, 243, 244, 245, 249, 250, 251, 377, 378, 379, 380, 381, 382, 383, 384, 385, 386, 480,
            481, 482, 483, 484, 485, 486, 487, 489, 490, 491, 492, 493, 494, 638, 639, 640, 641, 642, 643, 644, 645, 646,
@@ -312,10 +311,89 @@ def flip_starter_texture(starter_num: int):
                 shutil.copy2(ogfiledir, newfiledir)
 
 
+def checkStarter1(config, pokedata):
+    choice = 1021
+    if isinstance(config['force_starter_1'], str) is True:
+        pokeName = config['force_starter_1'].replace(" ", "")
+        pokeName = pokeName.upper()
+        for entries in pokedata['pokemons']:
+            entryName = entries['name'].replace(" ", "")
+            if entryName.upper() == pokeName:
+                choice = entries['id']
+                if choice in banned_pokemon:
+                    print("Invalid argument for Starter 1 - Try again")
+                    exit(0)
+                else:
+                    break
+    elif isinstance(config['force_starter_1'], int) is True:
+        choice = pokedata['pokemons'][config['force_starter_1']]['id']
+        if choice in banned_pokemon:
+            print("Invalid argument for Starter 1 - Try again")
+            exit(0)
+    else:
+        print("Invalid argument for Starter 1 - Try again")
+        exit(0)
+    return choice
+
+
+def checkStarter2(config, pokedata):
+    choice = 1021
+    if isinstance(config['force_starter_2'], str) is True:
+        pokeName = config['force_starter_2'].replace(" ", "")
+        pokeName = pokeName.upper()
+        for entries in pokedata['pokemons']:
+            entryName = entries['name'].replace(" ", "")
+            if entryName.upper() == pokeName:
+                choice = entries['id']
+                if choice in banned_pokemon:
+                    print("Invalid argument for Starter 1 - Try again")
+                    exit(0)
+                else:
+                    break
+    elif isinstance(config['force_starter_2'], int) is True:
+        choice = pokedata['pokemons'][config['force_starter_2']]['id']
+        if choice in banned_pokemon:
+            print("Invalid argument for Starter 2 - Try again")
+            exit(0)
+    else:
+        print("Invalid argument for Starter 2 - Try again")
+        exit(0)
+
+    return choice
+
+
+def checkStarter3(config, pokedata):
+    choice = 1021
+    if isinstance(config['force_starter_3'], str) is True:
+        pokeName = config['force_starter_3'].replace(" ", "")
+        pokeName = pokeName.upper()
+        for entries in pokedata['pokemons']:
+            entryName = entries['name'].replace(" ", "")
+            if entryName.upper() == pokeName:
+                choice = entries['id']
+                if choice in banned_pokemon:
+                    print("Invalid argument for Starter 3 - Try again")
+                    exit(0)
+                else:
+                    break
+    elif isinstance(config['force_starter_3'], int) is True:
+        choice = pokedata['pokemons'][config['force_starter_3']]['id']
+        if choice in banned_pokemon:
+            print("Invalid argument for Starter 3 - Try again")
+            exit(0)
+    else:
+        print("Invalid argument for Starter 3 - Try again")
+        exit(0)
+
+    return choice
+
+
 def randomize(config):
     if os.path.exists(os.getcwd() + "\\Randomizer\\Starters\\" +f'output'):
         shutil.rmtree(os.getcwd() + "\\Randomizer\\Starters\\" +f'output')
-
+    file = open(os.getcwd() + "/Randomizer/Starters/" + "pokemon_list_info.json", 'r')
+    pokedata = json.load(file)
+    file.close()
     file = open(os.getcwd() + "/Randomizer/Starters/" +"eventAddPokemon_array_clean.json", "r")
     data = json.load(file)
     file.close()
@@ -325,30 +403,74 @@ def randomize(config):
         names.append(name)
     file.close()
     i = 1
+    picked_starters = []
     for entry in data['values']:
         if config['randomize_all_gifts'] == "no":  # only starters
-            if "common_0065_" in entry['label']:
+            if "common_0065_hono" in entry['label'] and config['force_starter_3'] != 0:
+                choice = checkStarter3(config, pokedata)
+
+                entry['pokeData']['devId'] = fetch_devname(choice, names)
+                alt_form_choosen = get_alt_form(choice)
+                entry['pokeData']['formId'] = alt_form_choosen
+
+                # Hard code tera types for ogerpon and terapagos so that they don't break.
+                if config['randomize_tera_type'] == "yes":
+                    entry['pokeData']['gemType'] = tera_types[random.randint(0, len(tera_types) - 1)].upper()
+
+                    match choice:
+                        case 1011:
+                            match alt_form_choosen:
+                                case 0:
+                                    entry['pokeData']['gemType'] = "KUSA"
+                                    pass
+                                case 1:
+                                    entry['pokeData']['gemType'] = "MIZU"
+                                    pass
+                                case 2:
+                                    entry['pokeData']['gemType'] = "HONOO"
+                                    pass
+                                case 3:
+                                    entry['pokeData']['gemType'] = "IWA"
+                                    pass
+                        case 1021:
+                            entry['pokeData']['gemType'] = "NIJI"
+                        case _:
+                            pass
+
+                if config['all_shiny'] == "yes":
+                    entry['pokeData']['rareType'] = "RARE"
+                    if config['shiny_overworld'] == "yes":
+                        flip_starter_texture(choice)
+                elif config['higher_shiny_chance'] == "yes":
+                    chance = random.randint(1, 10)
+                    if chance == 10:
+                        entry['pokeData']['rareType'] = "RARE"
+                        if config['shiny_overworld'] == "yes":
+                            flip_starter_texture(choice)
+                    else:
+                        entry['pokeData']['rareType'] = "NO_RARE"
+            elif "common_0065_hono" in entry['label'] and config['force_starter_3'] == 0:
                 choice = random.randint(1, 1025)
                 while choice in banned_pokemon or choice in picked_starters:
                     choice = random.randint(1, 1025)
 
                 if config['only_legends'] == "yes":
-                    val = random.randint(0, len(legends)-1)
+                    val = random.randint(0, len(legends) - 1)
                     choice = legends[val]
                     while choice in banned_pokemon or choice in picked_starters:
-                        val = random.randint(0, len(legends)-1)
+                        val = random.randint(0, len(legends) - 1)
                         choice = legends[val]
                 if config['only_paradox'] == "yes":
-                    val = random.randint(0, len(paradox)-1)
+                    val = random.randint(0, len(paradox) - 1)
                     choice = paradox[val]
                     while choice in banned_pokemon or choice in picked_starters:
-                        val = random.randint(0, len(paradox)-1)
+                        val = random.randint(0, len(paradox) - 1)
                         choice = paradox[val]
                 if config['only_legends_and_paradox'] == "yes":
-                    val = random.randint(0, len(legends_and_paradox)-1)
+                    val = random.randint(0, len(legends_and_paradox) - 1)
                     choice = legends_and_paradox[val]
                     while choice in banned_pokemon or choice in picked_starters:
-                        val = random.randint(0, len(legends_and_paradox)-1)
+                        val = random.randint(0, len(legends_and_paradox) - 1)
                         choice = legends_and_paradox[val]
 
                 if choice not in picked_starters:
@@ -392,65 +514,612 @@ def randomize(config):
                                 flip_starter_texture(choice)
                         else:
                             entry['pokeData']['rareType'] = "NO_RARE"
-                    picked_starters.append(choice) 
-        else:  # everything plus starters
-            choice = random.randint(1, 1025)
-            while choice in banned_pokemon:
-                choice = random.randint(1, 1025)
+                    picked_starters.append(choice)
+            if "common_0065_mizu" in entry['label'] and config['force_starter_2'] != 0:
+                choice = checkStarter2(config, pokedata)
 
-            if config['only_legends'] == "yes":
-                val = random.randint(0, len(legends)-1)
-                choice = legends[val]
+                entry['pokeData']['devId'] = fetch_devname(choice, names)
+                alt_form_choosen = get_alt_form(choice)
+                entry['pokeData']['formId'] = alt_form_choosen
+
+                # Hard code tera types for ogerpon and terapagos so that they don't break.
+                if config['randomize_tera_type'] == "yes":
+                    entry['pokeData']['gemType'] = tera_types[random.randint(0, len(tera_types) - 1)].upper()
+
+                    match choice:
+                        case 1011:
+                            match alt_form_choosen:
+                                case 0:
+                                    entry['pokeData']['gemType'] = "KUSA"
+                                    pass
+                                case 1:
+                                    entry['pokeData']['gemType'] = "MIZU"
+                                    pass
+                                case 2:
+                                    entry['pokeData']['gemType'] = "HONOO"
+                                    pass
+                                case 3:
+                                    entry['pokeData']['gemType'] = "IWA"
+                                    pass
+                        case 1021:
+                            entry['pokeData']['gemType'] = "NIJI"
+                        case _:
+                            pass
+
+                if config['all_shiny'] == "yes":
+                    entry['pokeData']['rareType'] = "RARE"
+                    if config['shiny_overworld'] == "yes":
+                        flip_starter_texture(choice)
+                elif config['higher_shiny_chance'] == "yes":
+                    chance = random.randint(1, 10)
+                    if chance == 10:
+                        entry['pokeData']['rareType'] = "RARE"
+                        if config['shiny_overworld'] == "yes":
+                            flip_starter_texture(choice)
+                    else:
+                        entry['pokeData']['rareType'] = "NO_RARE"
+            elif "common_0065_mizu" in entry['label'] and config['force_starter_2'] == 0:
+                choice = random.randint(1, 1025)
                 while choice in banned_pokemon or choice in picked_starters:
+                    choice = random.randint(1, 1025)
+
+                if config['only_legends'] == "yes":
+                    val = random.randint(0, len(legends) - 1)
+                    choice = legends[val]
+                    while choice in banned_pokemon or choice in picked_starters:
+                        val = random.randint(0, len(legends) - 1)
+                        choice = legends[val]
+                if config['only_paradox'] == "yes":
+                    val = random.randint(0, len(paradox) - 1)
+                    choice = paradox[val]
+                    while choice in banned_pokemon or choice in picked_starters:
+                        val = random.randint(0, len(paradox) - 1)
+                        choice = paradox[val]
+                if config['only_legends_and_paradox'] == "yes":
+                    val = random.randint(0, len(legends_and_paradox) - 1)
+                    choice = legends_and_paradox[val]
+                    while choice in banned_pokemon or choice in picked_starters:
+                        val = random.randint(0, len(legends_and_paradox) - 1)
+                        choice = legends_and_paradox[val]
+
+                if choice not in picked_starters:
+                    entry['pokeData']['devId'] = fetch_devname(choice, names)
+                    alt_form_choosen = get_alt_form(choice)
+                    entry['pokeData']['formId'] = alt_form_choosen
+
+                    # Hard code tera types for ogerpon and terapagos so that they don't break.
+                    if config['randomize_tera_type'] == "yes":
+                        entry['pokeData']['gemType'] = tera_types[random.randint(0, len(tera_types) - 1)].upper()
+
+                        match choice:
+                            case 1011:
+                                match alt_form_choosen:
+                                    case 0:
+                                        entry['pokeData']['gemType'] = "KUSA"
+                                        pass
+                                    case 1:
+                                        entry['pokeData']['gemType'] = "MIZU"
+                                        pass
+                                    case 2:
+                                        entry['pokeData']['gemType'] = "HONOO"
+                                        pass
+                                    case 3:
+                                        entry['pokeData']['gemType'] = "IWA"
+                                        pass
+                            case 1021:
+                                entry['pokeData']['gemType'] = "NIJI"
+                            case _:
+                                pass
+
+                    if config['all_shiny'] == "yes":
+                        entry['pokeData']['rareType'] = "RARE"
+                        if config['shiny_overworld'] == "yes":
+                            flip_starter_texture(choice)
+                    elif config['higher_shiny_chance'] == "yes":
+                        chance = random.randint(1, 10)
+                        if chance == 10:
+                            entry['pokeData']['rareType'] = "RARE"
+                            if config['shiny_overworld'] == "yes":
+                                flip_starter_texture(choice)
+                        else:
+                            entry['pokeData']['rareType'] = "NO_RARE"
+                    picked_starters.append(choice)
+            if "common_0065_kusa" in entry['label'] and config['force_starter_1'] != 0:
+                choice = checkStarter1(config, pokedata)
+
+                entry['pokeData']['devId'] = fetch_devname(choice, names)
+                alt_form_choosen = get_alt_form(choice)
+                entry['pokeData']['formId'] = alt_form_choosen
+
+                # Hard code tera types for ogerpon and terapagos so that they don't break.
+                if config['randomize_tera_type'] == "yes":
+                    entry['pokeData']['gemType'] = tera_types[random.randint(0, len(tera_types) - 1)].upper()
+
+                    match choice:
+                        case 1011:
+                            match alt_form_choosen:
+                                case 0:
+                                    entry['pokeData']['gemType'] = "KUSA"
+                                    pass
+                                case 1:
+                                    entry['pokeData']['gemType'] = "MIZU"
+                                    pass
+                                case 2:
+                                    entry['pokeData']['gemType'] = "HONOO"
+                                    pass
+                                case 3:
+                                    entry['pokeData']['gemType'] = "IWA"
+                                    pass
+                        case 1021:
+                            entry['pokeData']['gemType'] = "NIJI"
+                        case _:
+                            pass
+
+                if config['all_shiny'] == "yes":
+                    entry['pokeData']['rareType'] = "RARE"
+                    if config['shiny_overworld'] == "yes":
+                        flip_starter_texture(choice)
+                elif config['higher_shiny_chance'] == "yes":
+                    chance = random.randint(1, 10)
+                    if chance == 10:
+                        entry['pokeData']['rareType'] = "RARE"
+                        if config['shiny_overworld'] == "yes":
+                            flip_starter_texture(choice)
+                    else:
+                        entry['pokeData']['rareType'] = "NO_RARE"
+            elif "common_0065_kusa" in entry['label'] and config['force_starter_1'] == 0:
+                choice = random.randint(1, 1025)
+                while choice in banned_pokemon or choice in picked_starters:
+                    choice = random.randint(1, 1025)
+
+                if config['only_legends'] == "yes":
+                    val = random.randint(0, len(legends) - 1)
+                    choice = legends[val]
+                    while choice in banned_pokemon or choice in picked_starters:
+                        val = random.randint(0, len(legends) - 1)
+                        choice = legends[val]
+                if config['only_paradox'] == "yes":
+                    val = random.randint(0, len(paradox) - 1)
+                    choice = paradox[val]
+                    while choice in banned_pokemon or choice in picked_starters:
+                        val = random.randint(0, len(paradox) - 1)
+                        choice = paradox[val]
+                if config['only_legends_and_paradox'] == "yes":
+                    val = random.randint(0, len(legends_and_paradox) - 1)
+                    choice = legends_and_paradox[val]
+                    while choice in banned_pokemon or choice in picked_starters:
+                        val = random.randint(0, len(legends_and_paradox) - 1)
+                        choice = legends_and_paradox[val]
+
+                if choice not in picked_starters:
+                    entry['pokeData']['devId'] = fetch_devname(choice, names)
+                    alt_form_choosen = get_alt_form(choice)
+                    entry['pokeData']['formId'] = alt_form_choosen
+
+                    # Hard code tera types for ogerpon and terapagos so that they don't break.
+                    if config['randomize_tera_type'] == "yes":
+                        entry['pokeData']['gemType'] = tera_types[random.randint(0, len(tera_types) - 1)].upper()
+
+                        match choice:
+                            case 1011:
+                                match alt_form_choosen:
+                                    case 0:
+                                        entry['pokeData']['gemType'] = "KUSA"
+                                        pass
+                                    case 1:
+                                        entry['pokeData']['gemType'] = "MIZU"
+                                        pass
+                                    case 2:
+                                        entry['pokeData']['gemType'] = "HONOO"
+                                        pass
+                                    case 3:
+                                        entry['pokeData']['gemType'] = "IWA"
+                                        pass
+                            case 1021:
+                                entry['pokeData']['gemType'] = "NIJI"
+                            case _:
+                                pass
+
+                    if config['all_shiny'] == "yes":
+                        entry['pokeData']['rareType'] = "RARE"
+                        if config['shiny_overworld'] == "yes":
+                            flip_starter_texture(choice)
+                    elif config['higher_shiny_chance'] == "yes":
+                        chance = random.randint(1, 10)
+                        if chance == 10:
+                            entry['pokeData']['rareType'] = "RARE"
+                            if config['shiny_overworld'] == "yes":
+                                flip_starter_texture(choice)
+                        else:
+                            entry['pokeData']['rareType'] = "NO_RARE"
+                    picked_starters.append(choice)
+
+        else:  # everything plus starters
+            if "common_0065" not in entry['label']:
+                choice = random.randint(1, 1025)
+                while choice in banned_pokemon:
+                    choice = random.randint(1, 1025)
+
+                if config['only_legends'] == "yes":
                     val = random.randint(0, len(legends)-1)
                     choice = legends[val]
-            if config['only_paradox'] == "yes":
-                val = random.randint(0, len(paradox)-1)
-                choice = paradox[val]
-                while choice in banned_pokemon or choice in picked_starters:
+                    while choice in banned_pokemon or choice in picked_starters:
+                        val = random.randint(0, len(legends)-1)
+                        choice = legends[val]
+                if config['only_paradox'] == "yes":
                     val = random.randint(0, len(paradox)-1)
                     choice = paradox[val]
-            if config['only_legends_and_paradox'] == "yes":
-                val = random.randint(0, len(legends_and_paradox)-1)
-                choice = legends_and_paradox[val]
-                while choice in banned_pokemon or choice in picked_starters:
+                    while choice in banned_pokemon or choice in picked_starters:
+                        val = random.randint(0, len(paradox)-1)
+                        choice = paradox[val]
+                if config['only_legends_and_paradox'] == "yes":
                     val = random.randint(0, len(legends_and_paradox)-1)
                     choice = legends_and_paradox[val]
+                    while choice in banned_pokemon or choice in picked_starters:
+                        val = random.randint(0, len(legends_and_paradox)-1)
+                        choice = legends_and_paradox[val]
 
-            entry['pokeData']['devId'] = fetch_devname(choice, names)
-            entry['pokeData']['formId'] = get_alt_form(choice)
+                entry['pokeData']['devId'] = fetch_devname(choice, names)
+                entry['pokeData']['formId'] = get_alt_form(choice)
 
-            if config['all_shiny'] == "yes":
-                entry['pokeData']['rareType'] = "RARE"
-            elif config['higher_shiny_chance'] == "yes":
-                chance = random.randint(0, 10)
-                if chance == 10:
+                if config['all_shiny'] == "yes":
                     entry['pokeData']['rareType'] = "RARE"
-                else:
-                    entry['pokeData']['rareType'] = "NO_RARE"
+                elif config['higher_shiny_chance'] == "yes":
+                    chance = random.randint(0, 10)
+                    if chance == 10:
+                        entry['pokeData']['rareType'] = "RARE"
+                    else:
+                        entry['pokeData']['rareType'] = "NO_RARE"
 
-            if config['randomize_tera_type'] == "yes":
-                entry['pokeData']['gemType'] = tera_types[random.randint(0, len(tera_types) - 1)].upper()
+                if config['randomize_tera_type'] == "yes":
+                    entry['pokeData']['gemType'] = tera_types[random.randint(0, len(tera_types) - 1)].upper()
 
-                match choice:
-                    case 1011:
-                        match alt_form_choosen:
-                            case 0:
-                                entry['pokeData']['gemType'] = "KUSA"
+                    match choice:
+                        case 1011:
+                            match alt_form_choosen:
+                                case 0:
+                                    entry['pokeData']['gemType'] = "KUSA"
+                                    pass
+                                case 1:
+                                    entry['pokeData']['gemType'] = "MIZU"
+                                    pass
+                                case 2:
+                                    entry['pokeData']['gemType'] = "HONOO"
+                                    pass
+                                case 3:
+                                    entry['pokeData']['gemType'] = "IWA"
+                                    pass
+                        case 1021:
+                            entry['pokeData']['gemType'] = "NIJI"
+                        case _:
+                            pass
+            if "common_0065_hono" in entry['label'] and config['force_starter_3'] != 0:
+                choice = checkStarter3(config, pokedata)
+
+                entry['pokeData']['devId'] = fetch_devname(choice, names)
+                alt_form_choosen = get_alt_form(choice)
+                entry['pokeData']['formId'] = alt_form_choosen
+
+                # Hard code tera types for ogerpon and terapagos so that they don't break.
+                if config['randomize_tera_type'] == "yes":
+                    entry['pokeData']['gemType'] = tera_types[random.randint(0, len(tera_types) - 1)].upper()
+
+                    match choice:
+                        case 1011:
+                            match alt_form_choosen:
+                                case 0:
+                                    entry['pokeData']['gemType'] = "KUSA"
+                                    pass
+                                case 1:
+                                    entry['pokeData']['gemType'] = "MIZU"
+                                    pass
+                                case 2:
+                                    entry['pokeData']['gemType'] = "HONOO"
+                                    pass
+                                case 3:
+                                    entry['pokeData']['gemType'] = "IWA"
+                                    pass
+                        case 1021:
+                            entry['pokeData']['gemType'] = "NIJI"
+                        case _:
+                            pass
+
+                if config['all_shiny'] == "yes":
+                    entry['pokeData']['rareType'] = "RARE"
+                    if config['shiny_overworld'] == "yes":
+                        flip_starter_texture(choice)
+                elif config['higher_shiny_chance'] == "yes":
+                    chance = random.randint(1, 10)
+                    if chance == 10:
+                        entry['pokeData']['rareType'] = "RARE"
+                        if config['shiny_overworld'] == "yes":
+                            flip_starter_texture(choice)
+                    else:
+                        entry['pokeData']['rareType'] = "NO_RARE"
+            elif "common_0065_hono" in entry['label'] and config['force_starter_3'] == 0:
+                choice = random.randint(1, 1025)
+                while choice in banned_pokemon or choice in picked_starters:
+                    choice = random.randint(1, 1025)
+
+                if config['only_legends'] == "yes":
+                    val = random.randint(0, len(legends) - 1)
+                    choice = legends[val]
+                    while choice in banned_pokemon or choice in picked_starters:
+                        val = random.randint(0, len(legends) - 1)
+                        choice = legends[val]
+                if config['only_paradox'] == "yes":
+                    val = random.randint(0, len(paradox) - 1)
+                    choice = paradox[val]
+                    while choice in banned_pokemon or choice in picked_starters:
+                        val = random.randint(0, len(paradox) - 1)
+                        choice = paradox[val]
+                if config['only_legends_and_paradox'] == "yes":
+                    val = random.randint(0, len(legends_and_paradox) - 1)
+                    choice = legends_and_paradox[val]
+                    while choice in banned_pokemon or choice in picked_starters:
+                        val = random.randint(0, len(legends_and_paradox) - 1)
+                        choice = legends_and_paradox[val]
+
+                if choice not in picked_starters:
+                    entry['pokeData']['devId'] = fetch_devname(choice, names)
+                    alt_form_choosen = get_alt_form(choice)
+                    entry['pokeData']['formId'] = alt_form_choosen
+
+                    # Hard code tera types for ogerpon and terapagos so that they don't break.
+                    if config['randomize_tera_type'] == "yes":
+                        entry['pokeData']['gemType'] = tera_types[random.randint(0, len(tera_types) - 1)].upper()
+
+                        match choice:
+                            case 1011:
+                                match alt_form_choosen:
+                                    case 0:
+                                        entry['pokeData']['gemType'] = "KUSA"
+                                        pass
+                                    case 1:
+                                        entry['pokeData']['gemType'] = "MIZU"
+                                        pass
+                                    case 2:
+                                        entry['pokeData']['gemType'] = "HONOO"
+                                        pass
+                                    case 3:
+                                        entry['pokeData']['gemType'] = "IWA"
+                                        pass
+                            case 1021:
+                                entry['pokeData']['gemType'] = "NIJI"
+                            case _:
                                 pass
-                            case 1:
-                                entry['pokeData']['gemType'] = "MIZU"
+
+                    if config['all_shiny'] == "yes":
+                        entry['pokeData']['rareType'] = "RARE"
+                        if config['shiny_overworld'] == "yes":
+                            flip_starter_texture(choice)
+                    elif config['higher_shiny_chance'] == "yes":
+                        chance = random.randint(1, 10)
+                        if chance == 10:
+                            entry['pokeData']['rareType'] = "RARE"
+                            if config['shiny_overworld'] == "yes":
+                                flip_starter_texture(choice)
+                        else:
+                            entry['pokeData']['rareType'] = "NO_RARE"
+                    picked_starters.append(choice)
+            if "common_0065_mizu" in entry['label'] and config['force_starter_2'] != 0:
+                choice = checkStarter2(config, pokedata)
+
+                entry['pokeData']['devId'] = fetch_devname(choice, names)
+                alt_form_choosen = get_alt_form(choice)
+                entry['pokeData']['formId'] = alt_form_choosen
+
+                # Hard code tera types for ogerpon and terapagos so that they don't break.
+                if config['randomize_tera_type'] == "yes":
+                    entry['pokeData']['gemType'] = tera_types[random.randint(0, len(tera_types) - 1)].upper()
+
+                    match choice:
+                        case 1011:
+                            match alt_form_choosen:
+                                case 0:
+                                    entry['pokeData']['gemType'] = "KUSA"
+                                    pass
+                                case 1:
+                                    entry['pokeData']['gemType'] = "MIZU"
+                                    pass
+                                case 2:
+                                    entry['pokeData']['gemType'] = "HONOO"
+                                    pass
+                                case 3:
+                                    entry['pokeData']['gemType'] = "IWA"
+                                    pass
+                        case 1021:
+                            entry['pokeData']['gemType'] = "NIJI"
+                        case _:
+                            pass
+
+                if config['all_shiny'] == "yes":
+                    entry['pokeData']['rareType'] = "RARE"
+                    if config['shiny_overworld'] == "yes":
+                        flip_starter_texture(choice)
+                elif config['higher_shiny_chance'] == "yes":
+                    chance = random.randint(1, 10)
+                    if chance == 10:
+                        entry['pokeData']['rareType'] = "RARE"
+                        if config['shiny_overworld'] == "yes":
+                            flip_starter_texture(choice)
+                    else:
+                        entry['pokeData']['rareType'] = "NO_RARE"
+            elif "common_0065_mizu" in entry['label'] and config['force_starter_2'] == 0:
+                choice = random.randint(1, 1025)
+                while choice in banned_pokemon or choice in picked_starters:
+                    choice = random.randint(1, 1025)
+
+                if config['only_legends'] == "yes":
+                    val = random.randint(0, len(legends) - 1)
+                    choice = legends[val]
+                    while choice in banned_pokemon or choice in picked_starters:
+                        val = random.randint(0, len(legends) - 1)
+                        choice = legends[val]
+                if config['only_paradox'] == "yes":
+                    val = random.randint(0, len(paradox) - 1)
+                    choice = paradox[val]
+                    while choice in banned_pokemon or choice in picked_starters:
+                        val = random.randint(0, len(paradox) - 1)
+                        choice = paradox[val]
+                if config['only_legends_and_paradox'] == "yes":
+                    val = random.randint(0, len(legends_and_paradox) - 1)
+                    choice = legends_and_paradox[val]
+                    while choice in banned_pokemon or choice in picked_starters:
+                        val = random.randint(0, len(legends_and_paradox) - 1)
+                        choice = legends_and_paradox[val]
+
+                if choice not in picked_starters:
+                    entry['pokeData']['devId'] = fetch_devname(choice, names)
+                    alt_form_choosen = get_alt_form(choice)
+                    entry['pokeData']['formId'] = alt_form_choosen
+
+                    # Hard code tera types for ogerpon and terapagos so that they don't break.
+                    if config['randomize_tera_type'] == "yes":
+                        entry['pokeData']['gemType'] = tera_types[random.randint(0, len(tera_types) - 1)].upper()
+
+                        match choice:
+                            case 1011:
+                                match alt_form_choosen:
+                                    case 0:
+                                        entry['pokeData']['gemType'] = "KUSA"
+                                        pass
+                                    case 1:
+                                        entry['pokeData']['gemType'] = "MIZU"
+                                        pass
+                                    case 2:
+                                        entry['pokeData']['gemType'] = "HONOO"
+                                        pass
+                                    case 3:
+                                        entry['pokeData']['gemType'] = "IWA"
+                                        pass
+                            case 1021:
+                                entry['pokeData']['gemType'] = "NIJI"
+                            case _:
                                 pass
-                            case 2:
-                                entry['pokeData']['gemType'] = "HONOO"
+
+                    if config['all_shiny'] == "yes":
+                        entry['pokeData']['rareType'] = "RARE"
+                        if config['shiny_overworld'] == "yes":
+                            flip_starter_texture(choice)
+                    elif config['higher_shiny_chance'] == "yes":
+                        chance = random.randint(1, 10)
+                        if chance == 10:
+                            entry['pokeData']['rareType'] = "RARE"
+                            if config['shiny_overworld'] == "yes":
+                                flip_starter_texture(choice)
+                        else:
+                            entry['pokeData']['rareType'] = "NO_RARE"
+                    picked_starters.append(choice)
+            if "common_0065_kusa" in entry['label'] and config['force_starter_1'] != 0:
+                choice = checkStarter1(config, pokedata)
+
+                entry['pokeData']['devId'] = fetch_devname(choice, names)
+                alt_form_choosen = get_alt_form(choice)
+                entry['pokeData']['formId'] = alt_form_choosen
+
+                # Hard code tera types for ogerpon and terapagos so that they don't break.
+                if config['randomize_tera_type'] == "yes":
+                    entry['pokeData']['gemType'] = tera_types[random.randint(0, len(tera_types) - 1)].upper()
+
+                    match choice:
+                        case 1011:
+                            match alt_form_choosen:
+                                case 0:
+                                    entry['pokeData']['gemType'] = "KUSA"
+                                    pass
+                                case 1:
+                                    entry['pokeData']['gemType'] = "MIZU"
+                                    pass
+                                case 2:
+                                    entry['pokeData']['gemType'] = "HONOO"
+                                    pass
+                                case 3:
+                                    entry['pokeData']['gemType'] = "IWA"
+                                    pass
+                        case 1021:
+                            entry['pokeData']['gemType'] = "NIJI"
+                        case _:
+                            pass
+
+                if config['all_shiny'] == "yes":
+                    entry['pokeData']['rareType'] = "RARE"
+                    if config['shiny_overworld'] == "yes":
+                        flip_starter_texture(choice)
+                elif config['higher_shiny_chance'] == "yes":
+                    chance = random.randint(1, 10)
+                    if chance == 10:
+                        entry['pokeData']['rareType'] = "RARE"
+                        if config['shiny_overworld'] == "yes":
+                            flip_starter_texture(choice)
+                    else:
+                        entry['pokeData']['rareType'] = "NO_RARE"
+            elif "common_0065_kusa" in entry['label'] and config['force_starter_1'] == 0:
+                choice = random.randint(1, 1025)
+                while choice in banned_pokemon or choice in picked_starters:
+                    choice = random.randint(1, 1025)
+
+                if config['only_legends'] == "yes":
+                    val = random.randint(0, len(legends) - 1)
+                    choice = legends[val]
+                    while choice in banned_pokemon or choice in picked_starters:
+                        val = random.randint(0, len(legends) - 1)
+                        choice = legends[val]
+                if config['only_paradox'] == "yes":
+                    val = random.randint(0, len(paradox) - 1)
+                    choice = paradox[val]
+                    while choice in banned_pokemon or choice in picked_starters:
+                        val = random.randint(0, len(paradox) - 1)
+                        choice = paradox[val]
+                if config['only_legends_and_paradox'] == "yes":
+                    val = random.randint(0, len(legends_and_paradox) - 1)
+                    choice = legends_and_paradox[val]
+                    while choice in banned_pokemon or choice in picked_starters:
+                        val = random.randint(0, len(legends_and_paradox) - 1)
+                        choice = legends_and_paradox[val]
+
+                if choice not in picked_starters:
+                    entry['pokeData']['devId'] = fetch_devname(choice, names)
+                    alt_form_choosen = get_alt_form(choice)
+                    entry['pokeData']['formId'] = alt_form_choosen
+
+                    # Hard code tera types for ogerpon and terapagos so that they don't break.
+                    if config['randomize_tera_type'] == "yes":
+                        entry['pokeData']['gemType'] = tera_types[random.randint(0, len(tera_types) - 1)].upper()
+
+                        match choice:
+                            case 1011:
+                                match alt_form_choosen:
+                                    case 0:
+                                        entry['pokeData']['gemType'] = "KUSA"
+                                        pass
+                                    case 1:
+                                        entry['pokeData']['gemType'] = "MIZU"
+                                        pass
+                                    case 2:
+                                        entry['pokeData']['gemType'] = "HONOO"
+                                        pass
+                                    case 3:
+                                        entry['pokeData']['gemType'] = "IWA"
+                                        pass
+                            case 1021:
+                                entry['pokeData']['gemType'] = "NIJI"
+                            case _:
                                 pass
-                            case 3:
-                                entry['pokeData']['gemType'] = "IWA"
-                                pass
-                    case 1021:
-                        entry['pokeData']['gemType'] = "NIJI"
-                    case _:
-                        pass
+
+                    if config['all_shiny'] == "yes":
+                        entry['pokeData']['rareType'] = "RARE"
+                        if config['shiny_overworld'] == "yes":
+                            flip_starter_texture(choice)
+                    elif config['higher_shiny_chance'] == "yes":
+                        chance = random.randint(1, 10)
+                        if chance == 10:
+                            entry['pokeData']['rareType'] = "RARE"
+                            if config['shiny_overworld'] == "yes":
+                                flip_starter_texture(choice)
+                        else:
+                            entry['pokeData']['rareType'] = "NO_RARE"
+                    picked_starters.append(choice)
 
         entry['pokeData']['wazaType'] = "DEFAULT"
         entry['pokeData']['waza1']['wazaId'] = "WAZA_NULL"

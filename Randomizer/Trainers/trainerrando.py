@@ -211,7 +211,20 @@ def get_alt_form(index: int):
         return 0
 
 
-
+legends = [144, 145, 146, 150, 151, 243, 244, 245, 249, 250, 251, 377, 378, 379, 380, 381, 382, 383, 384, 385, 386, 480,
+           481, 482, 483, 484, 485, 486, 487, 489, 490, 491, 492, 493, 494, 638, 639, 640, 641, 642, 643, 644, 645, 646,
+           647, 648, 649, 716, 717, 718, 719, 720, 721, 785, 786, 787, 788, 789, 790, 791, 792, 800, 801, 802, 807, 808,
+           809, 888, 889, 890, 891, 892, 893, 894, 895, 896, 897, 898, 905, 994, 995, 996, 997, 998, 999, 1011, 1014,
+           1015, 1016, 1021, 1022]
+paradox = [978, 979, 980, 981, 982, 983, 984, 985, 986, 987, 988, 989, 990, 991, 992, 993, 998, 999, 1021,
+           1017, 1018, 1019, 1020]
+legends_and_paradox = [
+           144, 145, 146, 150, 151, 243, 244, 245, 249, 250, 251, 377, 378, 379, 380, 381, 382, 383, 384, 385, 386, 480,
+           481, 482, 483, 484, 485, 486, 487, 489, 490, 491, 492, 493, 494, 638, 639, 640, 641, 642, 643, 644, 645, 646,
+           647, 648, 649, 716, 717, 718, 719, 720, 721, 785, 786, 787, 788, 789, 790, 791, 792, 800, 801, 802, 807, 808,
+           809, 888, 889, 890, 891, 892, 893, 894, 895, 896, 897, 898, 905, 978, 979, 980, 981, 982, 983, 984, 985, 986,
+           987, 988, 989, 990, 991, 992, 993, 1017, 1018, 1019, 1020, 994, 995, 996, 997, 998, 999, 1011, 1014, 1015,
+           1016, 1021, 1022]
 banned_pokemon = [10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 29, 30, 31, 32, 33, 34, 35, 41, 42, 46, 47, 63,
                   64, 65, 66, 67, 77, 78, 83, 95, 98, 99, 104, 105, 108, 114, 115, 118, 119, 120, 121, 122, 124, 127,
                   138, 139, 140, 141, 142, 165, 166, 169, 175, 176, 177, 178, 201, 202, 208, 213, 222, 223, 224, 226,
@@ -219,14 +232,14 @@ banned_pokemon = [10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 29, 30, 31
                   303, 304, 305, 306, 309, 310, 315, 318, 319, 320, 321, 327, 337, 338, 343, 344, 345, 346, 347, 348,
                   351, 352, 359, 360, 363, 364, 365, 366, 367, 368, 369, 399, 400, 406, 407, 412, 413, 414, 420, 421,
                   427, 428, 431, 432, 439, 441, 451, 452, 455, 458, 463, 465, 468, 494, 504, 505, 506, 507, 508, 509,
-                  510, 511, 512, 513, 514, 515, 516, 517, 518, 519, 520, 521, 524, 525, 526, 527, 528, 531, 526, 537,
-                  538, 539, 543, 544, 545, 554, 555, 556, 557, 558, 561, 562, 563, 564, 565, 566, 567, 568, 569, 582,
-                  583, 584, 587, 588, 589, 592, 593, 597, 598, 599, 600, 601, 605, 606, 616, 617, 618, 621, 626, 631,
-                  632, 649, 659, 660, 674, 675, 676, 679, 680, 681, 682, 683, 684, 685, 688, 689, 694, 695, 696, 697,
-                  698, 699, 710, 711, 716, 717, 718, 746, 755, 756, 759, 760, 767, 768, 771, 772, 773, 776, 777, 780,
-                  781, 785, 786, 787, 788, 793, 794, 795, 796, 797, 798, 799, 802, 803, 804, 805, 806, 807, 808, 809,
-                  824, 825, 826, 827, 828, 829, 830, 831, 832, 835, 836, 850, 851, 852, 853, 864, 865, 866, 867, 880,
-                  881, 882, 883]
+                  510, 511, 512, 513, 514, 515, 516, 517, 518, 519, 520, 521, 524, 525, 526, 527, 528, 531, 535, 536,
+                  537, 538, 539, 543, 544, 545, 554, 555, 556, 557, 558, 561, 562, 563, 564, 565, 566, 567, 568, 569,
+                  582, 583, 584, 587, 588, 589, 592, 593, 597, 598, 599, 600, 601, 605, 606, 616, 617, 618, 621, 626,
+                  631, 632, 649, 659, 660, 674, 675, 676, 679, 680, 681, 682, 683, 684, 685, 688, 689, 694, 695, 696,
+                  697, 698, 699, 710, 711, 716, 717, 718, 746, 755, 756, 759, 760, 767, 768, 771, 772, 773, 776, 777,
+                  780, 781, 785, 786, 787, 788, 793, 794, 795, 796, 797, 798, 799, 802, 803, 804, 805, 806, 807, 808,
+                  809, 824, 825, 826, 827, 828, 829, 830, 831, 832, 835, 836, 850, 851, 852, 853, 864, 865, 866, 867,
+                  880, 881, 882, 883]
 tera_types = ['normal', 'kakutou', 'hikou', 'doku', 'jimen', 'iwa', 'mushi', 'ghost', 'hagane', 'honoo', 'mizu', 'kusa',
               'denki', 'esper', 'koori', 'dragon', 'aku', 'fairy', 'niji']
 average_level = 0
@@ -262,12 +275,29 @@ def make_poke(pokeEntry, index: str, csvdata, config, beginner: bool):
     chosenmon = random.randint(1, 1025)
     while chosenmon in banned_pokemon:
         chosenmon = random.randint(1, 1025)
+    if config['only_legends'] == "yes":
+        chosenmon = legends[random.randint(0, len(legends)-1)]
+        while chosenmon in banned_pokemon:
+            chosenmon = legends[random.randint(0, len(legends) - 1)]
+    if config['only_paradox'] == "yes":
+        chosenmon = paradox[random.randint(0, len(paradox)-1)]
+        while chosenmon in banned_pokemon:
+            chosenmon = paradox[random.randint(0, len(paradox) - 1)]
+    if config['only_legends_and_paradoxes'] == "yes":
+        chosenmon = legends_and_paradox[random.randint(0, len(legends_and_paradox)-1)]
+        while chosenmon in banned_pokemon:
+            chosenmon = legends_and_paradox[random.randint(0, len(legends_and_paradox) - 1)]
+
+    while chosenmon in banned_pokemon:
+        chosenmon = random.randint(1, 1025)
     pokeEntry['poke' + index]['devId'] = fetch_devname(chosenmon, csvdata)
     alt_form_choosen = get_alt_form(chosenmon)
     pokeEntry['poke' + index]['formId'] = alt_form_choosen
     pokeEntry['poke' + index]['sex'] = "DEFAULT"
+    pokeEntry['poke' + index]['level'] = pokeEntry['poke1']['level']
     if beginner is False:
-        pokeEntry['poke' + index]['level'] = pokeEntry['poke'+ index]['level'] + 3
+        choice = random.randint(1,4)
+        pokeEntry['poke' + index]['level'] = pokeEntry['poke'+ index]['level'] + choice
     pokeEntry['poke' + index]['wazaType'] = "DEFAULT"
     pokeEntry['poke' + index]['waza1']['wazaId'] = "WAZA_TERABAASUTO"
     pokeEntry['poke' + index]['waza2']['wazaId'] = "WAZA_NULL"
@@ -287,6 +317,12 @@ def make_poke(pokeEntry, index: str, csvdata, config, beginner: bool):
         pokeEntry['poke' + index]['gemType'] = tera_types[random.randint(0, len(tera_types) - 1)].upper()
     if config['randomize_all_tera_type'] == "yes":
         pokeEntry['poke' + index]['gemType'] = tera_types[random.randint(0, len(tera_types) - 1)].upper()
+    if config['allow_trainers_shiny_pokemon'] == "yes":
+        shinychance = random.randint(0, 15)
+        if shinychance == 7:
+            pokeEntry['poke' + index]['rareType'] = "RARE"
+        else:
+            pokeEntry['poke' + index]['rareType'] = "NO_RARE"
 
     # Add check for ogerpon later
     match chosenmon:
