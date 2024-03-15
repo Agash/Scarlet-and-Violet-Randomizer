@@ -8,6 +8,10 @@ import Randomizer.StaticSpawns.statics as StaticRandomizer
 import Randomizer.Scenes.patchscene as PatchScene
 import Randomizer.FileDescriptor.fileDescriptor as FileDescriptor
 import Randomizer.generationLimiter.generationrando as GenerationLimiter
+import Randomizer.Items.itemrandomizer as ItemRandomizer
+import Randomizer.paldeaTeraRaids.teraRandomizePaldea as PaldeaRaids
+import Randomizer.kitakamiTeraRaids.teraRandomizerTeal as KitakamiRaids
+import Randomizer.blueberryTeraRaids.teraRandomizerIndigo as BlueberryRaids
 import shutil
 import subprocess
 
@@ -26,6 +30,7 @@ def generateBinary(schema: str, json: str, path: str):
         os.path.abspath(json)
         ], capture_output=True
     )
+    #print(proc)
     return proc
 
 
@@ -50,7 +55,14 @@ paths = {
     "gifts": "world/data/event/event_add_pokemon/eventAddPokemon",
     "personal": "avalon/data",
     "statics": "world/data/field/fixed_symbol/fixed_symbol_table",
-    "tms": "world/data/item/itemdata",
+    "itemdata": "world/data/item/itemdata",
+    "hidden_paldea": "world/data/item/hiddenItemDataTable",
+    "hidden_lc": "world/data/item/hiddenItemDataTable_lc",
+    "hidden_kitakami": "world/data/item/hiddenItemDataTable_su1",
+    "hidden_blueberry": "world/data/item/hiddenItemDataTable_su2",
+    "dropitems": "world/data/item/dropitemdata",
+    "pickupitems": "world/data/item/monohiroilItemData",
+    "letsgo": "world/data/item/rummagingItemDataTable",
     "catalog": "pokemon/catalog/catalog",
     "scenes": "world/scene/parts/event/event_scenario/main_scenario/common_0070_",
     "shiny_scenes": "pokemon/data/",
@@ -121,6 +133,44 @@ def randomize_based_on_config(config):
             StaticRandomizer.randomize(config['static_randomizer'])
             generateBinary("Randomizer/StaticSpawns/fixed_symbol_table_array.bfbs",
                            "Randomizer/StaticSpawns/fixed_symbol_table_array.json", paths["statics"])
+    if config['item_randomizer']['is_enabled'] == "yes":
+        ItemRandomizer.randomize(config['item_randomizer'])
+        if config['item_randomizer']['randomize_hidden_items'] == "yes":
+            generateBinary("Randomizer/Items/hiddenItemDataTable_array.bfbs",
+                           "Randomizer/Items/hiddenItemDataTable_array.json", paths["hidden_paldea"])
+            generateBinary("Randomizer/Items/hiddenItemDataTable_lc_array.bfbs",
+                           "Randomizer/Items/hiddenItemDataTable_lc_array.json", paths["hidden_lc"])
+            generateBinary("Randomizer/Items/hiddenItemDataTable_su1_array.bfbs",
+                           "Randomizer/Items/hiddenItemDataTable_su1_array.json", paths["hidden_kitakami"])
+            generateBinary("Randomizer/Items/hiddenItemDataTable_su2_array.bfbs",
+                           "Randomizer/Items/hiddenItemDataTable_su2_array.json", paths["hidden_blueberry"])
+        if config['item_randomizer']['randomize_items_from_pickup_ability'] == "yes":
+            generateBinary("Randomizer/Items/monohiroiItemData_array.bfbs",
+                           "Randomizer/Items/monohiroiItemData_array.json", paths["pickupitems"])
+        if config['item_randomizer']['randomize_letsgo_items'] == "yes":
+            generateBinary("Randomizer/Items/rummagingItemDataTable_array.bfbs",
+                           "Randomizer/Items/rummagingItemDataTable_array.json", paths["letsgo"])
+        if config['item_randomizer']['randomize_pokemon_drops'] == "yes":
+            generateBinary("Randomizer/Items/dropitemdata_array.bfbs",
+                           "Randomizer/Items/dropitemdata_array.json", paths["dropitems"])
+    if config['tera_raids_randomizer']['is_enabled'] == "yes":
+        PaldeaRaids.randomize(config['tera_raids_randomizer'], config)
+        for i in range(1, 7):
+            generateBinary(f"Randomizer/paldeaTeraRaids/raid_enemy_0{str(i)}_array.bfbs",
+                           f"Randomizer/paldeaTeraRaids/raid_enemy_0{str(i)}_array.json",
+                           f"world/data/raid/raid_enemy_0{str(i)}")
+
+        KitakamiRaids.randomize(config['tera_raids_randomizer'], config)
+        for i in range(1, 7):
+            generateBinary(f"Randomizer/kitakamiTeraRaids/su1_raid_enemy_0{str(i)}_array.bfbs",
+                           f"Randomizer/kitakamiTeraRaids/su1_raid_enemy_0{str(i)}_array.json",
+                           f"world/data/raid/su1_raid_enemy_0{str(i)}")
+
+        BlueberryRaids.randomize(config['tera_raids_randomizer'], config)
+        for i in range(1, 7):
+            generateBinary(f"Randomizer/blueberryTeraRaids/su2_raid_enemy_0{str(i)}_array.bfbs",
+                           f"Randomizer/blueberryTeraRaids/su2_raid_enemy_0{str(i)}_array.json",
+                           f"world/data/raid/su2_raid_enemy_0{str(i)}")
     if config['starter_randomizer']['is_enabled'] == "yes" and config['starter_randomizer']['show_starters_in_overworld'] == "yes":  # Updated for 3.0.1
         PatchScene.patchScenes()
         generateBinary("Randomizer/Scenes/poke_resource_table.fbs", "Randomizer/Scenes/poke_resource_table.json",
