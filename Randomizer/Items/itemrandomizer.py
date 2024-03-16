@@ -20,7 +20,9 @@ banned_items = [2311, 2313, 2314, 2315, 2316, 2317, 2318, 2319, 2320, 2321, 2322
                 2386, 2387, 2388, 2389, 2390, 2391, 2392, 2393, 2394, 2395, 2396, 1857, 1858, 1889, 1890, 1891, 1892,
                 1893, 1894, 1895, 1896, 1897, 1898, 1899, 1900, 1901, 1902, 1903, 1909, 1910, 1911, 1912, 1913, 1914,
                 1915, 1916, 1917, 1918, 1919, 1920, 1921, 1922, 1923, 1924, 1925, 1926, 1927, 1928, 1929, 1930, 1931,
-                1932, 1933, 1934, 1935, 1936, 1937, 1938, 1939, 1940, 1941, 1942, 1943, 1944, 1945, 1946]
+                1932, 1933, 1934, 1935, 1936, 1937, 1938, 1939, 1940, 1941, 1942, 1943, 1944, 1945, 1946, 2417, 2418,
+                2419, 2420, 2421, 2422, 2423, 2424, 2425, 2426, 2427, 2428, 2429, 2430, 2431, 2432, 2433, 2434, 2435,
+                2436, 2437, 2551, 2552]
 
 
 def randomizeHiddenItems():
@@ -49,8 +51,9 @@ def randomizeHiddenItems():
     for i in range(0, len(paldeaItems['values'])):
         for j in range(1, 11):
             itemChoice = random.randint(1, 1090)
-            while (itemData['items'][itemChoice]['ItemType'] == "ITEMTYPE_MATERIAL" or itemChoice in banned_items
-            or itemData['items'][itemChoice]['ItemType'] == "ITEMTYPE_EVENT" or
+            while (itemData['items'][itemChoice]['ItemType'] == "ITEMTYPE_MATERIAL" or
+                   itemData['items'][itemChoice]['id'] in banned_items or
+                   itemData['items'][itemChoice]['ItemType'] == "ITEMTYPE_EVENT" or
                    itemData['items'][itemChoice]['ItemType'] == "ITEMTYPE_BATTLE" or
                     itemData['items'][itemChoice]['ItemType'] == "ITEMTYPE_POCKET"):
                 itemChoice = random.randint(1, 1090)
@@ -62,9 +65,10 @@ def randomizeHiddenItems():
     for i in range(0, len(kitakamiItems['values'])):
         for j in range(1, 11):
             itemChoice = random.randint(1, 1090)
-            while (itemData['items'][itemChoice]['ItemType'] == "ITEMTYPE_MATERIAL" or itemChoice in banned_items
-            or itemData['items'][itemChoice]['ItemType'] == "ITEMTYPE_EVENT" or
-                   itemData['items'][itemChoice]['ItemType'] == "ITEMTYPE_BATTLE"or
+            while (itemData['items'][itemChoice]['ItemType'] == "ITEMTYPE_MATERIAL" or
+                   itemData['items'][itemChoice]['id'] in banned_items or
+                   itemData['items'][itemChoice]['ItemType'] == "ITEMTYPE_EVENT" or
+                   itemData['items'][itemChoice]['ItemType'] == "ITEMTYPE_BATTLE" or
                     itemData['items'][itemChoice]['ItemType'] == "ITEMTYPE_POCKET"):
                 itemChoice = random.randint(1, 1090)
             kitakamiItems['values'][i][f'item_{str(j)}']['itemId'] = itemData['items'][itemChoice]['devName']
@@ -75,9 +79,10 @@ def randomizeHiddenItems():
     for i in range(0, len(blueberryItems['values'])):
         for j in range(1, 11):
             itemChoice = random.randint(1, 1090)
-            while (itemData['items'][itemChoice]['ItemType'] == "ITEMTYPE_MATERIAL" or itemChoice in banned_items
-            or itemData['items'][itemChoice]['ItemType'] == "ITEMTYPE_EVENT" or
-                   itemData['items'][itemChoice]['ItemType'] == "ITEMTYPE_BATTLE"or
+            while (itemData['items'][itemChoice]['ItemType'] == "ITEMTYPE_MATERIAL" or
+                   itemData['items'][itemChoice]['id'] in banned_items or
+                   itemData['items'][itemChoice]['ItemType'] == "ITEMTYPE_EVENT" or
+                   itemData['items'][itemChoice]['ItemType'] == "ITEMTYPE_BATTLE" or
                     itemData['items'][itemChoice]['ItemType'] == "ITEMTYPE_POCKET"):
                 itemChoice = random.randint(1, 1090)
             blueberryItems['values'][i][f'item_{str(j)}']['itemId'] = itemData['items'][itemChoice]['devName']
@@ -88,9 +93,10 @@ def randomizeHiddenItems():
     for i in range(0, len(lcItems['values'])):
         for j in range(1, 11):
             itemChoice = random.randint(1, 1090)
-            while (itemData['items'][itemChoice]['ItemType'] == "ITEMTYPE_MATERIAL" or itemChoice in banned_items
-            or itemData['items'][itemChoice]['ItemType'] == "ITEMTYPE_EVENT" or
-                   itemData['items'][itemChoice]['ItemType'] == "ITEMTYPE_BATTLE"or
+            while (itemData['items'][itemChoice]['ItemType'] == "ITEMTYPE_MATERIAL" or
+                   itemData['items'][itemChoice]['id'] in banned_items or
+                   itemData['items'][itemChoice]['ItemType'] == "ITEMTYPE_EVENT" or
+                   itemData['items'][itemChoice]['ItemType'] == "ITEMTYPE_BATTLE" or
                     itemData['items'][itemChoice]['ItemType'] == "ITEMTYPE_POCKET"):
                 itemChoice = random.randint(1, 1090)
             lcItems['values'][i][f'item_{str(j)}']['itemId'] = itemData['items'][itemChoice]['devName']
@@ -129,9 +135,10 @@ def randomizePickUpAbilityItems():
     for i in range(0, len(pickitems['values'])):
         for j in range(1, 31):
             itemChoice = random.randint(1, 1090)
-            while (itemData['items'][itemChoice]['ItemType'] == "ITEMTYPE_MATERIAL" or itemChoice in banned_items
-            or itemData['items'][itemChoice]['ItemType'] == "ITEMTYPE_EVENT" or
-                   itemData['items'][itemChoice]['ItemType'] == "ITEMTYPE_BATTLE"or
+            while (itemData['items'][itemChoice]['ItemType'] == "ITEMTYPE_MATERIAL" or
+                   itemData['items'][itemChoice]['id'] in banned_items or
+                   itemData['items'][itemChoice]['ItemType'] == "ITEMTYPE_EVENT" or
+                   itemData['items'][itemChoice]['ItemType'] == "ITEMTYPE_BATTLE" or
                     itemData['items'][itemChoice]['ItemType'] == "ITEMTYPE_POCKET"):
                 itemChoice = random.randint(1, 1090)
 
@@ -161,9 +168,10 @@ def randomizeLetsGoItems(): # rummagingItemDataTable
     for i in range(0, len(pickitems['values'])):
         for j in range(0, 5):
             itemChoice = random.randint(1, 1090)
-            while (itemData['items'][itemChoice]['ItemType'] == "ITEMTYPE_MATERIAL" or itemChoice in banned_items
-            or itemData['items'][itemChoice]['ItemType'] == "ITEMTYPE_EVENT" or
-                   itemData['items'][itemChoice]['ItemType'] == "ITEMTYPE_BATTLE"or
+            while (itemData['items'][itemChoice]['ItemType'] == "ITEMTYPE_MATERIAL" or
+                   itemData['items'][itemChoice]['id'] in banned_items or
+                   itemData['items'][itemChoice]['ItemType'] == "ITEMTYPE_EVENT" or
+                   itemData['items'][itemChoice]['ItemType'] == "ITEMTYPE_BATTLE" or
                     itemData['items'][itemChoice]['ItemType'] == "ITEMTYPE_POCKET"):
                 itemChoice = random.randint(1, 1090)
 
@@ -191,10 +199,11 @@ def randomizePokemonDrops():
 
     for i in range(0, len(pickitems['values'])):
         itemChoice = random.randint(1, 1090)
-        while (itemData['items'][itemChoice]['ItemType'] == "ITEMTYPE_MATERIAL" or itemChoice in banned_items
-                or itemData['items'][itemChoice]['ItemType'] == "ITEMTYPE_EVENT" or
-                itemData['items'][itemChoice]['ItemType'] == "ITEMTYPE_BATTLE"or
-                    itemData['items'][itemChoice]['ItemType'] == "ITEMTYPE_POCKET"):
+        while (itemData['items'][itemChoice]['ItemType'] == "ITEMTYPE_MATERIAL" or
+               itemData['items'][itemChoice]['id'] in banned_items or
+               itemData['items'][itemChoice]['ItemType'] == "ITEMTYPE_EVENT" or
+               itemData['items'][itemChoice]['ItemType'] == "ITEMTYPE_BATTLE" or
+               itemData['items'][itemChoice]['ItemType'] == "ITEMTYPE_POCKET"):
             itemChoice = random.randint(1, 1090)
 
         pickitems['values'][i]["item1"]['itemid'] = itemData['items'][itemChoice]['devName']

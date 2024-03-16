@@ -117,6 +117,16 @@ gen9 = [906, 907, 908, 909, 910, 911, 912, 913, 914, 915, 916, 917, 918, 919, 92
         972, 973, 974, 975, 976, 977, 978, 979, 980, 981, 982, 983, 984, 985, 986, 987, 988, 989, 990, 991, 992, 993,
         994, 995, 996, 997, 998, 999, 1000, 1001, 1002, 1003, 1004, 1005, 1006, 1007, 1008, 1009, 1010, 1011, 1012,
         1013, 1014, 1015, 1016, 1017, 1018, 1019, 1020, 1021, 1022, 1023, 1024, 1025]
+banned_items = [2311, 2313, 2314, 2315, 2316, 2317, 2318, 2319, 2320, 2321, 2322, 2323, 2324, 2325, 2326, 2327, 2329,
+                2330, 2331, 2332, 2333, 2334, 2335, 2336, 2337, 2338, 2339, 2340, 2341, 2342, 2348, 2349, 2350, 2351,
+                2352, 2353, 2354, 2355, 2356, 2357, 2358, 2359, 2360, 2361, 2362, 2363, 2364, 2365, 2366, 2367, 2368,
+                2369, 2370, 2371, 2372, 2373, 2374, 2375, 2376, 2377, 2378, 2379, 2380, 2381, 2382, 2383, 2384, 2385,
+                2386, 2387, 2388, 2389, 2390, 2391, 2392, 2393, 2394, 2395, 2396, 1857, 1858, 1889, 1890, 1891, 1892,
+                1893, 1894, 1895, 1896, 1897, 1898, 1899, 1900, 1901, 1902, 1903, 1909, 1910, 1911, 1912, 1913, 1914,
+                1915, 1916, 1917, 1918, 1919, 1920, 1921, 1922, 1923, 1924, 1925, 1926, 1927, 1928, 1929, 1930, 1931,
+                1932, 1933, 1934, 1935, 1936, 1937, 1938, 1939, 1940, 1941, 1942, 1943, 1944, 1945, 1946, 2417, 2418,
+                2419, 2420, 2421, 2422, 2423, 2424, 2425, 2426, 2427, 2428, 2429, 2430, 2431, 2432, 2433, 2434, 2435,
+                2436, 2437, 2551, 2552]
 generationLimter = False
 forcedShiny = False
 increasedShiny = False
@@ -511,6 +521,78 @@ def limitPaldeaRaids(config, actualconfig):
     randomizePaldea(actualconfig, allowed_pokemon, allowed_legends)
 
 
+def randomizeTables():
+    lotteryItems = open(os.getcwd() + '\\Randomizer\\paldeaTeraRaids\\' + 'raid_lottery_reward_item_array_clean.json',
+                           'r')
+    lottery = json.load(lotteryItems)
+    lotteryItems.close()
+
+    fixedItems = open(os.getcwd() + '\\Randomizer\\paldeaTeraRaids\\' + 'raid_fixed_reward_item_array_clean.json',
+                           'r')
+    fixed = json.load(fixedItems)
+    fixedItems.close()
+
+    item_info = open(os.getcwd() + '\\Randomizer\\Items\\' + 'pokemon_items_dev.json', 'r')
+    itemData = json.load(item_info)
+    item_info.close()
+    # rate: 0 - 10000 (0% to 100%)
+    # num: # of drops
+    # if category == POKE ignore (pokemon drops - if changed could crash game)
+
+    # fixed
+    # category == poke ignore
+    # no rate
+
+    for i in range(0, len(fixed['values'])):
+        for j in range(0, 15):
+            testName = f'0{str(j)}'
+            if j > 9:
+                testName = str(j)
+
+            if (fixed['values'][i][f'reward_item_{testName}']['category'] == "POKE" or
+            fixed['values'][i][f'reward_item_{testName}']['category'] == "GEM"):
+                continue
+            itemChoice = random.randint(1, 1090)
+            while (itemData['items'][itemChoice]['ItemType'] == "ITEMTYPE_MATERIAL" or
+                   itemData['items'][itemChoice]['id'] in banned_items or
+                   itemData['items'][itemChoice]['ItemType'] == "ITEMTYPE_EVENT" or
+                   itemData['items'][itemChoice]['ItemType'] == "ITEMTYPE_BATTLE" or
+                   itemData['items'][itemChoice]['ItemType'] == "ITEMTYPE_POCKET"):
+                itemChoice = random.randint(1, 1090)
+
+            fixed['values'][i][f'reward_item_{testName}']['itemID'] = itemData['items'][itemChoice]['devName']
+            fixed['values'][i][f'reward_item_{testName}']['num'] = random.randint(1, 5)
+
+    for i in range(0, len(lottery['values'])):
+        for j in range(0, 15):
+            testName = f'0{str(j)}'
+            if j > 9:
+                testName = str(j)
+
+            if (lottery['values'][i][f'reward_item_{testName}']['category'] == "POKE" or
+            lottery['values'][i][f'reward_item_{testName}']['category'] == "GEM"):
+                continue
+            itemChoice = random.randint(1, 1090)
+            while (itemData['items'][itemChoice]['ItemType'] == "ITEMTYPE_MATERIAL" or
+                   itemData['items'][itemChoice]['id'] in banned_items or
+                   itemData['items'][itemChoice]['ItemType'] == "ITEMTYPE_EVENT" or
+                   itemData['items'][itemChoice]['ItemType'] == "ITEMTYPE_BATTLE" or
+                   itemData['items'][itemChoice]['ItemType'] == "ITEMTYPE_POCKET"):
+                itemChoice = random.randint(1, 1090)
+
+            lottery['values'][i][f'reward_item_{testName}']['itemID'] = itemData['items'][itemChoice]['devName']
+            lottery['values'][i][f'reward_item_{testName}']['num'] = random.randint(1, 5)
+            lottery['values'][i][f'reward_item_{testName}']['rate'] = random.randint(500, 10000)
+    outdata = json.dumps(fixed, indent=2)
+    with open(os.getcwd() + '\\Randomizer\\paldeaTeraRaids\\' + f'raid_fixed_reward_item_array.json', 'w') as outfile:
+        outfile.write(outdata)
+
+    outdata = json.dumps(lottery, indent=2)
+    with open(os.getcwd() + '\\Randomizer\\paldeaTeraRaids\\' + f'raid_lottery_reward_item_array.json', 'w') as outfile:
+        outfile.write(outdata)
+    print(f"Randomisation of Tera Raid Tables Done !")
+
+
 def randomize(config, configGlobal):
     if config['force_shiny'] == "yes":
         global forcedShiny
@@ -523,3 +605,4 @@ def randomize(config, configGlobal):
         limitPaldeaRaids(configGlobal['limit_generation'], config)
     elif config['is_enabled'] == "yes":
         randomizePaldea(config, None, legends)
+        randomizeTables()

@@ -2,6 +2,7 @@ import json
 import random
 import os
 import shutil
+from Randomizer.shared_Variables import starters_used as picked_starters
 
 gen1 = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30,
         31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58,
@@ -70,7 +71,6 @@ gen8_legends = [888, 889, 890, 891, 892, 893, 894, 895, 896, 897, 898, 905]
 paradox = [978, 979, 980, 981, 982, 983, 984, 985, 986, 987, 988, 989, 990, 991, 992, 993, 998, 999, 1021,
            1017, 1018, 1019, 1020]
 gen9_legends = [994, 995, 996, 997, 998, 999, 1011, 1014, 1015, 1016, 1021, 1022]
-picked_starters = []
 recreated_species = []
 recreated_altforms = []
 chosen_biomes = []
@@ -1730,19 +1730,20 @@ def randomize(config, globalconfig):
                     entry['aiChange'] = True
                 if globalconfig['trainer_randomizer']['allow_all_trainers_to_terastalize'] == "yes" and beginner is False:
                     entry['changeGem'] = True
-                if globalconfig['trainer_randomizer']['randomnly_choose_single_or_double'] == "yes" and beginner is False:
-                    battleformat = random.randint(1, 2)
-                    if battleformat == 2 and pokemon_to_randomize < 2:
-                        make_poke_random(entry, str(2), csvdata, globalconfig['trainer_randomizer'], beginner, allowed_pokemon)
-                    if battleformat == 2:
+                if "raid_assist_NPC" not in entry['trid']:
+                    if globalconfig['trainer_randomizer']['randomnly_choose_single_or_double'] == "yes" and beginner is False:
+                        battleformat = random.randint(1, 2)
+                        if battleformat == 2 and pokemon_to_randomize < 2:
+                            make_poke_random(entry, str(2), csvdata, globalconfig['trainer_randomizer'], beginner, allowed_pokemon)
+                        if battleformat == 2:
+                            entry['aiDouble'] = True
+                        type_of_battle = f"_{battleformat}vs{battleformat}"
+                        entry['battleType'] = type_of_battle
+                    if globalconfig['trainer_randomizer']['only_double'] == "yes" and beginner is False:
+                        entry['battleType'] = "_2vs2"
                         entry['aiDouble'] = True
-                    type_of_battle = f"_{battleformat}vs{battleformat}"
-                    entry['battleType'] = type_of_battle
-                if globalconfig['trainer_randomizer']['only_double'] == "yes" and beginner is False:
-                    entry['battleType'] = "_2vs2"
-                    entry['aiDouble'] = True
-                    if pokemon_to_randomize < 2:
-                        make_poke_random(entry, str(2), csvdata, globalconfig['trainer_randomizer'], beginner, allowed_pokemon)
+                        if pokemon_to_randomize < 2:
+                            make_poke_random(entry, str(2), csvdata, globalconfig['trainer_randomizer'], beginner, allowed_pokemon)
 
 
             outdata = json.dumps(data, indent=4)

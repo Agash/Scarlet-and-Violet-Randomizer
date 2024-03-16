@@ -2,6 +2,7 @@ import json
 import random
 import os
 import shutil
+from Randomizer.shared_Variables import starters_used as picked_starters
 
 tera_types = ['normal', 'kakutou', 'hikou', 'doku', 'jimen', 'iwa', 'mushi', 'ghost', 'hagane', 'honoo', 'mizu', 'kusa',
               'denki', 'esper', 'koori', 'dragon', 'aku', 'fairy', 'niji']
@@ -403,7 +404,6 @@ def randomize(config):
         names.append(name)
     file.close()
     i = 1
-    picked_starters = []
     for entry in data['values']:
         if config['randomize_all_gifts'] == "no":  # only starters
             if "common_0065_hono" in entry['label'] and config['force_starter_3'] != 0:
@@ -739,6 +739,7 @@ def randomize(config):
                 choice = random.randint(1, 1025)
                 while choice in banned_pokemon:
                     choice = random.randint(1, 1025)
+
 
                 if config['only_legends'] == "yes":
                     val = random.randint(0, len(legends)-1)
@@ -1127,7 +1128,7 @@ def randomize(config):
         entry['pokeData']['waza3']['wazaId'] = "WAZA_NULL"
         entry['pokeData']['waza4']['wazaId'] = "WAZA_NULL"
 
-
+    print(picked_starters)
     outdata = json.dumps(data, indent=4)
     with open(os.getcwd() + "/Randomizer/Starters/" +"eventAddPokemon_array.json", 'w') as outfile:
         outfile.write(outdata)

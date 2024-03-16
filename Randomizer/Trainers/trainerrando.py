@@ -344,6 +344,7 @@ def make_poke(pokeEntry, index: str, csvdata, config, beginner: bool):
             pokeEntry['poke' + index]['gemType'] = "NIJI"
 
 
+# "trid": "raid_assist_NPC_1", - skip them if wanted (for sure for double battles though) [for 1.0.6]
 def randomize(config):
     #load information
     file = open(os.getcwd() + "/Randomizer/Trainers/" +"trdata_array_clean.json", "r")
@@ -412,19 +413,20 @@ def randomize(config):
             entry['aiChange'] = True
         if config['allow_all_trainers_to_terastalize'] == "yes" and beginner is False:
             entry['changeGem'] = True
-        if config['randomnly_choose_single_or_double'] == "yes" and beginner is False:
-            battleformat = random.randint(1, 2)
-            if battleformat == 2 and pokemon_to_randomize < 2:
-                make_poke(entry, str(2), csvdata, config, beginner)
-            if battleformat == 2:
+        if "raid_assist_NPC" not in entry['trid']:
+            if config['randomnly_choose_single_or_double'] == "yes" and beginner is False:
+                battleformat = random.randint(1, 2)
+                if battleformat == 2 and pokemon_to_randomize < 2:
+                    make_poke(entry, str(2), csvdata, config, beginner)
+                if battleformat == 2:
+                    entry['aiDouble'] = True
+                type_of_battle = f"_{battleformat}vs{battleformat}"
+                entry['battleType'] = type_of_battle
+            if config['only_double'] == "yes" and beginner is False:
+                entry['battleType'] = "_2vs2"
                 entry['aiDouble'] = True
-            type_of_battle = f"_{battleformat}vs{battleformat}"
-            entry['battleType'] = type_of_battle
-        if config['only_double'] == "yes" and beginner is False:
-            entry['battleType'] = "_2vs2"
-            entry['aiDouble'] = True
-            if pokemon_to_randomize < 2:
-                make_poke(entry, str(2), csvdata, config, beginner)
+                if pokemon_to_randomize < 2:
+                    make_poke(entry, str(2), csvdata, config, beginner)
 
     outdata = json.dumps(data, indent=4)
     with open(os.getcwd() + "/Randomizer/Trainers/" +"trdata_array.json", 'w') as outfile:

@@ -66,6 +66,8 @@ paths = {
     "catalog": "pokemon/catalog/catalog",
     "scenes": "world/scene/parts/event/event_scenario/main_scenario/common_0070_",
     "shiny_scenes": "pokemon/data/",
+    "item_fixed": "world/data/raid/raid_fixed_reward_item",
+    "item_lottery": "world/data/raid/raid_lottery_reward_item",
     "trpfd": "arc"
 }
 
@@ -159,6 +161,12 @@ def randomize_based_on_config(config):
             generateBinary(f"Randomizer/paldeaTeraRaids/raid_enemy_0{str(i)}_array.bfbs",
                            f"Randomizer/paldeaTeraRaids/raid_enemy_0{str(i)}_array.json",
                            f"world/data/raid/raid_enemy_0{str(i)}")
+        generateBinary(f"Randomizer/paldeaTeraRaids/raid_fixed_reward_item_array.bfbs",
+                        f"Randomizer/paldeaTeraRaids/raid_fixed_reward_item_array.json",
+                        paths["item_fixed"])
+        generateBinary(f"Randomizer/paldeaTeraRaids/raid_lottery_reward_item_array.bfbs",
+                        f"Randomizer/paldeaTeraRaids/raid_lottery_reward_item_array.json",
+                        paths["item_lottery"])
 
         KitakamiRaids.randomize(config['tera_raids_randomizer'], config)
         for i in range(1, 7):
