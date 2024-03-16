@@ -1256,13 +1256,17 @@ def randomizeStarters(config, pokemon, allowedlist, names, allowed_legends, allo
     file = open(os.getcwd() + "/Randomizer/Starters/" + "pokemon_list_info.json", 'r')
     pokedata = json.load(file)
     file.close()
-    i = 1
+    i = 0
+    shinyforced = [0] * 3
     if config['ban_stage1_pokemon'] == "yes":
         bannedStages.extend(sharedVar.gen9Stage1)
     if config['ban_stage2_pokemon'] == "yes":
         bannedStages.extend(sharedVar.gen9Stage2)
     if config['ban_singlestage_pokemon'] == "yes":
         bannedStages.extend(sharedVar.no_evolution)
+    if config['force_one_starter_to_be_shiny'] == "yes":
+        choice = random.randint(0,2)
+        shinyforced[choice] = 1
 
     for entry in pokemon['values']:
         if config['randomize_all_gifts'] == "no":  # only starters
@@ -1332,6 +1336,12 @@ def randomizeStarters(config, pokemon, allowedlist, names, allowed_legends, allo
                                 flip_starter_texture(choice)
                         else:
                             entry['pokeData']['rareType'] = "NO_RARE"
+                    if i < 3:
+                        if shinyforced[i] == 1:
+                            entry['pokeData']['rareType'] = "RARE"
+                            if config['shiny_overworld'] == "yes":
+                                flip_starter_texture(choice)
+                    i = i +1
                     picked_starters.append(choice)
         else:  # everything plus starters
             choice = allowedlist[random.randint(0, len(allowedlist)-1)]
@@ -1368,6 +1378,10 @@ def randomizeStarters(config, pokemon, allowedlist, names, allowed_legends, allo
                     entry['pokeData']['rareType'] = "RARE"
                 else:
                     entry['pokeData']['rareType'] = "NO_RARE"
+            if i < 3:
+                if shinyforced[i] == 1:
+                    entry['pokeData']['rareType'] = "RARE"
+            i = i +1
 
             if config['randomize_tera_type'] == "yes":
                 entry['pokeData']['gemType'] = tera_types[random.randint(0, len(tera_types) - 1)].upper()
