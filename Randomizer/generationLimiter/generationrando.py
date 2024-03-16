@@ -2,6 +2,7 @@ import json
 import random
 import os
 import shutil
+from Randomizer.shared_Variables import starters_used as picked_starters
 
 gen1 = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30,
         31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58,
@@ -70,7 +71,6 @@ gen8_legends = [888, 889, 890, 891, 892, 893, 894, 895, 896, 897, 898, 905]
 paradox = [978, 979, 980, 981, 982, 983, 984, 985, 986, 987, 988, 989, 990, 991, 992, 993, 998, 999, 1021,
            1017, 1018, 1019, 1020]
 gen9_legends = [994, 995, 996, 997, 998, 999, 1011, 1014, 1015, 1016, 1021, 1022]
-picked_starters = []
 recreated_species = []
 recreated_altforms = []
 chosen_biomes = []
@@ -110,14 +110,14 @@ banned_pokemon = [10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 29, 30, 31
                   303, 304, 305, 306, 309, 310, 315, 318, 319, 320, 321, 327, 337, 338, 343, 344, 345, 346, 347, 348,
                   351, 352, 359, 360, 363, 364, 365, 366, 367, 368, 369, 399, 400, 406, 407, 412, 413, 414, 420, 421,
                   427, 428, 431, 432, 439, 441, 451, 452, 455, 458, 463, 465, 468, 494, 504, 505, 506, 507, 508, 509,
-                  510, 511, 512, 513, 514, 515, 516, 517, 518, 519, 520, 521, 524, 525, 526, 527, 528, 531, 526, 537,
-                  538, 539, 543, 544, 545, 554, 555, 556, 557, 558, 561, 562, 563, 564, 565, 566, 567, 568, 569, 582,
-                  583, 584, 587, 588, 589, 592, 593, 597, 598, 599, 600, 601, 605, 606, 616, 617, 618, 621, 626, 631,
-                  632, 649, 659, 660, 674, 675, 676, 679, 680, 681, 682, 683, 684, 685, 688, 689, 694, 695, 696, 697,
-                  698, 699, 710, 711, 716, 717, 718, 746, 755, 756, 759, 760, 767, 768, 771, 772, 773, 776, 777, 780,
-                  781, 785, 786, 787, 788, 793, 794, 795, 796, 797, 798, 799, 802, 803, 804, 805, 806, 807, 808, 809,
-                  824, 825, 826, 827, 828, 829, 830, 831, 832, 835, 836, 850, 851, 852, 853, 864, 865, 866, 867, 880,
-                  881, 882, 883]
+                  510, 511, 512, 513, 514, 515, 516, 517, 518, 519, 520, 521, 524, 525, 526, 527, 528, 531, 535, 536,
+                  537, 538, 539, 543, 544, 545, 554, 555, 556, 557, 558, 561, 562, 563, 564, 565, 566, 567, 568, 569,
+                  582, 583, 584, 587, 588, 589, 592, 593, 597, 598, 599, 600, 601, 605, 606, 616, 617, 618, 621, 626,
+                  631, 632, 649, 659, 660, 674, 675, 676, 679, 680, 681, 682, 683, 684, 685, 688, 689, 694, 695, 696,
+                  697, 698, 699, 710, 711, 716, 717, 718, 746, 755, 756, 759, 760, 767, 768, 771, 772, 773, 776, 777,
+                  780, 781, 785, 786, 787, 788, 793, 794, 795, 796, 797, 798, 799, 802, 803, 804, 805, 806, 807, 808,
+                  809, 824, 825, 826, 827, 828, 829, 830, 831, 832, 835, 836, 850, 851, 852, 853, 864, 865, 866, 867,
+                  880, 881, 882, 883]
 
 
 # ## Utility functions for biomes ## #
@@ -621,7 +621,7 @@ def pick_random_biome1():
 
 def pick_random_biomerest():
     possible_biomes = ["GRASS", "FOREST", "SWAMP", "LAKE", "TOWN", "MOUNTAIN", "BAMBOO", "MINE", "CAVE", "OLIVE",
-                       "UNDERGROUND", "RIVER", "ROCKY", "BEACH", "SNOW", "OSEAN", "RUINS", "FLOWER", "NONE"]
+                       "UNDERGROUND", "RIVER", "ROCKY", "BEACH", "SNOW", "OSEAN", "RUINS", "FLOWER"]
     choice = possible_biomes[random.randint(0, len(possible_biomes) - 1)]
     while choice in chosen_biomes:
         choice = possible_biomes[random.randint(0, len(possible_biomes) - 1)]
@@ -1251,6 +1251,9 @@ def randomizeEvolutions(pokemon, allowedlist):
 
 
 def randomizeStarters(config, pokemon, allowedlist, names, allowed_legends, allowed_generations):
+    file = open(os.getcwd() + "/Randomizer/Starters/" + "pokemon_list_info.json", 'r')
+    pokedata = json.load(file)
+    file.close()
     i = 1
     for entry in pokemon['values']:
         if config['randomize_all_gifts'] == "no":  # only starters
@@ -1279,6 +1282,7 @@ def randomizeStarters(config, pokemon, allowedlist, names, allowed_legends, allo
                         choice = allowed_legends[val]
 
                 if choice not in picked_starters:
+
                     entry['pokeData']['devId'] = fetch_devname(choice, names)
                     alt_form_choosen = get_alt_form(choice)
                     entry['pokeData']['formId'] = alt_form_choosen
@@ -1397,8 +1401,10 @@ def make_poke_random(pokeEntry, index: str, csvdata, config, beginner: bool, all
     alt_form_choosen = get_alt_form(chosenmon)
     pokeEntry['poke' + index]['formId'] = alt_form_choosen
     pokeEntry['poke' + index]['sex'] = "DEFAULT"
+    pokeEntry['poke' + index]['level'] = pokeEntry['poke1']['level']
     if beginner is False:
-        pokeEntry['poke' + index]['level'] = pokeEntry['poke'+ index]['level'] + 3
+        choice = random.randint(1, 4)
+        pokeEntry['poke' + index]['level'] = pokeEntry['poke' + index]['level'] + choice
     pokeEntry['poke' + index]['wazaType'] = "DEFAULT"
     pokeEntry['poke' + index]['waza1']['wazaId'] = "WAZA_TERABAASUTO"
     pokeEntry['poke' + index]['waza2']['wazaId'] = "WAZA_NULL"
@@ -1418,7 +1424,12 @@ def make_poke_random(pokeEntry, index: str, csvdata, config, beginner: bool, all
         pokeEntry['poke' + index]['gemType'] = tera_types[random.randint(0, len(tera_types) - 1)].upper()
     if config['randomize_all_tera_type'] == "yes":
         pokeEntry['poke' + index]['gemType'] = tera_types[random.randint(0, len(tera_types) - 1)].upper()
-
+    if config['allow_trainers_shiny_pokemon'] == "yes":
+        shinychance = random.randint(0, 15)
+        if shinychance == 7:
+            pokeEntry['poke' + index]['rareType'] = "RARE"
+        else:
+            pokeEntry['poke' + index]['rareType'] = "NO_RARE"
     # Add check for ogerpon later
     match chosenmon:
         case 1011:
@@ -1438,6 +1449,45 @@ def make_poke_random(pokeEntry, index: str, csvdata, config, beginner: bool, all
         case 1021:
             pokeEntry['poke' + index]['gemType'] = "NIJI"
     picked_trainer.append(chosenmon)
+
+
+def randomizeEvolutionsEveryLevel(allowedpokemon):
+    template_evolution = {
+        "level": 0,
+        "condition": 0,
+        "parameter": 0,
+        "reserved3": 0,
+        "reserved4": 0,
+        "reserved5": 0,
+        "species": 0,
+        "form": 0
+    }
+
+    evoList = []
+    for i in range(1, 101):
+        template_evolution['level'] = i
+        template_evolution['condition'] = 4
+        species_choice = allowedpokemon[random.randint(0, len(allowedpokemon)-1)]
+        while species_choice in banned_pokemon:
+            species_choice = allowedpokemon[random.randint(0, len(allowedpokemon)-1)]
+        template_evolution['species'] = species_choice
+        template_evolution['form'] = get_alt_form(species_choice)
+        evoList.append(template_evolution)
+
+        template_evolution = {
+            "level": 0,
+            "condition": 0,
+            "parameter": 0,
+            "reserved3": 0,
+            "reserved4": 0,
+            "reserved5": 0,
+            "species": 0,
+            "form": 0
+        }
+
+    return evoList
+
+    return evoList
 
 
 def randomize(config, globalconfig):
@@ -1559,6 +1609,19 @@ def randomize(config, globalconfig):
             with open(os.getcwd() + "/Randomizer/PersonalData/" + "personal_array.json", 'w') as outfile:
                 outfile.write(outdata)
             print("Limted Generation Randomisation Of Evos Done !")
+        if (globalconfig['personal_data_randomizer']['is_enabled'] == "yes" and
+            globalconfig['personal_data_randomizer']['let_pokemon_evolve_every_level'] == "yes"
+            and config['evolution_limiter'] == "yes"):
+            file = open(os.getcwd() + "/Randomizer/PersonalData/" + "personal_array.json", "r")
+            data = json.load(file)
+            file.close()
+            for pokemon in data['entry']:
+                pokemon['evolutions'] = randomizeEvolutionsEveryLevel(allowed_pokemon)
+
+            outdata = json.dumps(data, indent=4)
+            with open(os.getcwd() + "/Randomizer/PersonalData/" + "personal_array.json", 'w') as outfile:
+                outfile.write(outdata)
+            print("Limted Generation Randomisation Of Evos Done !")
         if (globalconfig['starter_randomizer']['is_enabled'] == "yes"
             and config['starter_limiter'] == "yes"):
             if os.path.exists(os.getcwd() + "\\Randomizer\\Starters\\" + f'output'):
@@ -1667,19 +1730,20 @@ def randomize(config, globalconfig):
                     entry['aiChange'] = True
                 if globalconfig['trainer_randomizer']['allow_all_trainers_to_terastalize'] == "yes" and beginner is False:
                     entry['changeGem'] = True
-                if globalconfig['trainer_randomizer']['randomnly_choose_single_or_double'] == "yes" and beginner is False:
-                    battleformat = random.randint(1, 2)
-                    if battleformat == 2 and pokemon_to_randomize < 2:
-                        make_poke_random(entry, str(2), csvdata, globalconfig['trainer_randomizer'], beginner, allowed_pokemon)
-                    if battleformat == 2:
+                if "raid_assist_NPC" not in entry['trid']:
+                    if globalconfig['trainer_randomizer']['randomnly_choose_single_or_double'] == "yes" and beginner is False:
+                        battleformat = random.randint(1, 2)
+                        if battleformat == 2 and pokemon_to_randomize < 2:
+                            make_poke_random(entry, str(2), csvdata, globalconfig['trainer_randomizer'], beginner, allowed_pokemon)
+                        if battleformat == 2:
+                            entry['aiDouble'] = True
+                        type_of_battle = f"_{battleformat}vs{battleformat}"
+                        entry['battleType'] = type_of_battle
+                    if globalconfig['trainer_randomizer']['only_double'] == "yes" and beginner is False:
+                        entry['battleType'] = "_2vs2"
                         entry['aiDouble'] = True
-                    type_of_battle = f"_{battleformat}vs{battleformat}"
-                    entry['battleType'] = type_of_battle
-                if globalconfig['trainer_randomizer']['only_double'] == "yes" and beginner is False:
-                    entry['battleType'] = "_2vs2"
-                    entry['aiDouble'] = True
-                    if pokemon_to_randomize < 2:
-                        make_poke_random(entry, str(2), csvdata, globalconfig['trainer_randomizer'], beginner, allowed_pokemon)
+                        if pokemon_to_randomize < 2:
+                            make_poke_random(entry, str(2), csvdata, globalconfig['trainer_randomizer'], beginner, allowed_pokemon)
 
 
             outdata = json.dumps(data, indent=4)

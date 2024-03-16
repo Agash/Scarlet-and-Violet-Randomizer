@@ -46,14 +46,14 @@ banned_pokemon = [10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 29, 30, 31
                   303, 304, 305, 306, 309, 310, 315, 318, 319, 320, 321, 327, 337, 338, 343, 344, 345, 346, 347, 348,
                   351, 352, 359, 360, 363, 364, 365, 366, 367, 368, 369, 399, 400, 406, 407, 412, 413, 414, 420, 421,
                   427, 428, 431, 432, 439, 441, 451, 452, 455, 458, 463, 465, 468, 494, 504, 505, 506, 507, 508, 509,
-                  510, 511, 512, 513, 514, 515, 516, 517, 518, 519, 520, 521, 524, 525, 526, 527, 528, 531, 526, 537,
-                  538, 539, 543, 544, 545, 554, 555, 556, 557, 558, 561, 562, 563, 564, 565, 566, 567, 568, 569, 582,
-                  583, 584, 587, 588, 589, 592, 593, 597, 598, 599, 600, 601, 605, 606, 616, 617, 618, 621, 626, 631,
-                  632, 649, 659, 660, 674, 675, 676, 679, 680, 681, 682, 683, 684, 685, 688, 689, 694, 695, 696, 697,
-                  698, 699, 710, 711, 716, 717, 718, 746, 755, 756, 759, 760, 767, 768, 771, 772, 773, 776, 777, 780,
-                  781, 785, 786, 787, 788, 793, 794, 795, 796, 797, 798, 799, 802, 803, 804, 805, 806, 807, 808, 809,
-                  824, 825, 826, 827, 828, 829, 830, 831, 832, 835, 836, 850, 851, 852, 853, 864, 865, 866, 867, 880,
-                  881, 882, 883]
+                  510, 511, 512, 513, 514, 515, 516, 517, 518, 519, 520, 521, 524, 525, 526, 527, 528, 531, 535, 536,
+                  537, 538, 539, 543, 544, 545, 554, 555, 556, 557, 558, 561, 562, 563, 564, 565, 566, 567, 568, 569,
+                  582, 583, 584, 587, 588, 589, 592, 593, 597, 598, 599, 600, 601, 605, 606, 616, 617, 618, 621, 626,
+                  631, 632, 649, 659, 660, 674, 675, 676, 679, 680, 681, 682, 683, 684, 685, 688, 689, 694, 695, 696,
+                  697, 698, 699, 710, 711, 716, 717, 718, 746, 755, 756, 759, 760, 767, 768, 771, 772, 773, 776, 777,
+                  780, 781, 785, 786, 787, 788, 793, 794, 795, 796, 797, 798, 799, 802, 803, 804, 805, 806, 807, 808,
+                  809, 824, 825, 826, 827, 828, 829, 830, 831, 832, 835, 836, 850, 851, 852, 853, 864, 865, 866, 867,
+                  880, 881, 882, 883]
 # abilities are any number between 1 and 298, inclusive
 banned_abilities = [278, 307]  # Zero to Hero and Tera Shift banned
 randomize_abilities = 0
@@ -338,6 +338,43 @@ def randomizeEvolutions(pokemon):
     return pokemon
 
 
+def randomizeEvolutionsEveryLevel():
+    template_evolution = {
+        "level": 0,
+        "condition": 0,
+        "parameter": 0,
+        "reserved3": 0,
+        "reserved4": 0,
+        "reserved5": 0,
+        "species": 0,
+        "form": 0
+    }
+
+    evoList = []
+    for i in range(1, 101):
+        template_evolution['level'] = i
+        template_evolution['condition'] = 4
+        species_choice = random.randint(1, 1025)
+        while species_choice in banned_pokemon:
+            species_choice = random.randint(1, 1025)
+        template_evolution['species'] = species_choice
+        template_evolution['form'] = get_alt_form(species_choice)
+        evoList.append(template_evolution)
+
+        template_evolution = {
+            "level": 0,
+            "condition": 0,
+            "parameter": 0,
+            "reserved3": 0,
+            "reserved4": 0,
+            "reserved5": 0,
+            "species": 0,
+            "form": 0
+        }
+
+    return evoList
+
+
 # To be completed - Trying to figure out how to keep
 # same total.
 def randomizeBaseStatsWeighted(pokemon):
@@ -426,6 +463,8 @@ def randomize(config, configglobal):
             pokemon = randomizeMoveset(pokemon)
         if config['randomize_evolutions'] == "yes" and configglobal['limit_generation']['evolution_limiter'] == "no":
             pokemon = randomizeEvolutions(pokemon)
+        if config['let_pokemon_evolve_every_level'] == "yes" and configglobal['limit_generation']['evolution_limiter'] == "no":
+            pokemon['evolutions'] = randomizeEvolutionsEveryLevel()
         if config['randomize_types'] == "yes":
             pokemon = randomizeTypes(pokemon)
     
