@@ -42,6 +42,12 @@ def open_config():
 
 
 def create_modpack():
+    if os.path.exists(os.getcwd() + "\\randomizer-patched-shiny"):
+        shutil.rmtree(os.getcwd() + "\\randomizer-patched-shiny")
+
+    if os.path.exists(os.getcwd() + "\\randomizer-patched"):
+        shutil.rmtree(os.getcwd() + "\\randomizer-patched")
+
     if os.access("output/", mode=777) == True: #exists
         shutil.rmtree("output/")
     os.makedirs("output/", mode=777, exist_ok=True)
@@ -149,7 +155,7 @@ def randomize_based_on_config(config):
         if config['item_randomizer']['randomize_items_from_pickup_ability'] == "yes":
             generateBinary("Randomizer/Items/monohiroiItemData_array.bfbs",
                            "Randomizer/Items/monohiroiItemData_array.json", paths["pickupitems"])
-        if config['item_randomizer']['randomize_letsgo_items'] == "yes":
+        if config['item_randomizer']['randomize_synchro_items'] == "yes":
             generateBinary("Randomizer/Items/rummagingItemDataTable_array.bfbs",
                            "Randomizer/Items/rummagingItemDataTable_array.json", paths["letsgo"])
         if config['item_randomizer']['randomize_pokemon_drops'] == "yes":
@@ -191,6 +197,8 @@ def randomize_based_on_config(config):
 
 
 def randomize():
+    if os.path.exists(os.getcwd() + "\\all-created-randomizer"):
+        shutil.rmtree(os.getcwd() + "\\all-created-randomizer")
     config = open_config()
     if (config['bulk_creation']['is_enabled'] == "no" or
             config['bulk_creation']["number_of_unique_randomizers_to_create"] <= 1):
@@ -212,10 +220,10 @@ def randomize():
                     FileDescriptor.patchFileDescriptor()
                     generateBinary("Randomizer/FileDescriptor/data.fbs", "Randomizer/FileDescriptor/data.json",
                                    paths['trpfd'])
-                    if os.path.exists(os.getcwd() + "\\randomizer-shiny"):
-                        shutil.rmtree(os.getcwd() + "\\randomizer-shiny")
-                    shutil.copytree('output/', 'randomizer-shiny/')
-                    shutil.make_archive("randomizer-shiny/randomizer-shiny-overworld", "zip", "output/")
+                    if os.path.exists(os.getcwd() + "\\randomizer-patched-shiny"):
+                        shutil.rmtree(os.getcwd() + "\\randomizer-patched-shiny")
+                    shutil.copytree('output/', 'randomizer-patched-shiny/')
+                    shutil.make_archive("randomizer-patched-shiny/randomizer-shiny-overworld", "zip", "output/")
         else:
             shutil.make_archive("output/randomizer", "zip", "output/romfs/")
 
@@ -247,10 +255,10 @@ def randomize():
                         generateBinary("Randomizer/FileDescriptor/data.fbs", "Randomizer/FileDescriptor/data.json",
                                        paths['trpfd'])
                         shinyFile = True
-                        if os.path.exists(os.getcwd() + "\\randomizer-shiny"):
-                            shutil.rmtree(os.getcwd() + "\\randomizer-shiny")
-                        shutil.copytree('output/', 'randomizer-shiny/')
-                        shutil.make_archive("randomizer-shiny/randomizer-shiny-overworld", "zip", "output/")
+                        if os.path.exists(os.getcwd() + "\\randomizer-patched-shiny"):
+                            shutil.rmtree(os.getcwd() + "\\randomizer-patched-shiny")
+                        shutil.copytree('output/', 'randomizer-patched-shiny/')
+                        shutil.make_archive("randomizer-patched-shiny/randomizer-shiny-overworld", "zip", "output/")
                 if i == 0:
                     if os.path.exists(os.getcwd() + f"\\all-created-randomizer"):
                         shutil.rmtree(os.getcwd() + f"\\all-created-randomizer")
@@ -258,15 +266,15 @@ def randomize():
                     shutil.copytree('randomizer-patched/',
                                     'all-created-randomizer/randomizer_0/randomizer-patched')
                     if shinyFile is True:
-                        shutil.copytree('randomizer-shiny/',
-                                        'all-created-randomizer/randomizer_0/randomizer-shiny')
+                        shutil.copytree('randomizer-patched-shiny/',
+                                        'all-created-randomizer/randomizer_0/randomizer-patched-shiny')
                 else:
                     os.makedirs(f"all-created-randomizer/randomizer_{i}")
                     shutil.copytree('randomizer-patched/',
                                     f'all-created-randomizer/randomizer_{i}/randomizer-patched')
                     if shinyFile is True:
-                        shutil.copytree('randomizer-shiny/',
-                                        f'all-created-randomizer/randomizer_{i}/randomizer-shiny')
+                        shutil.copytree('randomizer-patched-shiny/',
+                                        f'all-created-randomizer/randomizer_{i}/randomizer-patched-shiny')
             else:
                 shutil.make_archive("output/randomizer", "zip", "output/romfs/")
 

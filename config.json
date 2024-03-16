@@ -28,7 +28,7 @@
     "bulk_creation": {
         "is_enabled": "no",
         "_comment": "Default is 0 - if enabled and left at 0 then only 1 will be created",
-        "number_of_unique_randomizers_to_create": 3
+        "number_of_unique_randomizers_to_create": 12
     },
     "trainer_randomizer": {
         "_comment": "Updated for 3.0.0",
@@ -45,7 +45,16 @@
         "only_double": "yes",
         "only_legends": "no",
         "only_paradox": "no",
-        "only_legends_and_paradoxes": "no"
+        "only_legends_and_paradoxes": "no",
+        "force_important_trainers_to6_pokemon": "yes",
+        "_comment0": "Note Raid_NPC are part of important trainers",
+        "only_randomize_important_trainers": "no",
+        "impo_trainers_only_legends": "no",
+        "impo_trainers_only_paradox": "no",
+        "impo_trainers_only_both": "yes",
+        "tera_raid_trainers_only_legends": "yes",
+        "tera_raid_trainers_only_paradox": "no",
+        "tera_raid_trainers_only_both": "no"
     },
     "personal_data_randomizer": {
         "_comment": "Fully Updated to 3.0.0",
@@ -54,17 +63,17 @@
         "randomize_types": "no",
         "ban_wonder_guard": "yes",
         "randomize_movesets": "yes",
-        "randomize_stats_with_same_total": "no",
+        "randomize_stats_with_same_total": "yes",
         "randomize_stats_with_different_total": "no",
-        "randomize_evolutions": "no",
+        "randomize_evolutions": "yes",
         "let_pokemon_evolve_every_level": "no"
     },
     "starter_randomizer": {
         "_comment0": "Fully updated for 3.0",
         "is_enabled": "yes",
-        "all_shiny": "yes",
-        "higher_shiny_chance": "no",
-        "randomize_all_gifts": "no",
+        "all_shiny": "no",
+        "higher_shiny_chance": "yes",
+        "randomize_all_gifts": "yes",
         "randomize_tera_type": "yes",
         "show_starters_in_overworld": "yes",
         "only_legends": "no",
@@ -91,7 +100,7 @@
         "randomize_tera_type_for_static_tera": "yes",
         "only_legends": "no",
         "only_paradox": "no",
-        "only_legends_and_paradoxes": "yes"
+        "only_legends_and_paradoxes": "no"
     },
     "item_randomizer": {
         "_comment": "Only works on hidden items - I can't find file for overworld items.",
@@ -99,17 +108,17 @@
         "randomize_hidden_items": "yes",
         "randomize_items_from_pickup_ability": "no",
         "_comment2": "This could also be synchro machine",
-        "randomize_letsgo_items": "yes",
+        "randomize_synchro_items": "yes",
         "_comment1": "Following setting if active will make TMS uncraftable",
-        "randomize_pokemon_drops": "no"
+        "randomize_pokemon_drops": "yes"
     },
     "tera_raids_randomizer": {
         "_comment": "Still in Beta - Expect Issues",
         "is_enabled": "yes",
         "only_legends": "no",
         "only_paradox": "no",
-        "only_legends_and_paradox": "yes",
-        "force_shiny": "yes",
-        "increased_shiny_chance": "no"
+        "only_legends_and_paradox": "no",
+        "force_shiny": "no",
+        "increased_shiny_chance": "yes"
     }
 }
