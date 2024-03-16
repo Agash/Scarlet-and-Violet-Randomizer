@@ -73,6 +73,7 @@
         "is_enabled": "yes",
         "all_shiny": "no",
         "higher_shiny_chance": "yes",
+        "force_one_starter_to_be_shiny": "no",
         "randomize_all_gifts": "yes",
         "randomize_tera_type": "yes",
         "show_starters_in_overworld": "yes",

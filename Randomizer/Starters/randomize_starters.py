@@ -406,13 +406,16 @@ def randomize(config):
         names.append(name)
     file.close()
     i = 1
-
+    shinyforced = [0] * 3
     if config['ban_stage1_pokemon'] == "yes":
         bannedStages.extend(sharedVar.gen9Stage1)
     if config['ban_stage2_pokemon'] == "yes":
         bannedStages.extend(sharedVar.gen9Stage2)
     if config['ban_singlestage_pokemon'] == "yes":
         bannedStages.extend(sharedVar.no_evolution)
+    if config['force_one_starter_to_be_shiny'] == "yes":
+        choice = random.randint(0,2)
+        shinyforced[choice] = 1
 
     for entry in data['values']:
         if config['randomize_all_gifts'] == "no":  # only starters
@@ -447,7 +450,7 @@ def randomize(config):
                         case _:
                             pass
 
-                if config['all_shiny'] == "yes":
+                if config['all_shiny'] == "yes" or shinyforced[2] == 1:
                     entry['pokeData']['rareType'] = "RARE"
                     if config['shiny_overworld'] == "yes":
                         flip_starter_texture(choice)
@@ -513,7 +516,7 @@ def randomize(config):
                             case _:
                                 pass
 
-                    if config['all_shiny'] == "yes":
+                    if config['all_shiny'] == "yes" or shinyforced[2] == 1:
                         entry['pokeData']['rareType'] = "RARE"
                         if config['shiny_overworld'] == "yes":
                             flip_starter_texture(choice)
@@ -557,7 +560,7 @@ def randomize(config):
                         case _:
                             pass
 
-                if config['all_shiny'] == "yes":
+                if config['all_shiny'] == "yes" or shinyforced[1] == 1:
                     entry['pokeData']['rareType'] = "RARE"
                     if config['shiny_overworld'] == "yes":
                         flip_starter_texture(choice)
@@ -622,7 +625,7 @@ def randomize(config):
                             case _:
                                 pass
 
-                    if config['all_shiny'] == "yes":
+                    if config['all_shiny'] == "yes" or shinyforced[1] == 1:
                         entry['pokeData']['rareType'] = "RARE"
                         if config['shiny_overworld'] == "yes":
                             flip_starter_texture(choice)
@@ -666,7 +669,7 @@ def randomize(config):
                         case _:
                             pass
 
-                if config['all_shiny'] == "yes":
+                if config['all_shiny'] == "yes" or shinyforced[0] == 1:
                     entry['pokeData']['rareType'] = "RARE"
                     if config['shiny_overworld'] == "yes":
                         flip_starter_texture(choice)
@@ -731,7 +734,7 @@ def randomize(config):
                             case _:
                                 pass
 
-                    if config['all_shiny'] == "yes":
+                    if config['all_shiny'] == "yes" or shinyforced[0] == 1:
                         entry['pokeData']['rareType'] = "RARE"
                         if config['shiny_overworld'] == "yes":
                             flip_starter_texture(choice)
@@ -836,7 +839,7 @@ def randomize(config):
                         case _:
                             pass
 
-                if config['all_shiny'] == "yes":
+                if config['all_shiny'] == "yes" or shinyforced[2] == 1:
                     entry['pokeData']['rareType'] = "RARE"
                     if config['shiny_overworld'] == "yes":
                         flip_starter_texture(choice)
@@ -900,7 +903,7 @@ def randomize(config):
                             case _:
                                 pass
 
-                    if config['all_shiny'] == "yes":
+                    if config['all_shiny'] == "yes" or shinyforced[2] == 1:
                         entry['pokeData']['rareType'] = "RARE"
                         if config['shiny_overworld'] == "yes":
                             flip_starter_texture(choice)
@@ -944,7 +947,7 @@ def randomize(config):
                         case _:
                             pass
 
-                if config['all_shiny'] == "yes":
+                if config['all_shiny'] == "yes" or shinyforced[1] == 1:
                     entry['pokeData']['rareType'] = "RARE"
                     if config['shiny_overworld'] == "yes":
                         flip_starter_texture(choice)
@@ -1009,7 +1012,7 @@ def randomize(config):
                             case _:
                                 pass
 
-                    if config['all_shiny'] == "yes":
+                    if config['all_shiny'] == "yes" or shinyforced[1] == 1:
                         entry['pokeData']['rareType'] = "RARE"
                         if config['shiny_overworld'] == "yes":
                             flip_starter_texture(choice)
@@ -1053,7 +1056,7 @@ def randomize(config):
                         case _:
                             pass
 
-                if config['all_shiny'] == "yes":
+                if config['all_shiny'] == "yes" or shinyforced[0] == 1:
                     entry['pokeData']['rareType'] = "RARE"
                     if config['shiny_overworld'] == "yes":
                         flip_starter_texture(choice)
@@ -1118,7 +1121,7 @@ def randomize(config):
                             case _:
                                 pass
 
-                    if config['all_shiny'] == "yes":
+                    if config['all_shiny'] == "yes" or shinyforced[0] == 1:
                         entry['pokeData']['rareType'] = "RARE"
                         if config['shiny_overworld'] == "yes":
                             flip_starter_texture(choice)
