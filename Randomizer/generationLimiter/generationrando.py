@@ -3,6 +3,7 @@ import random
 import os
 import shutil
 from Randomizer.shared_Variables import starters_used as picked_starters
+import Randomizer.shared_Variables as sharedVar
 
 gen1 = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30,
         31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58,
@@ -71,6 +72,7 @@ gen8_legends = [888, 889, 890, 891, 892, 893, 894, 895, 896, 897, 898, 905]
 paradox = [978, 979, 980, 981, 982, 983, 984, 985, 986, 987, 988, 989, 990, 991, 992, 993, 998, 999, 1021,
            1017, 1018, 1019, 1020]
 gen9_legends = [994, 995, 996, 997, 998, 999, 1011, 1014, 1015, 1016, 1021, 1022]
+bannedStages = []
 recreated_species = []
 recreated_altforms = []
 chosen_biomes = []
@@ -1255,11 +1257,18 @@ def randomizeStarters(config, pokemon, allowedlist, names, allowed_legends, allo
     pokedata = json.load(file)
     file.close()
     i = 1
+    if config['ban_stage1_pokemon'] == "yes":
+        bannedStages.extend(sharedVar.gen9Stage1)
+    if config['ban_stage2_pokemon'] == "yes":
+        bannedStages.extend(sharedVar.gen9Stage2)
+    if config['ban_singlestage_pokemon'] == "yes":
+        bannedStages.extend(sharedVar.no_evolution)
+
     for entry in pokemon['values']:
         if config['randomize_all_gifts'] == "no":  # only starters
             if "common_0065_" in entry['label']:
                 choice = allowedlist[random.randint(0, len(allowedlist)-1)]
-                while choice in banned_pokemon or choice in picked_starters:
+                while choice in banned_pokemon or choice in picked_starters or pokedata['pokemons'][choice]['id'] in bannedStages:
                     choice = allowedlist[random.randint(0, len(allowedlist)-1)]
 
                 if config['only_legends'] == "yes":
@@ -1326,7 +1335,7 @@ def randomizeStarters(config, pokemon, allowedlist, names, allowed_legends, allo
                     picked_starters.append(choice)
         else:  # everything plus starters
             choice = allowedlist[random.randint(0, len(allowedlist)-1)]
-            while choice in banned_pokemon or choice in picked_starters:
+            while choice in banned_pokemon or choice in picked_starters or pokedata['pokemons'][choice]['id'] in bannedStages:
                 choice = allowedlist[random.randint(0, len(allowedlist)-1)]
 
             if config['only_legends'] == "yes":
