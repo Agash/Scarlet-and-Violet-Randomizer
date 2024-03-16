@@ -34,7 +34,7 @@
         "_comment": "Updated for 3.0.0",
         "is_enabled": "yes",
         "force_6_pokemons_on_trainers": "no",
-        "give_trainers_extra_mons": "no",
+        "give_trainers_extra_mons": "yes",
         "force_perfect_ivs": "no",
         "make_ai_smart_for_all_trainers": "yes",
         "allow_all_trainers_to_terastalize": "yes",
@@ -52,7 +52,7 @@
         "is_enabled": "yes",
         "randomize_abilities": "yes",
         "randomize_types": "no",
-        "ban_wonder_guard": "yes",
+        "ban_wonder_guard": "no",
         "randomize_movesets": "yes",
         "randomize_stats_with_same_total": "no",
         "randomize_stats_with_different_total": "no",
@@ -108,7 +108,7 @@
         "is_enabled": "yes",
         "only_legends": "no",
         "only_paradox": "no",
-        "only_legends_and_paradox": "yes",
+        "only_legends_and_paradox": "no",
         "force_shiny": "yes",
         "increased_shiny_chance": "no"
     }
