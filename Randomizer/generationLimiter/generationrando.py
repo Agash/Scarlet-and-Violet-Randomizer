@@ -1268,7 +1268,7 @@ def randomizeStarters(config, pokemon, allowedlist, names, allowed_legends, allo
         if config['randomize_all_gifts'] == "no":  # only starters
             if "common_0065_" in entry['label']:
                 choice = allowedlist[random.randint(0, len(allowedlist)-1)]
-                while choice in banned_pokemon or choice in picked_starters or pokedata['pokemons'][choice]['id'] in bannedStages:
+                while choice in banned_pokemon or choice in picked_starters or pokedata['pokemons'][choice]['natdex'] in bannedStages:
                     choice = allowedlist[random.randint(0, len(allowedlist)-1)]
 
                 if config['only_legends'] == "yes":
@@ -1335,7 +1335,7 @@ def randomizeStarters(config, pokemon, allowedlist, names, allowed_legends, allo
                     picked_starters.append(choice)
         else:  # everything plus starters
             choice = allowedlist[random.randint(0, len(allowedlist)-1)]
-            while choice in banned_pokemon or choice in picked_starters or pokedata['pokemons'][choice]['id'] in bannedStages:
+            while choice in banned_pokemon or choice in picked_starters or pokedata['pokemons'][choice]['natdex'] in bannedStages:
                 choice = allowedlist[random.randint(0, len(allowedlist)-1)]
 
             if config['only_legends'] == "yes":

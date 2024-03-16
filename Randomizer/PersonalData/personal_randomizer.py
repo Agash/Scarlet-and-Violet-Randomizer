@@ -338,6 +338,21 @@ def randomizeEvolutions(pokemon):
     return pokemon
 
 
+def forceTeraBlast(pokemon):
+    teraBlastForced = {
+        "move": 851,
+        "level": 5
+    }
+    pokemon['levelup_moves'].append(teraBlastForced)
+
+    currentlevel = 5
+    while currentlevel < 105:
+        teraBlastForced["level"] = teraBlastForced["level"] + 5
+        pokemon['levelup_moves'].append(teraBlastForced)
+        currentlevel = currentlevel + 5
+
+    return pokemon
+
 def randomizeEvolutionsEveryLevel():
     template_evolution = {
         "level": 0,
@@ -467,7 +482,8 @@ def randomize(config, configglobal):
             pokemon['evolutions'] = randomizeEvolutionsEveryLevel()
         if config['randomize_types'] == "yes":
             pokemon = randomizeTypes(pokemon)
-    
+        pokemon = forceTeraBlast(pokemon)
+
     outdata = json.dumps(data, indent=4)
     with open(os.getcwd() + "/Randomizer/PersonalData/" +"personal_array.json", 'w') as outfile:
         outfile.write(outdata)

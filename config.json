@@ -26,9 +26,9 @@
         "only_legends_and_paradoxes": "no"
     },
     "bulk_creation": {
-        "is_enabled": "no",
+        "is_enabled": "yes",
         "_comment": "Default is 0 - if enabled and left at 0 then only 1 will be created",
-        "number_of_unique_randomizers_to_create": 12
+        "number_of_unique_randomizers_to_create": 5
     },
     "trainer_randomizer": {
         "_comment": "Updated for 3.0.0",
@@ -72,17 +72,17 @@
         "_comment0": "Fully updated for 3.0",
         "is_enabled": "yes",
         "all_shiny": "no",
-        "higher_shiny_chance": "yes",
-        "force_one_starter_to_be_shiny": "no",
+        "higher_shiny_chance": "no",
+        "force_one_starter_to_be_shiny": "yes",
         "randomize_all_gifts": "yes",
         "randomize_tera_type": "yes",
         "show_starters_in_overworld": "yes",
         "only_legends": "no",
         "only_paradox": "no",
         "only_legends_and_paradox": "no",
-        "ban_stage1_pokemon": "no",
-        "ban_stage2_pokemon": "no",
-        "ban_singlestage_pokemon": "no",
+        "ban_stage1_pokemon": "yes",
+        "ban_stage2_pokemon": "yes",
+        "ban_singlestage_pokemon": "yes",
         "_comment7": "As long as the force_starter is a dex number or a valid english pokemon name",
         "_comment8": "Ex: 1024, Tera Pagos, teRapagos, t e r a pa gos are all valid for Terapagos",
         "_comment9": "However 1 0 2 4 is not a valid input for terapagos",

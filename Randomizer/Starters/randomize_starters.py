@@ -465,7 +465,7 @@ def randomize(config):
             elif "common_0065_hono" in entry['label'] and config['force_starter_3'] == 0:
                 choice = random.randint(1, 1025)
 
-                while choice in banned_pokemon or choice in picked_starters or pokedata['pokemons'][choice]['id'] in bannedStages:
+                while choice in banned_pokemon or choice in picked_starters or pokedata['pokemons'][choice]['natdex'] in bannedStages:
                     choice = random.randint(1, 1025)
 
                 if config['only_legends'] == "yes":
@@ -574,7 +574,7 @@ def randomize(config):
                         entry['pokeData']['rareType'] = "NO_RARE"
             elif "common_0065_mizu" in entry['label'] and config['force_starter_2'] == 0:
                 choice = random.randint(1, 1025)
-                while choice in banned_pokemon or choice in picked_starters or pokedata['pokemons'][choice]['id'] in bannedStages:
+                while choice in banned_pokemon or choice in picked_starters or pokedata['pokemons'][choice]['natdex'] in bannedStages:
                     choice = random.randint(1, 1025)
 
                 if config['only_legends'] == "yes":
@@ -683,7 +683,7 @@ def randomize(config):
                         entry['pokeData']['rareType'] = "NO_RARE"
             elif "common_0065_kusa" in entry['label'] and config['force_starter_1'] == 0:
                 choice = random.randint(1, 1025)
-                while choice in banned_pokemon or choice in picked_starters or pokedata['pokemons'][choice]['id'] in bannedStages:
+                while choice in banned_pokemon or choice in picked_starters or pokedata['pokemons'][choice]['natdex'] in bannedStages:
                     choice = random.randint(1, 1025)
 
                 if config['only_legends'] == "yes":
@@ -751,7 +751,7 @@ def randomize(config):
         else:  # everything plus starters
             if "common_0065" not in entry['label']:
                 choice = random.randint(1, 1025)
-                while choice in banned_pokemon or pokedata['pokemons'][choice]['id'] in bannedStages:
+                while choice in banned_pokemon or pokedata['pokemons'][choice]['natdex'] in bannedStages:
                     choice = random.randint(1, 1025)
 
 
@@ -853,7 +853,7 @@ def randomize(config):
                         entry['pokeData']['rareType'] = "NO_RARE"
             elif "common_0065_hono" in entry['label'] and config['force_starter_3'] == 0:
                 choice = random.randint(1, 1025)
-                while choice in banned_pokemon or choice in picked_starters or pokedata['pokemons'][choice]['id'] in bannedStages:
+                while choice in banned_pokemon or choice in picked_starters or pokedata['pokemons'][choice]['natdex'] in bannedStages:
                     choice = random.randint(1, 1025)
                 if config['only_legends'] == "yes":
                     val = random.randint(0, len(legends) - 1)
@@ -961,7 +961,7 @@ def randomize(config):
                         entry['pokeData']['rareType'] = "NO_RARE"
             elif "common_0065_mizu" in entry['label'] and config['force_starter_2'] == 0:
                 choice = random.randint(1, 1025)
-                while choice in banned_pokemon or choice in picked_starters or pokedata['pokemons'][choice]['id'] in bannedStages:
+                while choice in banned_pokemon or choice in picked_starters or pokedata['pokemons'][choice]['natdex'] in bannedStages:
                     choice = random.randint(1, 1025)
 
                 if config['only_legends'] == "yes":
@@ -1070,7 +1070,7 @@ def randomize(config):
                         entry['pokeData']['rareType'] = "NO_RARE"
             elif "common_0065_kusa" in entry['label'] and config['force_starter_1'] == 0:
                 choice = random.randint(1, 1025)
-                while choice in banned_pokemon or choice in picked_starters or pokedata['pokemons'][choice]['id'] in bannedStages:
+                while choice in banned_pokemon or choice in picked_starters or pokedata['pokemons'][choice]['natdex'] in bannedStages:
                     choice = random.randint(1, 1025)
 
                 if config['only_legends'] == "yes":
