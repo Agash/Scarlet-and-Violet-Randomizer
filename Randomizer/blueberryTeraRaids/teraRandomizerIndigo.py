@@ -476,7 +476,7 @@ def randomizeRaids(raidsJSON, limiter):
                         while altformNumber in zacianForms:
                             altformNumber = get_alt_form(limiter[pokeChoice])
                         zacianForms.append(altformNumber)
-                        if len(zacianForms) < 18:
+                        if len(zacianForms) < 2:
                             addedToUsed = True
                         else:
                             addedToUsed = False
@@ -487,7 +487,7 @@ def randomizeRaids(raidsJSON, limiter):
                         while altformNumber in zamazentaForms:
                             altformNumber = get_alt_form(limiter[pokeChoice])
                         zamazentaForms.append(altformNumber)
-                        if len(zamazentaForms) < 18:
+                        if len(zamazentaForms) < 2:
                             addedToUsed = True
                         else:
                             addedToUsed = False
@@ -495,6 +495,7 @@ def randomizeRaids(raidsJSON, limiter):
                     pass
         while limiter[pokeChoice] in banned_pokemon or limiter[pokeChoice] in usedPokemon:
             pokeChoice = random.randint(0, len(limiter) - 1)
+
             if len(limiter) - len(usedPokemon) == totalbannedlength:
                 break
             altformNumber = get_alt_form(limiter[pokeChoice])
@@ -551,7 +552,7 @@ def randomizeRaids(raidsJSON, limiter):
                             while altformNumber in zacianForms:
                                 altformNumber = get_alt_form(limiter[pokeChoice])
                             zacianForms.append(altformNumber)
-                            if len(zacianForms) < 18:
+                            if len(zacianForms) < 2:
                                 addedToUsed = True
                             else:
                                 addedToUsed = False
@@ -562,7 +563,7 @@ def randomizeRaids(raidsJSON, limiter):
                             while altformNumber in zamazentaForms:
                                 altformNumber = get_alt_form(limiter[pokeChoice])
                             zamazentaForms.append(altformNumber)
-                            if len(zamazentaForms) < 18:
+                            if len(zamazentaForms) < 2:
                                 addedToUsed = True
                             else:
                                 addedToUsed = False
@@ -572,6 +573,7 @@ def randomizeRaids(raidsJSON, limiter):
             break
         if addedToUsed is False:
             usedPokemon.append(limiter[pokeChoice])
+
         counter = counter + 1
         raidsJSON['values'][i]['raidEnemyInfo']['romVer'] = "BOTH"
         raidsJSON['values'][i]['raidEnemyInfo']['bossPokePara']['devId'] = fetch_devname(limiter[pokeChoice], csvdata)
