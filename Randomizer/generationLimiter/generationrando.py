@@ -3,6 +3,7 @@ import random
 import os
 import shutil
 from Randomizer.shared_Variables import starters_used as picked_starters
+import Randomizer.shared_Variables as sharedVar
 
 gen1 = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30,
         31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58,
@@ -57,8 +58,8 @@ gen9 = [906, 907, 908, 909, 910, 911, 912, 913, 914, 915, 916, 917, 918, 919, 92
 legends = [144, 145, 146, 150, 151, 243, 244, 245, 249, 250, 251, 377, 378, 379, 380, 381, 382, 383, 384, 385, 386, 480,
            481, 482, 483, 484, 485, 486, 487, 489, 490, 491, 492, 493, 494, 638, 639, 640, 641, 642, 643, 644, 645, 646,
            647, 648, 649, 716, 717, 718, 719, 720, 721, 785, 786, 787, 788, 789, 790, 791, 792, 800, 801, 802, 807, 808,
-           809, 888, 889, 890, 891, 892, 893, 894, 895, 896, 897, 898, 905, 994, 995, 996, 997, 998, 999, 1011, 1014,
-           1015, 1016, 1021, 1022]
+           809, 888, 889, 890, 891, 892, 893, 894, 895, 896, 897, 898, 905, 994, 995, 996, 997, 998, 999, 1009, 1010,
+           1011, 1014, 1015, 1016, 1017, 1018, 1019, 1020, 1021, 1022]
 gen1_legends = [144, 145, 146, 150, 151]
 gen2_legends = [243, 244, 245, 249, 250, 251]
 gen3_legends = [377, 378, 379, 380, 381, 382, 383, 384, 385, 386]
@@ -71,6 +72,7 @@ gen8_legends = [888, 889, 890, 891, 892, 893, 894, 895, 896, 897, 898, 905]
 paradox = [978, 979, 980, 981, 982, 983, 984, 985, 986, 987, 988, 989, 990, 991, 992, 993, 998, 999, 1021,
            1017, 1018, 1019, 1020]
 gen9_legends = [994, 995, 996, 997, 998, 999, 1011, 1014, 1015, 1016, 1021, 1022]
+bannedStages = []
 recreated_species = []
 recreated_altforms = []
 chosen_biomes = []
@@ -1254,12 +1256,23 @@ def randomizeStarters(config, pokemon, allowedlist, names, allowed_legends, allo
     file = open(os.getcwd() + "/Randomizer/Starters/" + "pokemon_list_info.json", 'r')
     pokedata = json.load(file)
     file.close()
-    i = 1
+    i = 0
+    shinyforced = [0] * 3
+    if config['ban_stage1_pokemon'] == "yes":
+        bannedStages.extend(sharedVar.gen9Stage1)
+    if config['ban_stage2_pokemon'] == "yes":
+        bannedStages.extend(sharedVar.gen9Stage2)
+    if config['ban_singlestage_pokemon'] == "yes":
+        bannedStages.extend(sharedVar.no_evolution)
+    if config['force_one_starter_to_be_shiny'] == "yes":
+        choice = random.randint(0,2)
+        shinyforced[choice] = 1
+
     for entry in pokemon['values']:
         if config['randomize_all_gifts'] == "no":  # only starters
             if "common_0065_" in entry['label']:
                 choice = allowedlist[random.randint(0, len(allowedlist)-1)]
-                while choice in banned_pokemon or choice in picked_starters:
+                while choice in banned_pokemon or choice in picked_starters or pokedata['pokemons'][choice]['natdex'] in bannedStages:
                     choice = allowedlist[random.randint(0, len(allowedlist)-1)]
 
                 if config['only_legends'] == "yes":
@@ -1323,10 +1336,16 @@ def randomizeStarters(config, pokemon, allowedlist, names, allowed_legends, allo
                                 flip_starter_texture(choice)
                         else:
                             entry['pokeData']['rareType'] = "NO_RARE"
+                    if i < 3:
+                        if shinyforced[i] == 1:
+                            entry['pokeData']['rareType'] = "RARE"
+                            if config['shiny_overworld'] == "yes":
+                                flip_starter_texture(choice)
+                    i = i +1
                     picked_starters.append(choice)
         else:  # everything plus starters
             choice = allowedlist[random.randint(0, len(allowedlist)-1)]
-            while choice in banned_pokemon or choice in picked_starters:
+            while choice in banned_pokemon or choice in picked_starters or pokedata['pokemons'][choice]['natdex'] in bannedStages:
                 choice = allowedlist[random.randint(0, len(allowedlist)-1)]
 
             if config['only_legends'] == "yes":
@@ -1359,6 +1378,10 @@ def randomizeStarters(config, pokemon, allowedlist, names, allowed_legends, allo
                     entry['pokeData']['rareType'] = "RARE"
                 else:
                     entry['pokeData']['rareType'] = "NO_RARE"
+            if i < 3:
+                if shinyforced[i] == 1:
+                    entry['pokeData']['rareType'] = "RARE"
+            i = i +1
 
             if config['randomize_tera_type'] == "yes":
                 entry['pokeData']['gemType'] = tera_types[random.randint(0, len(tera_types) - 1)].upper()
@@ -1487,7 +1510,75 @@ def randomizeEvolutionsEveryLevel(allowedpokemon):
 
     return evoList
 
-    return evoList
+
+def checkTrainerImportance(entry):
+    trainerId = entry['trid']
+    if "raid_assist_NPC" in trainerId:
+        return "raid"
+    elif "botan_" in trainerId:  # Penny
+        return True
+    elif "dan_" in trainerId:  # Team Star
+        return True
+    elif "e4_" in trainerId:  # Elite 4
+        return True
+    elif "gym_" in trainerId:  # Gym Leader/Gym Trainer
+        return True
+    elif "kihada_" in trainerId:  # Dendra
+        return True
+    elif "mimoza_" in trainerId:  # Miriam
+        return True
+    elif "pepper_" in trainerId:  # Arven
+        return True
+    elif "professor_A_01" in trainerId:  # Sada 6v6
+        return True
+    elif "professor_B_01" in trainerId:  # Turo 6v6
+        return True
+    elif "rehoru_" in trainerId:  # Raifort
+        return True
+    elif "richf_" in trainerId:  # O'Nare Base Game
+        return True
+    elif "rival_" in trainerId:  # Nemona
+        return True
+    elif "sawaro" in trainerId:  # Saguaro
+        return True
+    elif "seizi" in trainerId:  # Salvatore
+        return True
+    elif "brother" in trainerId:  # kieran
+        return True
+    elif "camera" in trainerId:  # Perrin
+        return True
+    elif "serebu" in trainerId:  # O'Nare
+        return True
+    elif "sp_trainer" in trainerId:  # Ogre Clan
+        return True
+    elif "sister" in trainerId:  # Carmine
+        return True
+    elif "s2_side" in trainerId:  # Epilogue Fights
+        return True
+    elif "dragon4" in trainerId:  # Dragon BBL
+        return True
+    elif "dragonchallenge" in trainerId:  # Dragon Fights
+        return True
+    elif "fairy4" in trainerId:  # Fairy BBL
+        return True
+    elif "fairychallenge" in trainerId:  # Fairy Fights
+        return True
+    elif "hagane4" in trainerId:  # Steel BBL
+        return True
+    elif "hono4" in trainerId:  # Fire BBL
+        return True
+    elif "honochallenge" in trainerId:  # Fire Fights
+        return True
+    elif "su2_bukatu" in trainerId:  # BBL Extra Fights
+        return True
+    elif "shiano" in trainerId:  # Cirano
+        return True
+    elif "taimu" in trainerId:  # Ryme
+        return True
+    elif "zinia" in trainerId:  # Bio Teacher
+        return True
+    else:
+        return False
 
 
 def randomize(config, globalconfig):
@@ -1673,6 +1764,15 @@ def randomize(config, globalconfig):
             csvfile.close()
 
             for entry in data['values']:
+                if globalconfig['trainer_randomizer']['only_randomize_important_trainers'] == "yes":
+                    if checkTrainerImportance(entry) is False:
+                        continue
+                if entry['trainerType'] == "su2_brother_kodaigame":
+                    continue
+                elif entry['trid'] == "professor_A_02":
+                    continue
+                elif entry['trid'] == "professor_B_02":
+                    continue
                 # Counter to see how many pokemon there are to randomize originally
                 counter = 1
                 for j in range(0, 6):
@@ -1712,6 +1812,25 @@ def randomize(config, globalconfig):
                         if entry['poke' + str(t)]['devId'] != "DEV_NULL":
                             counter = counter + 1
                     pokemon_to_randomize = counter
+                temp_legends = globalconfig['trainer_randomizer']['only_legends']
+                temp_paradox = globalconfig['trainer_randomizer']['only_paradox']
+                temp_both = globalconfig['trainer_randomizer']['only_legends_and_paradoxes']
+                if checkTrainerImportance(entry) == "raid":
+                    if globalconfig['trainer_randomizer']['tera_raid_trainers_only_legends'] == "yes":
+                        globalconfig['trainer_randomizer']['only_legends'] = "yes"
+                    if globalconfig['trainer_randomizer']['tera_raid_trainers_only_paradox'] == "yes":
+                        globalconfig['trainer_randomizer']['only_paradox'] = "yes"
+                    if globalconfig['trainer_randomizer']['tera_raid_trainers_only_both'] == "yes":
+                        globalconfig['trainer_randomizer']['only_legends_and_paradoxes'] = "yes"
+                elif checkTrainerImportance(entry) is True:
+                    if globalconfig['trainer_randomizer']["force_important_trainers_to6_pokemon"] == "yes":
+                        pokemon_to_randomize = 6
+                    if globalconfig['trainer_randomizer']['impo_trainers_only_legends'] == "yes":
+                        globalconfig['trainer_randomizer']['only_legends'] = "yes"
+                    if globalconfig['trainer_randomizer']['impo_trainers_only_paradox'] == "yes":
+                        globalconfig['trainer_randomizer']['only_paradox'] = "yes"
+                    if globalconfig['trainer_randomizer']['impo_trainers_only_both'] == "yes":
+                        globalconfig['trainer_randomizer']['only_legends_and_paradoxes'] = "yes"
 
                 if entry['trid'] == "rival_01_hono" or entry['trid'] == "rival_01_kusa" or entry[
                     'trid'] == "rival_01_mizu":
@@ -1722,7 +1841,9 @@ def randomize(config, globalconfig):
                 while i <= pokemon_to_randomize:
                     make_poke_random(entry, str(i), csvdata, globalconfig['trainer_randomizer'], beginner, allowed_pokemon)
                     i = i + 1
-
+                globalconfig['trainer_randomizer']['only_legends'] = temp_legends
+                globalconfig['trainer_randomizer']['only_paradox'] = temp_paradox
+                globalconfig['trainer_randomizer']['only_legends_and_paradoxes'] = temp_both
                 if globalconfig['trainer_randomizer']['make_ai_smart_for_all_trainers'] == "yes" and beginner is False:
                     entry['aiBasic'] = True
                     entry['aiHigh'] = True

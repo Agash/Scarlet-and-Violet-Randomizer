@@ -214,8 +214,8 @@ def get_alt_form(index: int):
 legends = [144, 145, 146, 150, 151, 243, 244, 245, 249, 250, 251, 377, 378, 379, 380, 381, 382, 383, 384, 385, 386, 480,
            481, 482, 483, 484, 485, 486, 487, 489, 490, 491, 492, 493, 494, 638, 639, 640, 641, 642, 643, 644, 645, 646,
            647, 648, 649, 716, 717, 718, 719, 720, 721, 785, 786, 787, 788, 789, 790, 791, 792, 800, 801, 802, 807, 808,
-           809, 888, 889, 890, 891, 892, 893, 894, 895, 896, 897, 898, 905, 994, 995, 996, 997, 998, 999, 1011, 1014,
-           1015, 1016, 1021, 1022]
+           809, 888, 889, 890, 891, 892, 893, 894, 895, 896, 897, 898, 905, 994, 995, 996, 997, 998, 999, 1009, 1010,
+           1011, 1014, 1015, 1016, 1017, 1018, 1019, 1020, 1021, 1022]
 paradox = [978, 979, 980, 981, 982, 983, 984, 985, 986, 987, 988, 989, 990, 991, 992, 993, 998, 999, 1021,
            1017, 1018, 1019, 1020]
 legends_and_paradox = [
@@ -344,7 +344,140 @@ def make_poke(pokeEntry, index: str, csvdata, config, beginner: bool):
             pokeEntry['poke' + index]['gemType'] = "NIJI"
 
 
-# "trid": "raid_assist_NPC_1", - skip them if wanted (for sure for double battles though) [for 1.0.6]
+# "trid": "raid_assist_NPC", - skip them if wanted (for sure for double battles though) [for 1.0.6]
+# "trid" : botan - penny
+# - : chairperson - geeta
+# - : clavel - clavell
+# - : dan_aku_ - Dark Team Star
+# - : dan_doku_ -  Poison
+# - : dan_fairy_ - Fairy
+# - : dan_hono_ - Fire
+# - : dan_kakutou - Fighting
+# - : dan_tr - Tutorial TS
+# - : e4_dragon
+# - : e4_hagane
+# - : e4_hikou
+# - : e4_jimen
+# - : gym_denki
+# - : gym_esper
+# - : gym_ghost
+# - : gym_koori
+# - : gym_kusa
+# - : gym_mizu
+# - : gym_mushi
+# - : gym_normal
+# - : kihada (Dendra)
+# - : mimoza (Miriam)
+# - : pepper - Arven
+# - : professor_A_01 - Sada
+# - : professor_B_01 - Turo
+# - : rehoru (Raifort)
+# - : richf - O'Nare
+# - : rival_01 (Nemona - cutscene)
+# - : rival_02 (Nemona - cutscene)
+# - : rival_03 (Nemona - cutscene)
+# - : rival_05 (Nemona - cutscene)
+# - : rival_06 (Nemona - cutscene)
+# - : rival_0X_hono (Nemona w/Sprigattito)
+# - : rival_0X_kusa (Nemona w/Quaxly)
+# - : rival_0X_mizu (Nemona w/ Fuecoco)
+# - : rival_multi (Nemona A0)
+# - : sawaro (Saguaro)
+# - : seizi (Salvatore)
+# - : Brother (Kieran - SU1)
+# - : Camera (Perrin)
+# - : serebu (O'Nare)
+# - : sister (Carmine)
+# - : sp_trainer (Ogre Clan)
+#trainerType: "su2_brother_kodaigame" (no randomization just up level)
+# - : s2_side_grandfather
+# - : s2_side_grandmother
+# - : s2_side_brother
+# - : dragon4 (BB4)
+# - : dragonchallenge
+# - : fairy4
+# - : fairychallenge
+# - : hagane4
+# - : hono4
+# - : honochallenge
+# - : su2_bukatu (bbleauge)
+# - : rival_02_0Xhono (Nemona DLC)
+# - : rival_02_0Xkusa (Nemona DLC)
+# - : rival_02_0Xmizu (Nemona DLC)
+# - : rival_schoolwars_y (Nemona DLC)
+# - : shiano (Citrano)
+# - : taimu (Ryme)
+# - : zinia (Bio Teacher)
+def checkTrainerImportance(entry):
+    trainerId = entry['trid']
+    if "raid_assist_NPC" in trainerId:
+        return "raid"
+    elif "botan_" in trainerId:  # Penny
+        return True
+    elif "dan_" in trainerId:  # Team Star
+        return True
+    elif "e4_" in trainerId:  # Elite 4
+        return True
+    elif "gym_" in trainerId:  # Gym Leader/Gym Trainer
+        return True
+    elif "kihada_" in trainerId:  # Dendra
+        return True
+    elif "mimoza_" in trainerId:  # Miriam
+        return True
+    elif "pepper_" in trainerId:  # Arven
+        return True
+    elif "professor_A_01" in trainerId:  # Sada 6v6
+        return True
+    elif "professor_B_01" in trainerId:  # Turo 6v6
+        return True
+    elif "rehoru_" in trainerId:  # Raifort
+        return True
+    elif "richf_" in trainerId:  # O'Nare Base Game
+        return True
+    elif "rival_" in trainerId:  # Nemona
+        return True
+    elif "sawaro" in trainerId:  # Saguaro
+        return True
+    elif "seizi" in trainerId:  # Salvatore
+        return True
+    elif "brother" in trainerId:  # kieran
+        return True
+    elif "camera" in trainerId:  # Perrin
+        return True
+    elif "serebu" in trainerId:  # O'Nare
+        return True
+    elif "sp_trainer" in trainerId:  # Ogre Clan
+        return True
+    elif "sister" in trainerId:  # Carmine
+        return True
+    elif "s2_side" in trainerId:  # Epilogue Fights
+        return True
+    elif "dragon4" in trainerId:  # Dragon BBL
+        return True
+    elif "dragonchallenge" in trainerId:  # Dragon Fights
+        return True
+    elif "fairy4" in trainerId:  # Fairy BBL
+        return True
+    elif "fairychallenge" in trainerId:  # Fairy Fights
+        return True
+    elif "hagane4" in trainerId:  # Steel BBL
+        return True
+    elif "hono4" in trainerId:  # Fire BBL
+        return True
+    elif "honochallenge" in trainerId:  # Fire Fights
+        return True
+    elif "su2_bukatu" in trainerId:  # BBL Extra Fights
+        return True
+    elif "shiano" in trainerId:  # Cirano
+        return True
+    elif "taimu" in trainerId:  # Ryme
+        return True
+    elif "zinia" in trainerId:  # Bio Teacher
+        return True
+    else:
+        return False
+
+
 def randomize(config):
     #load information
     file = open(os.getcwd() + "/Randomizer/Trainers/" +"trdata_array_clean.json", "r")
@@ -357,6 +490,15 @@ def randomize(config):
     csvfile.close()
 
     for entry in data['values']:
+        if config['only_randomize_important_trainers'] == "yes":
+            if checkTrainerImportance(entry) is False:
+                continue
+        if entry['trainerType'] == "su2_brother_kodaigame":
+            continue
+        elif entry['trid'] == "professor_A_02":
+            continue
+        elif entry['trid'] == "professor_B_02":
+            continue
         # Counter to see how many pokemon there are to randomize originally
         counter = 1
         for j in range(0, 6):
@@ -396,7 +538,25 @@ def randomize(config):
                 if entry['poke' + str(t)]['devId'] != "DEV_NULL":
                     counter = counter + 1
             pokemon_to_randomize = counter
-
+        temp_legends = config['only_legends']
+        temp_paradox = config['only_paradox']
+        temp_both = config['only_legends_and_paradoxes']
+        if checkTrainerImportance(entry) == "raid":
+            if config['tera_raid_trainers_only_legends'] == "yes":
+                config['only_legends'] = "yes"
+            if config['tera_raid_trainers_only_paradox'] == "yes":
+                config['only_paradox'] = "yes"
+            if config['tera_raid_trainers_only_both'] == "yes":
+                config['only_legends_and_paradoxes'] = "yes"
+        elif checkTrainerImportance(entry) is True:
+            if config["force_important_trainers_to6_pokemon"] == "yes":
+                pokemon_to_randomize = 6
+            if config['impo_trainers_only_legends'] == "yes":
+                config['only_legends'] = "yes"
+            if config['impo_trainers_only_paradox'] == "yes":
+                config['only_paradox'] = "yes"
+            if config['impo_trainers_only_both'] == "yes":
+                config['only_legends_and_paradoxes'] = "yes"
         if entry['trid'] == "rival_01_hono" or entry['trid'] == "rival_01_kusa" or entry['trid'] == "rival_01_mizu":
             pokemon_to_randomize = 1
             beginner = True
@@ -405,6 +565,9 @@ def randomize(config):
         while i <= pokemon_to_randomize:
             make_poke(entry, str(i), csvdata, config, beginner)
             i = i + 1
+        config['only_legends'] = temp_legends
+        config['only_paradox'] = temp_paradox
+        config['only_legends_and_paradoxes'] = temp_both
 
         if config['make_ai_smart_for_all_trainers'] == "yes" and beginner is False:
             entry['aiBasic'] = True

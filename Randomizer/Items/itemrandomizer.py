@@ -220,7 +220,7 @@ def randomize(config):
         randomizeHiddenItems()
     if config['randomize_items_from_pickup_ability'] == "yes":
         randomizePickUpAbilityItems()
-    if config['randomize_letsgo_items'] == "yes":
+    if config['randomize_synchro_items'] == "yes":
         randomizeLetsGoItems()
     if config['randomize_pokemon_drops'] == "yes":
         randomizePokemonDrops()

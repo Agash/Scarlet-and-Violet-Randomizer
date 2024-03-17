@@ -7,12 +7,12 @@
         "is_enabled": "no",
         "_comment2": "fill out like this: 'generations_allowed': [1,2,3] - this will only allow gens 1-3 to be used",
         "_comment3": "as a fail safe if its enabled and empty then all generations will be used.",
-        "generations_allowed": [],
+        "generations_allowed": [4],
         "wild_limiter": "no",
         "trainer_limiter": "no",
         "static_limiter": "no",
         "starter_limiter": "no",
-        "teraRaid_limiter": "no",
+        "teraRaid_limiter": "yes",
         "_comment4": "limits for randomized evolutions if they are active.",
         "evolution_limiter": "no"
     },
@@ -28,7 +28,7 @@
     "bulk_creation": {
         "is_enabled": "no",
         "_comment": "Default is 0 - if enabled and left at 0 then only 1 will be created",
-        "number_of_unique_randomizers_to_create": 3
+        "number_of_unique_randomizers_to_create": 6
     },
     "trainer_randomizer": {
         "_comment": "Updated for 3.0.0",
@@ -42,10 +42,19 @@
         "randomize_all_tera_type": "yes",
         "randomnly_choose_single_or_double": "no",
         "allow_trainers_shiny_pokemon": "yes",
-        "only_double": "yes",
+        "only_double": "no",
         "only_legends": "no",
         "only_paradox": "no",
-        "only_legends_and_paradoxes": "no"
+        "only_legends_and_paradoxes": "no",
+        "force_important_trainers_to6_pokemon": "yes",
+        "_comment0": "Note Raid_NPC are part of important trainers",
+        "only_randomize_important_trainers": "no",
+        "impo_trainers_only_legends": "no",
+        "impo_trainers_only_paradox": "no",
+        "impo_trainers_only_both": "no",
+        "tera_raid_trainers_only_legends": "no",
+        "tera_raid_trainers_only_paradox": "no",
+        "tera_raid_trainers_only_both": "yes"
     },
     "personal_data_randomizer": {
         "_comment": "Fully Updated to 3.0.0",
@@ -54,22 +63,26 @@
         "randomize_types": "no",
         "ban_wonder_guard": "no",
         "randomize_movesets": "yes",
-        "randomize_stats_with_same_total": "no",
+        "randomize_stats_with_same_total": "yes",
         "randomize_stats_with_different_total": "no",
-        "randomize_evolutions": "no",
+        "randomize_evolutions": "yes",
         "let_pokemon_evolve_every_level": "no"
     },
     "starter_randomizer": {
         "_comment0": "Fully updated for 3.0",
         "is_enabled": "yes",
-        "all_shiny": "yes",
+        "all_shiny": "no",
         "higher_shiny_chance": "no",
+        "force_one_starter_to_be_shiny": "yes",
         "randomize_all_gifts": "no",
         "randomize_tera_type": "yes",
         "show_starters_in_overworld": "yes",
         "only_legends": "no",
         "only_paradox": "no",
         "only_legends_and_paradox": "no",
+        "ban_stage1_pokemon": "no",
+        "ban_stage2_pokemon": "no",
+        "ban_singlestage_pokemon": "no",
         "_comment7": "As long as the force_starter is a dex number or a valid english pokemon name",
         "_comment8": "Ex: 1024, Tera Pagos, teRapagos, t e r a pa gos are all valid for Terapagos",
         "_comment9": "However 1 0 2 4 is not a valid input for terapagos",
@@ -91,7 +104,7 @@
         "randomize_tera_type_for_static_tera": "yes",
         "only_legends": "no",
         "only_paradox": "no",
-        "only_legends_and_paradoxes": "yes"
+        "only_legends_and_paradoxes": "no"
     },
     "item_randomizer": {
         "_comment": "Only works on hidden items - I can't find file for overworld items.",
@@ -99,17 +112,17 @@
         "randomize_hidden_items": "yes",
         "randomize_items_from_pickup_ability": "no",
         "_comment2": "This could also be synchro machine",
-        "randomize_letsgo_items": "yes",
+        "randomize_synchro_items": "yes",
         "_comment1": "Following setting if active will make TMS uncraftable",
         "randomize_pokemon_drops": "no"
     },
     "tera_raids_randomizer": {
         "_comment": "Still in Beta - Expect Issues",
         "is_enabled": "yes",
-        "only_legends": "no",
+        "only_legends": "yes",
         "only_paradox": "no",
         "only_legends_and_paradox": "no",
-        "force_shiny": "yes",
-        "increased_shiny_chance": "no"
+        "force_shiny": "no",
+        "increased_shiny_chance": "yes"
     }
 }

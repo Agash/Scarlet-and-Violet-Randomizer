@@ -3,6 +3,7 @@ import random
 import os
 import shutil
 from Randomizer.shared_Variables import starters_used as picked_starters
+import Randomizer.shared_Variables as sharedVar
 
 tera_types = ['normal', 'kakutou', 'hikou', 'doku', 'jimen', 'iwa', 'mushi', 'ghost', 'hagane', 'honoo', 'mizu', 'kusa',
               'denki', 'esper', 'koori', 'dragon', 'aku', 'fairy', 'niji']
@@ -46,8 +47,8 @@ banned_pokemon = [10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 29, 30, 31
 legends = [144, 145, 146, 150, 151, 243, 244, 245, 249, 250, 251, 377, 378, 379, 380, 381, 382, 383, 384, 385, 386, 480,
            481, 482, 483, 484, 485, 486, 487, 489, 490, 491, 492, 493, 494, 638, 639, 640, 641, 642, 643, 644, 645, 646,
            647, 648, 649, 716, 717, 718, 719, 720, 721, 785, 786, 787, 788, 789, 790, 791, 792, 800, 801, 802, 807, 808,
-           809, 888, 889, 890, 891, 892, 893, 894, 895, 896, 897, 898, 905, 994, 995, 996, 997, 998, 999, 1011, 1014,
-           1015, 1016, 1021, 1022]
+           809, 888, 889, 890, 891, 892, 893, 894, 895, 896, 897, 898, 905, 994, 995, 996, 997, 998, 999, 1009, 1010,
+           1011, 1014, 1015, 1016, 1017, 1018, 1019, 1020, 1021, 1022]
 UB = [793, 794, 795, 796, 797, 798, 799, 803, 804, 805, 806]
 paradox = [978, 979, 980, 981, 982, 983, 984, 985, 986, 987, 988, 989, 990, 991, 992, 993, 998, 999, 1021,
            1017, 1018, 1019, 1020]
@@ -58,6 +59,7 @@ legends_and_paradox = [
            809, 888, 889, 890, 891, 892, 893, 894, 895, 896, 897, 898, 905, 978, 979, 980, 981, 982, 983, 984, 985, 986,
            987, 988, 989, 990, 991, 992, 993, 1017, 1018, 1019, 1020, 994, 995, 996, 997, 998, 999, 1011, 1014, 1015,
            1016, 1021, 1022]
+bannedStages = []
 
 
 def fetch_devname(index: int, csvdata):
@@ -404,6 +406,17 @@ def randomize(config):
         names.append(name)
     file.close()
     i = 1
+    shinyforced = [0] * 3
+    if config['ban_stage1_pokemon'] == "yes":
+        bannedStages.extend(sharedVar.gen9Stage1)
+    if config['ban_stage2_pokemon'] == "yes":
+        bannedStages.extend(sharedVar.gen9Stage2)
+    if config['ban_singlestage_pokemon'] == "yes":
+        bannedStages.extend(sharedVar.no_evolution)
+    if config['force_one_starter_to_be_shiny'] == "yes":
+        choice = random.randint(0,2)
+        shinyforced[choice] = 1
+
     for entry in data['values']:
         if config['randomize_all_gifts'] == "no":  # only starters
             if "common_0065_hono" in entry['label'] and config['force_starter_3'] != 0:
@@ -437,7 +450,7 @@ def randomize(config):
                         case _:
                             pass
 
-                if config['all_shiny'] == "yes":
+                if config['all_shiny'] == "yes" or shinyforced[2] == 1:
                     entry['pokeData']['rareType'] = "RARE"
                     if config['shiny_overworld'] == "yes":
                         flip_starter_texture(choice)
@@ -451,7 +464,8 @@ def randomize(config):
                         entry['pokeData']['rareType'] = "NO_RARE"
             elif "common_0065_hono" in entry['label'] and config['force_starter_3'] == 0:
                 choice = random.randint(1, 1025)
-                while choice in banned_pokemon or choice in picked_starters:
+
+                while choice in banned_pokemon or choice in picked_starters or pokedata['pokemons'][choice]['natdex'] in bannedStages:
                     choice = random.randint(1, 1025)
 
                 if config['only_legends'] == "yes":
@@ -502,7 +516,7 @@ def randomize(config):
                             case _:
                                 pass
 
-                    if config['all_shiny'] == "yes":
+                    if config['all_shiny'] == "yes" or shinyforced[2] == 1:
                         entry['pokeData']['rareType'] = "RARE"
                         if config['shiny_overworld'] == "yes":
                             flip_starter_texture(choice)
@@ -546,7 +560,7 @@ def randomize(config):
                         case _:
                             pass
 
-                if config['all_shiny'] == "yes":
+                if config['all_shiny'] == "yes" or shinyforced[1] == 1:
                     entry['pokeData']['rareType'] = "RARE"
                     if config['shiny_overworld'] == "yes":
                         flip_starter_texture(choice)
@@ -560,7 +574,7 @@ def randomize(config):
                         entry['pokeData']['rareType'] = "NO_RARE"
             elif "common_0065_mizu" in entry['label'] and config['force_starter_2'] == 0:
                 choice = random.randint(1, 1025)
-                while choice in banned_pokemon or choice in picked_starters:
+                while choice in banned_pokemon or choice in picked_starters or pokedata['pokemons'][choice]['natdex'] in bannedStages:
                     choice = random.randint(1, 1025)
 
                 if config['only_legends'] == "yes":
@@ -611,7 +625,7 @@ def randomize(config):
                             case _:
                                 pass
 
-                    if config['all_shiny'] == "yes":
+                    if config['all_shiny'] == "yes" or shinyforced[1] == 1:
                         entry['pokeData']['rareType'] = "RARE"
                         if config['shiny_overworld'] == "yes":
                             flip_starter_texture(choice)
@@ -655,7 +669,7 @@ def randomize(config):
                         case _:
                             pass
 
-                if config['all_shiny'] == "yes":
+                if config['all_shiny'] == "yes" or shinyforced[0] == 1:
                     entry['pokeData']['rareType'] = "RARE"
                     if config['shiny_overworld'] == "yes":
                         flip_starter_texture(choice)
@@ -669,7 +683,7 @@ def randomize(config):
                         entry['pokeData']['rareType'] = "NO_RARE"
             elif "common_0065_kusa" in entry['label'] and config['force_starter_1'] == 0:
                 choice = random.randint(1, 1025)
-                while choice in banned_pokemon or choice in picked_starters:
+                while choice in banned_pokemon or choice in picked_starters or pokedata['pokemons'][choice]['natdex'] in bannedStages:
                     choice = random.randint(1, 1025)
 
                 if config['only_legends'] == "yes":
@@ -720,7 +734,7 @@ def randomize(config):
                             case _:
                                 pass
 
-                    if config['all_shiny'] == "yes":
+                    if config['all_shiny'] == "yes" or shinyforced[0] == 1:
                         entry['pokeData']['rareType'] = "RARE"
                         if config['shiny_overworld'] == "yes":
                             flip_starter_texture(choice)
@@ -737,7 +751,7 @@ def randomize(config):
         else:  # everything plus starters
             if "common_0065" not in entry['label']:
                 choice = random.randint(1, 1025)
-                while choice in banned_pokemon:
+                while choice in banned_pokemon or pokedata['pokemons'][choice]['natdex'] in bannedStages:
                     choice = random.randint(1, 1025)
 
 
@@ -825,7 +839,7 @@ def randomize(config):
                         case _:
                             pass
 
-                if config['all_shiny'] == "yes":
+                if config['all_shiny'] == "yes" or shinyforced[2] == 1:
                     entry['pokeData']['rareType'] = "RARE"
                     if config['shiny_overworld'] == "yes":
                         flip_starter_texture(choice)
@@ -839,9 +853,8 @@ def randomize(config):
                         entry['pokeData']['rareType'] = "NO_RARE"
             elif "common_0065_hono" in entry['label'] and config['force_starter_3'] == 0:
                 choice = random.randint(1, 1025)
-                while choice in banned_pokemon or choice in picked_starters:
+                while choice in banned_pokemon or choice in picked_starters or pokedata['pokemons'][choice]['natdex'] in bannedStages:
                     choice = random.randint(1, 1025)
-
                 if config['only_legends'] == "yes":
                     val = random.randint(0, len(legends) - 1)
                     choice = legends[val]
@@ -890,7 +903,7 @@ def randomize(config):
                             case _:
                                 pass
 
-                    if config['all_shiny'] == "yes":
+                    if config['all_shiny'] == "yes" or shinyforced[2] == 1:
                         entry['pokeData']['rareType'] = "RARE"
                         if config['shiny_overworld'] == "yes":
                             flip_starter_texture(choice)
@@ -934,7 +947,7 @@ def randomize(config):
                         case _:
                             pass
 
-                if config['all_shiny'] == "yes":
+                if config['all_shiny'] == "yes" or shinyforced[1] == 1:
                     entry['pokeData']['rareType'] = "RARE"
                     if config['shiny_overworld'] == "yes":
                         flip_starter_texture(choice)
@@ -948,7 +961,7 @@ def randomize(config):
                         entry['pokeData']['rareType'] = "NO_RARE"
             elif "common_0065_mizu" in entry['label'] and config['force_starter_2'] == 0:
                 choice = random.randint(1, 1025)
-                while choice in banned_pokemon or choice in picked_starters:
+                while choice in banned_pokemon or choice in picked_starters or pokedata['pokemons'][choice]['natdex'] in bannedStages:
                     choice = random.randint(1, 1025)
 
                 if config['only_legends'] == "yes":
@@ -999,7 +1012,7 @@ def randomize(config):
                             case _:
                                 pass
 
-                    if config['all_shiny'] == "yes":
+                    if config['all_shiny'] == "yes" or shinyforced[1] == 1:
                         entry['pokeData']['rareType'] = "RARE"
                         if config['shiny_overworld'] == "yes":
                             flip_starter_texture(choice)
@@ -1043,7 +1056,7 @@ def randomize(config):
                         case _:
                             pass
 
-                if config['all_shiny'] == "yes":
+                if config['all_shiny'] == "yes" or shinyforced[0] == 1:
                     entry['pokeData']['rareType'] = "RARE"
                     if config['shiny_overworld'] == "yes":
                         flip_starter_texture(choice)
@@ -1057,7 +1070,7 @@ def randomize(config):
                         entry['pokeData']['rareType'] = "NO_RARE"
             elif "common_0065_kusa" in entry['label'] and config['force_starter_1'] == 0:
                 choice = random.randint(1, 1025)
-                while choice in banned_pokemon or choice in picked_starters:
+                while choice in banned_pokemon or choice in picked_starters or pokedata['pokemons'][choice]['natdex'] in bannedStages:
                     choice = random.randint(1, 1025)
 
                 if config['only_legends'] == "yes":
@@ -1108,7 +1121,7 @@ def randomize(config):
                             case _:
                                 pass
 
-                    if config['all_shiny'] == "yes":
+                    if config['all_shiny'] == "yes" or shinyforced[0] == 1:
                         entry['pokeData']['rareType'] = "RARE"
                         if config['shiny_overworld'] == "yes":
                             flip_starter_texture(choice)
