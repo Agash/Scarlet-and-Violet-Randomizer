@@ -26,7 +26,7 @@
         "only_legends_and_paradoxes": "no"
     },
     "bulk_creation": {
-        "is_enabled": "no",
+        "is_enabled": "yes",
         "_comment": "Default is 0 - if enabled and left at 0 then only 1 will be created",
         "number_of_unique_randomizers_to_create": 6
     },
@@ -46,9 +46,9 @@
         "only_legends": "no",
         "only_paradox": "no",
         "only_legends_and_paradoxes": "no",
-        "force_important_trainers_to6_pokemon": "yes",
+        "force_important_trainers_to6_pokemon": "no",
         "_comment0": "Note Raid_NPC are part of important trainers",
-        "only_randomize_important_trainers": "yes",
+        "only_randomize_important_trainers": "no",
         "impo_trainers_only_legends": "no",
         "impo_trainers_only_paradox": "no",
         "impo_trainers_only_both": "no",
@@ -119,7 +119,7 @@
     "tera_raids_randomizer": {
         "_comment": "Still in Beta - Expect Issues",
         "is_enabled": "yes",
-        "only_legends": "yes",
+        "only_legends": "no",
         "only_paradox": "no",
         "only_legends_and_paradox": "no",
         "force_shiny": "no",

@@ -341,16 +341,16 @@ def randomizeEvolutions(pokemon):
 def forceTeraBlast(pokemon):
     teraBlastForced = {
         "move": 851,
-        "level": 5
+        "level": 0
     }
-    pokemon['levelup_moves'].append(teraBlastForced)
 
-    currentlevel = 5
-    while currentlevel < 105:
-        teraBlastForced["level"] = teraBlastForced["level"] + 5
+    for i in range(5, 105, 5):
+        teraBlastForced['level'] = i
         pokemon['levelup_moves'].append(teraBlastForced)
-        currentlevel = currentlevel + 5
-
+        teraBlastForced = {
+            "move": 851,
+            "level": 0
+        }
     return pokemon
 
 def randomizeEvolutionsEveryLevel():
