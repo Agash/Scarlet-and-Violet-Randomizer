@@ -117,9 +117,22 @@ gen9 = [906, 907, 908, 909, 910, 911, 912, 913, 914, 915, 916, 917, 918, 919, 92
         972, 973, 974, 975, 976, 977, 978, 979, 980, 981, 982, 983, 984, 985, 986, 987, 988, 989, 990, 991, 992, 993,
         994, 995, 996, 997, 998, 999, 1000, 1001, 1002, 1003, 1004, 1005, 1006, 1007, 1008, 1009, 1010, 1011, 1012,
         1013, 1014, 1015, 1016, 1017, 1018, 1019, 1020, 1021, 1022, 1023, 1024, 1025]
+in_array = [0] * 9
+has_alt_form_with_item = [483, 484, 487, 493, 888, 889]
+gen1bannedlength = 52
+gen2bannedlength = 18
+gen3bannedlength = 48
+gen4bannedlength = 22
+gen5bannedlength = 70
+gen6bannedlength = 25
+gen7bannedlength = 25
+gen8bannedlength = 31
+gen9bannedlength = 2
+totalbannedlength = 0
 generationLimter = False
 forcedShiny = False
 increasedShiny = False
+
 
 def get_alt_form(index: int):
     has_alt = [25,  # pikachu
@@ -325,17 +338,70 @@ def get_alt_form(index: int):
         return 0
 
 
+def get_item_for_alt_form(index: int, form: int, raidJSON):
+    if index in has_alt_form_with_item:
+        match index:
+            case 483:
+                if form == 1:
+                    raidJSON['item'] = "ITEMID_DAIKONGOUDAMA"
+            case 484:
+                if form == 1:
+                    raidJSON['item'] = "ITEMID_DAISIRATAMA"
+            case 487:
+                if form == 1:
+                    raidJSON['item'] = "ITEMID_DAIHAKKINDAMA"
+            case 493:
+                match form:
+                    case 1:  # Fightning
+                        raidJSON['item'] = "ITEMID_KOBUSINOPUREETO"
+                    case 2:  # Flying
+                        raidJSON['item'] = "ITEMID_AOZORAPUREETO"
+                    case 3:  # poison
+                        raidJSON['item'] = "ITEMID_MOUDOKUPUREETO"
+                    case 4:  # ground
+                        raidJSON['item'] = "ITEMID_DAITINOPUREETO"
+                    case 5:  # rock
+                        raidJSON['item'] = "ITEMID_GANSEKIPUREETO"
+                    case 6:  # bug
+                        raidJSON['item'] = "ITEMID_TAMAMUSIPUREETO"
+                    case 7:  # ghost
+                        raidJSON['item'] = "ITEMID_MONONOKEPUREETO"
+                    case 8:  # steel
+                        raidJSON['item'] = "ITEMID_KOUTETUPUREETO"
+                    case 9:  # fire
+                        raidJSON['item'] = "ITEMID_HINOTAMAPUREETO"
+                    case 10:  # water
+                        raidJSON['item'] = "ITEMID_SIZUKUPUREETO"
+                    case 11:  # grass
+                        raidJSON['item'] = "ITEMID_MIDORINOPUREETO"
+                    case 12:  # electric
+                        raidJSON['item'] = "ITEMID_IKAZUTIPUREETO"
+                    case 13:  # psychic
+                        raidJSON['item'] = "ITEMID_HUSIGINOPUREETO"
+                    case 14:  # ice
+                        raidJSON['item'] = "ITEMID_TURARANOPUREETO"
+                    case 15:  # dragon
+                        raidJSON['item'] = "ITEMID_RYUUNOPUREETO"
+                    case 16:  # dark
+                        raidJSON['item'] = "ITEMID_KOWAMOTEPUREETO"
+                    case 17:  # Fairy
+                        raidJSON['item'] = "ITEMID_SEIREIPUREETO"
+            case 888:
+                if form == 1:
+                    raidJSON['item'] = "ITEMID_KUTITATURUGI"
+            case 889:
+                if form == 1:
+                    raidJSON['item'] = "ITEMID_KUTITATATE"
+    return raidJSON
+
+
 def fetch_devname(index: int, csvdata):
     #print(csvdata[index])
     return str.strip(csvdata[index])
 
 
-def randomizeRaids(raidsJSON, allowed, limiter):
-    newJSON = 0
-    return newJSON
-
-
-def randomizeLess(raidsJSON, limiter):
+def randomizeRaids(raidsJSON, limiter):
+    global totalbannedlength
     csvfile = open(os.getcwd() + "/Randomizer/WildEncounters/" + "pokemon_to_id.txt", "r")
     csvdata = []
     for i in csvfile:
@@ -347,16 +413,170 @@ def randomizeLess(raidsJSON, limiter):
     counter = 0
 
     usedPokemon = []
+    dialgaForms = []
+    palkiaForms = []
+    giratinaForms = []
+    arceusForms = []
+    zacianForms = []
+    zamazentaForms = []
     for i in range(0, len(raidsJSON['values'])):
+        addedToUsed = False
         pokeChoice = random.randint(0, len(limiter) - 1)
-        usedPokemon.append(pokeChoice)
+        altformNumber = get_alt_form(limiter[pokeChoice])
+        if limiter[pokeChoice] in has_alt_form_with_item:
+            match limiter[pokeChoice]:
+                case 483:
+                    if limiter[pokeChoice] in usedPokemon:
+                        pass
+                    else:
+                        while altformNumber in dialgaForms:
+                            altformNumber = get_alt_form(limiter[pokeChoice])
+                        dialgaForms.append(altformNumber)
+                        if len(dialgaForms) < 2:
+                            addedToUsed = True
+                        else:
+                            addedToUsed = False
+                case 484:
+                    if limiter[pokeChoice] in usedPokemon:
+                        pass
+                    else:
+                        while altformNumber in palkiaForms:
+                            altformNumber = get_alt_form(limiter[pokeChoice])
+                        palkiaForms.append(altformNumber)
+                        if len(palkiaForms) < 2:
+                            addedToUsed = True
+                        else:
+                            addedToUsed = False
+                case 487:
+                    if limiter[pokeChoice] in usedPokemon:
+                        pass
+                    else:
+                        while altformNumber in giratinaForms:
+                            altformNumber = get_alt_form(limiter[pokeChoice])
+                        giratinaForms.append(altformNumber)
+                        if len(giratinaForms) < 2:
+                            addedToUsed = True
+                        else:
+                            addedToUsed = False
+                case 493:
+                    if limiter[pokeChoice] in usedPokemon:
+                        pass
+                    else:
+                        while altformNumber in arceusForms:
+                            altformNumber = get_alt_form(limiter[pokeChoice])
+                        arceusForms.append(altformNumber)
+                        if len(arceusForms) < 18:
+                            addedToUsed = True
+                        else:
+                            addedToUsed = False
+                case 888:
+                    if limiter[pokeChoice] in usedPokemon:
+                        pass
+                    else:
+                        while altformNumber in zacianForms:
+                            altformNumber = get_alt_form(limiter[pokeChoice])
+                        zacianForms.append(altformNumber)
+                        if len(zacianForms) < 18:
+                            addedToUsed = True
+                        else:
+                            addedToUsed = False
+                case 889:
+                    if limiter[pokeChoice] in usedPokemon:
+                        pass
+                    else:
+                        while altformNumber in zamazentaForms:
+                            altformNumber = get_alt_form(limiter[pokeChoice])
+                        zamazentaForms.append(altformNumber)
+                        if len(zamazentaForms) < 18:
+                            addedToUsed = True
+                        else:
+                            addedToUsed = False
+                case _:
+                    pass
         while limiter[pokeChoice] in banned_pokemon or limiter[pokeChoice] in usedPokemon:
             pokeChoice = random.randint(0, len(limiter) - 1)
-            usedPokemon.append(pokeChoice)
+            if len(limiter) - len(usedPokemon) == totalbannedlength:
+                break
+            altformNumber = get_alt_form(limiter[pokeChoice])
+            if limiter[pokeChoice] in has_alt_form_with_item:
+                match limiter[pokeChoice]:
+                    case 483:
+                        if limiter[pokeChoice] in usedPokemon:
+                            pass
+                        else:
+                            while altformNumber in dialgaForms:
+                                altformNumber = get_alt_form(limiter[pokeChoice])
+                            dialgaForms.append(altformNumber)
+                            if len(dialgaForms) < 2:
+                                addedToUsed = True
+                            else:
+                                addedToUsed = False
+                    case 484:
+                        if limiter[pokeChoice] in usedPokemon:
+                            pass
+                        else:
+                            while altformNumber in palkiaForms:
+                                altformNumber = get_alt_form(limiter[pokeChoice])
+                            palkiaForms.append(altformNumber)
+                            if len(palkiaForms) < 2:
+                                addedToUsed = True
+                            else:
+                                addedToUsed = False
+                    case 487:
+                        if limiter[pokeChoice] in usedPokemon:
+                            pass
+                        else:
+                            while altformNumber in giratinaForms:
+                                altformNumber = get_alt_form(limiter[pokeChoice])
+                            giratinaForms.append(altformNumber)
+                            if len(giratinaForms) < 2:
+                                addedToUsed = True
+                            else:
+                                addedToUsed = False
+                    case 493:
+                        if limiter[pokeChoice] in usedPokemon:
+                            pass
+                        else:
+                            while altformNumber in arceusForms:
+                                altformNumber = get_alt_form(limiter[pokeChoice])
+                            arceusForms.append(altformNumber)
+                            if len(arceusForms) < 18:
+                                addedToUsed = True
+                            else:
+                                addedToUsed = False
+                    case 888:
+                        if limiter[pokeChoice] in usedPokemon:
+                            pass
+                        else:
+                            while altformNumber in zacianForms:
+                                altformNumber = get_alt_form(limiter[pokeChoice])
+                            zacianForms.append(altformNumber)
+                            if len(zacianForms) < 18:
+                                addedToUsed = True
+                            else:
+                                addedToUsed = False
+                    case 889:
+                        if limiter[pokeChoice] in usedPokemon:
+                            pass
+                        else:
+                            while altformNumber in zamazentaForms:
+                                altformNumber = get_alt_form(limiter[pokeChoice])
+                            zamazentaForms.append(altformNumber)
+                            if len(zamazentaForms) < 18:
+                                addedToUsed = True
+                            else:
+                                addedToUsed = False
+                    case _:
+                        pass
+        if len(limiter) - len(usedPokemon) == totalbannedlength:
+            break
+        if addedToUsed is False:
+            usedPokemon.append(limiter[pokeChoice])
         counter = counter + 1
         raidsJSON['values'][i]['raidEnemyInfo']['romVer'] = "BOTH"
         raidsJSON['values'][i]['raidEnemyInfo']['bossPokePara']['devId'] = fetch_devname(limiter[pokeChoice], csvdata)
-        raidsJSON['values'][i]['raidEnemyInfo']['bossPokePara']['formId'] = get_alt_form(limiter[pokeChoice])
+        raidsJSON['values'][i]['raidEnemyInfo']['bossPokePara']['formId'] = altformNumber
+        get_item_for_alt_form(limiter[pokeChoice], altformNumber, raidsJSON['values'][i]['raidEnemyInfo']['bossPokePara'])
         raidsJSON['values'][i]['raidEnemyInfo']['bossPokePara']['wazaType'] = "DEFAULT"
         raidsJSON['values'][i]['raidEnemyInfo']['bossPokePara']['waza1']['wazaId'] = "WAZA_TERABAASUTO"
         raidsJSON['values'][i]['raidEnemyInfo']['bossPokePara']['waza2']['wazaId'] = "WAZA_NULL"
@@ -372,39 +592,59 @@ def randomizeLess(raidsJSON, limiter):
         if len(usedPokemon) == len(limiter):
             break
 
-    if len(raidsJSON['values']) - counter != 0:
+    if len(raidsJSON['values']) - counter < 0:
         newRaidJSON['values'] = raidsJSON['values'][:len(raidsJSON['values'])-1]
+    elif len(raidsJSON['values']) - counter > 0:
+        newRaidJSON['values'] = raidsJSON['values'][:counter]
     else:
         newRaidJSON['values'] = raidsJSON['values']
-
+    usedPokemon = []
+    dialgaForms = []
+    palkiaForms = []
+    giratinaForms = []
+    arceusForms = []
+    zacianForms = []
+    zamazentaForms = []
     return newRaidJSON
 
 
-def randomizePaldea(config, pokemonAllowed, legendsAllowed):
+def randomizeKitakami(config, pokemonAllowed, legendsAllowed):
     if pokemonAllowed is None:
         pokemonAllowed = [i for i in range(1, 1026)]
     for i in range(1, 7):
-        paldeaTeraRaids = open(os.getcwd() + '\\Randomizer\\kitakamiTeraRaids\\' + f'su1_raid_enemy_0{str(i)}_array_clean.json', 'r')
-        paldeaRaids = json.load(paldeaTeraRaids)
-        paldeaTeraRaids.close()
+        kitakamiTeraRaids = open(os.getcwd() + '\\Randomizer\\kitakamiTeraRaids\\' + f'su1_raid_enemy_0{str(i)}_array_clean.json', 'r')
+        kitakamiRaids = json.load(kitakamiTeraRaids)
+        kitakamiTeraRaids.close()
+
+        randomizeRaids(kitakamiRaids, pokemonAllowed)
 
         if generationLimter is False:
             if config['only_paradox'] == "yes":
-                paldeaRaids = randomizeLess(paldeaRaids, paradox)
+                kitakamiRaids = randomizeRaids(kitakamiRaids, paradox)
             if config['only_legends'] == "yes":
-                paldeaRaids = randomizeLess(paldeaRaids, legends)
+                kitakamiRaids = randomizeRaids(kitakamiRaids, legends)
             if config['only_legends_and_paradox'] == "yes":
-                paldeaRaids = randomizeLess(paldeaRaids, legends_and_paradox)
+                kitakamiRaids = randomizeRaids(kitakamiRaids, legends_and_paradox)
+        if generationLimter is True:
+            if config['only_paradox'] == "yes" and in_array[8] == 1:
+                kitakamiRaids = randomizeRaids(kitakamiRaids, paradox)
+            if config['only_legends'] == "yes":
+                kitakamiRaids = randomizeRaids(kitakamiRaids, legendsAllowed)
+            if config['only_legends_and_paradox'] == "yes" and in_array[8] == 1:
+                kitakamiRaids = randomizeRaids(kitakamiRaids, legendsAllowed)
 
-        outdata = json.dumps(paldeaRaids, indent=4)
+        outdata = json.dumps(kitakamiRaids, indent=4)
         with open(os.getcwd() + '\\Randomizer\\kitakamiTeraRaids\\' + f'su1_raid_enemy_0{str(i)}_array.json', 'w') as outfile:
             outfile.write(outdata)
         print(f"Randomisation of Kitakami Raids Star {str(i)} Done !")
 
 
-def limitPaldeaRaids(config, actualconfig):
+def limitKitakamiRaids(config, actualconfig):
+    global totalbannedlength
     global generationLimter
     generationLimter = True
+    for i in range(0, 9):
+        in_array[i] = 0
     allowed_pokemon = []
     allowed_legends = []
     if len(config['generations_allowed']) == 0:
@@ -427,8 +667,8 @@ def limitPaldeaRaids(config, actualconfig):
         allowed_pokemon.extend(gen9)
         allowed_legends.extend(paradox)
         allowed_legends.extend(gen9_legends)
+        totalbannedlength = len(banned_pokemon)
     else:
-        in_array = [0] * 9
         for generations in config['generations_allowed']:
             match generations:
                 case 1:
@@ -438,6 +678,7 @@ def limitPaldeaRaids(config, actualconfig):
                     allowed_pokemon.extend(gen1)
                     allowed_legends.extend(gen1_legends)
                     in_array[0] = 1
+                    totalbannedlength = totalbannedlength + gen1bannedlength
                     continue
                 case 2:
                     if in_array[1] == 1:
@@ -445,6 +686,7 @@ def limitPaldeaRaids(config, actualconfig):
                         exit(0)
                     allowed_pokemon.extend(gen2)
                     allowed_legends.extend(gen2_legends)
+                    totalbannedlength = totalbannedlength + gen2bannedlength
                     in_array[1] = 1
                     continue
                 case 3:
@@ -453,6 +695,7 @@ def limitPaldeaRaids(config, actualconfig):
                         exit(0)
                     allowed_pokemon.extend(gen3)
                     allowed_legends.extend(gen3_legends)
+                    totalbannedlength = totalbannedlength + gen3bannedlength
                     in_array[2] = 1
                     continue
                 case 4:
@@ -461,6 +704,7 @@ def limitPaldeaRaids(config, actualconfig):
                         exit(0)
                     allowed_pokemon.extend(gen4)
                     allowed_legends.extend(gen4_legends)
+                    totalbannedlength = totalbannedlength + gen4bannedlength
                     in_array[3] = 1
                     continue
                 case 5:
@@ -469,6 +713,7 @@ def limitPaldeaRaids(config, actualconfig):
                         exit(0)
                     allowed_pokemon.extend(gen5)
                     allowed_legends.extend(gen5_legends)
+                    totalbannedlength = totalbannedlength + gen5bannedlength
                     in_array[4] = 1
                     continue
                 case 6:
@@ -477,6 +722,7 @@ def limitPaldeaRaids(config, actualconfig):
                         exit(0)
                     allowed_pokemon.extend(gen6)
                     allowed_legends.extend(gen6_legends)
+                    totalbannedlength = totalbannedlength + gen6bannedlength
                     in_array[5] = 1
                     continue
                 case 7:
@@ -485,6 +731,7 @@ def limitPaldeaRaids(config, actualconfig):
                         exit(0)
                     allowed_pokemon.extend(gen7)
                     allowed_legends.extend(gen7_legends)
+                    totalbannedlength = totalbannedlength + gen7bannedlength
                     in_array[6] = 1
                     continue
                 case 8:
@@ -493,6 +740,7 @@ def limitPaldeaRaids(config, actualconfig):
                         exit(0)
                     allowed_pokemon.extend(gen8)
                     allowed_legends.extend(gen8_legends)
+                    totalbannedlength = totalbannedlength + gen8bannedlength
                     in_array[7] = 1
                     continue
                 case 9:
@@ -502,13 +750,15 @@ def limitPaldeaRaids(config, actualconfig):
                     allowed_pokemon.extend(gen9)
                     allowed_legends.extend(paradox)
                     allowed_legends.extend(gen9_legends)
+                    totalbannedlength = totalbannedlength + gen9bannedlength
                     in_array[8] = 1
                     continue
                 case _:
                     print("Invalid Generation")
                     exit(0)
 
-    randomizePaldea(actualconfig, allowed_pokemon, allowed_legends)
+    randomizeKitakami(actualconfig, allowed_pokemon, allowed_legends)
+    totalbannedlength = 0
 
 
 def randomize(config, configGlobal):
@@ -520,6 +770,6 @@ def randomize(config, configGlobal):
         increasedShiny = True
 
     if configGlobal['limit_generation']['is_enabled'] == "yes" and configGlobal['limit_generation']['teraRaid_limiter'] == "yes":
-        limitPaldeaRaids(configGlobal['limit_generation'], config)
+        limitKitakamiRaids(configGlobal['limit_generation'], config)
     elif config['is_enabled'] == "yes":
-        randomizePaldea(config, None, legends)
+        randomizeKitakami(config, None, legends)
