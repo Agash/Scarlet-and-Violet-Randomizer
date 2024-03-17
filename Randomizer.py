@@ -6,7 +6,6 @@ import Randomizer.PersonalData.personal_randomizer as PersonalRandomizer
 import Randomizer.Starters.randomize_starters as StarterRandomizer
 import Randomizer.StaticSpawns.statics as StaticRandomizer
 import Randomizer.Scenes.patchscene as PatchScene
-import Randomizer.FileDescriptor.fileDescriptor as FileDescriptor
 import Randomizer.generationLimiter.generationrando as GenerationLimiter
 import Randomizer.Items.itemrandomizer as ItemRandomizer
 import Randomizer.paldeaTeraRaids.teraRandomizePaldea as PaldeaRaids
@@ -207,6 +206,7 @@ def randomize():
             shutil.rmtree(os.getcwd() + "\\all-created-randomizer")
         randomize_based_on_config(config)
         if config['patch_trpfd'] == "yes":
+            import Randomizer.FileDescriptor.fileDescriptor as FileDescriptor
             FileDescriptor.patchFileDescriptor()
             generateBinary("Randomizer/FileDescriptor/data.fbs", "Randomizer/FileDescriptor/data.json", paths['trpfd'])
             if os.path.exists(os.getcwd() + "\\randomizer-patched"):
@@ -240,6 +240,7 @@ def randomize():
         for i in range(0, config['bulk_creation']["number_of_unique_randomizers_to_create"]):
             randomize_based_on_config(config)
             if config['patch_trpfd'] == "yes":
+                import Randomizer.FileDescriptor.fileDescriptor as FileDescriptor
                 shinyFile = False
                 FileDescriptor.patchFileDescriptor()
                 generateBinary("Randomizer/FileDescriptor/data.fbs", "Randomizer/FileDescriptor/data.json", paths['trpfd'])
